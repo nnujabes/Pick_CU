@@ -1,0 +1,37 @@
+{
+  "gguf_repo": "mykor/A.X-4.0-Light-gguf",
+  "gguf_file": "A.X-4.0-Light-Q4_K_M.gguf",
+  "gguf_path": "/home/ai/models/ax-gguf/A.X-4.0-Light-Q4_K_M.gguf",
+  "gguf_sha256": "6bd9cb8ccaae2efc5c33c7b5e443c2f820d4731130df38cd24f7ba494146ead5",
+  "base_model": "skt/A.X-4.0-Light",
+  "quantization": "Q4_K_M (general.file_type=15)",
+  "chat_template": "official skt/A.X-4.0-Light tokenizer_config.json (verified identical to GGUF-embedded)",
+  "n_ctx": 4096,
+  "n_gpu_layers": -1,
+  "max_tokens": 96,
+  "max_prompt_tokens": 644,
+  "decoding": {
+    "temperature": 0.0,
+    "top_k": 1,
+    "top_p": 1.0,
+    "repeat_penalty": 1.0,
+    "seed": 42,
+    "grammar": null
+  },
+  "runtime": {
+    "llama_cpp_python": "0.3.36",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU 8GB",
+    "python": "3.11.18",
+    "conda_env": "axgguf"
+  },
+  "speed": {
+    "sec_per_sentence_avg": 0.747,
+    "sec_total": 161.7
+  },
+  "inputs": {
+    "dev": "/mnt/c/Users/user/Downloads/dev_category.csv",
+    "dev_md5": "103403c86413b2082bff0ded274d38b6",
+    "train": "/mnt/c/Users/user/Downloads/train_category.csv",
+    "train_md5": "3e337971d3ab0fd5d131d0af8b20958c"
+  }
+}

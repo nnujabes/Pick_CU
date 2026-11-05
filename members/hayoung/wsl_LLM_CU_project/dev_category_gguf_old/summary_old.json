@@ -1,0 +1,4783 @@
+{
+  "model_info": {
+    "gguf_repo": "mykor/A.X-4.0-Light-gguf",
+    "gguf_file": "A.X-4.0-Light-Q4_K_M.gguf",
+    "gguf_path": "/home/ai/models/ax-gguf/A.X-4.0-Light-Q4_K_M.gguf",
+    "gguf_sha256": "6bd9cb8ccaae2efc5c33c7b5e443c2f820d4731130df38cd24f7ba494146ead5",
+    "base_model": "skt/A.X-4.0-Light",
+    "quantization": "Q4_K_M (general.file_type=15)",
+    "chat_template": "official skt/A.X-4.0-Light tokenizer_config.json (verified identical to GGUF-embedded)",
+    "n_ctx": 4096,
+    "n_gpu_layers": -1,
+    "max_tokens": 96,
+    "max_prompt_tokens": 644,
+    "decoding": {
+      "temperature": 0.0,
+      "top_k": 1,
+      "top_p": 1.0,
+      "repeat_penalty": 1.0,
+      "seed": 42,
+      "grammar": null
+    },
+    "runtime": {
+      "llama_cpp_python": "0.3.36",
+      "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU 8GB",
+      "python": "3.11.18",
+      "conda_env": "axgguf"
+    },
+    "speed": {
+      "sec_per_sentence_avg": 0.747,
+      "sec_total": 161.7
+    },
+    "inputs": {
+      "dev": "/mnt/c/Users/user/Downloads/dev_category.csv",
+      "dev_md5": "103403c86413b2082bff0ded274d38b6",
+      "train": "/mnt/c/Users/user/Downloads/train_category.csv",
+      "train_md5": "3e337971d3ab0fd5d131d0af8b20958c"
+    }
+  },
+  "n": 216,
+  "prompt_fields_used": [
+    "입력 문장"
+  ],
+  "excluded_fewshot_labels": [
+    "sodium/high (train에 없음)",
+    "protein/low (train에 없음)"
+  ],
+  "overall": {
+    "all3": {
+      "correct": 49,
+      "n": 216,
+      "acc": 0.2269
+    },
+    "category": {
+      "correct": 54,
+      "n": 216,
+      "acc": 0.25
+    },
+    "nutrient": {
+      "correct": 168,
+      "n": 216,
+      "acc": 0.7778
+    },
+    "direction": {
+      "correct": 204,
+      "n": 216,
+      "acc": 0.9444
+    },
+    "nut_dir": {
+      "correct": 164,
+      "n": 216,
+      "acc": 0.7593
+    }
+  },
+  "parse_fail": 0,
+  "category_missing_in_parsed": 0,
+  "invalid_category_names": {},
+  "category_multilabel": {
+    "micro_precision": 0.8757,
+    "micro_recall": 0.5773,
+    "mean_jaccard": 0.6088,
+    "FP_total(지어냄)": 44,
+    "FN_total(누락)": 227,
+    "gold_count_dist": {
+      "3": 136,
+      "1": 31,
+      "2": 49
+    },
+    "pred_count_dist": {
+      "2": 130,
+      "3": 4,
+      "1": 82
+    },
+    "per_category": {
+      "간편식사": {
+        "gold": 141,
+        "pred": 176,
+        "TP": 138,
+        "FP(지어냄)": 38,
+        "FN(누락)": 3,
+        "precision": 0.7841,
+        "recall": 0.9787
+      },
+      "과자류": {
+        "gold": 92,
+        "pred": 24,
+        "TP": 24,
+        "FP(지어냄)": 0,
+        "FN(누락)": 68,
+        "precision": 1.0,
+        "recall": 0.2609
+      },
+      "식품": {
+        "gold": 177,
+        "pred": 111,
+        "TP": 107,
+        "FP(지어냄)": 4,
+        "FN(누락)": 70,
+        "precision": 0.964,
+        "recall": 0.6045
+      },
+      "음료": {
+        "gold": 120,
+        "pred": 38,
+        "TP": 36,
+        "FP(지어냄)": 2,
+        "FN(누락)": 84,
+        "precision": 0.9474,
+        "recall": 0.3
+      },
+      "아이스크림": {
+        "gold": 7,
+        "pred": 5,
+        "TP": 5,
+        "FP(지어냄)": 0,
+        "FN(누락)": 2,
+        "precision": 1.0,
+        "recall": 0.7143
+      }
+    }
+  },
+  "category_combo_confusion": [
+    {
+      "gold": "간편식사 + 식품 + 음료",
+      "pred": "간편식사 + 식품",
+      "n": 37
+    },
+    {
+      "gold": "간편식사 + 식품",
+      "pred": "간편식사",
+      "n": 24
+    },
+    {
+      "gold": "간편식사 + 식품",
+      "pred": "간편식사 + 식품",
+      "n": 24
+    },
+    {
+      "gold": "과자류 + 식품 + 음료",
+      "pred": "간편식사 + 식품",
+      "n": 23
+    },
+    {
+      "gold": "간편식사 + 과자류 + 식품",
+      "pred": "간편식사 + 식품",
+      "n": 17
+    },
+    {
+      "gold": "음료",
+      "pred": "음료",
+      "n": 17
+    },
+    {
+      "gold": "간편식사 + 식품 + 음료",
+      "pred": "간편식사",
+      "n": 12
+    },
+    {
+      "gold": "간편식사 + 과자류 + 식품",
+      "pred": "간편식사",
+      "n": 12
+    },
+    {
+      "gold": "과자류",
+      "pred": "과자류",
+      "n": 10
+    },
+    {
+      "gold": "과자류 + 식품 + 음료",
+      "pred": "간편식사 + 과자류",
+      "n": 5
+    },
+    {
+      "gold": "간편식사 + 식품 + 음료",
+      "pred": "간편식사 + 음료",
+      "n": 5
+    },
+    {
+      "gold": "과자류 + 식품 + 음료",
+      "pred": "간편식사 + 음료",
+      "n": 4
+    },
+    {
+      "gold": "과자류 + 식품 + 음료",
+      "pred": "음료",
+      "n": 4
+    },
+    {
+      "gold": "과자류 + 음료 + 아이스크림",
+      "pred": "과자류 + 아이스크림",
+      "n": 3
+    },
+    {
+      "gold": "과자류 + 식품 + 음료",
+      "pred": "간편식사 + 과자류 + 식품",
+      "n": 2
+    },
+    {
+      "gold": "간편식사 + 식품 + 음료",
+      "pred": "식품 + 음료",
+      "n": 2
+    },
+    {
+      "gold": "간편식사 + 과자류 + 식품",
+      "pred": "간편식사 + 음료",
+      "n": 2
+    },
+    {
+      "gold": "간편식사",
+      "pred": "간편식사",
+      "n": 2
+    },
+    {
+      "gold": "과자류 + 식품 + 음료",
+      "pred": "간편식사",
+      "n": 1
+    },
+    {
+      "gold": "과자류 + 식품 + 음료",
+      "pred": "간편식사 + 식품 + 음료",
+      "n": 1
+    },
+    {
+      "gold": "간편식사",
+      "pred": "간편식사 + 식품",
+      "n": 1
+    },
+    {
+      "gold": "과자류",
+      "pred": "간편식사 + 식품",
+      "n": 1
+    },
+    {
+      "gold": "간편식사 + 과자류",
+      "pred": "간편식사 + 식품",
+      "n": 1
+    },
+    {
+      "gold": "간편식사 + 과자류 + 식품",
+      "pred": "간편식사 + 과자류",
+      "n": 1
+    },
+    {
+      "gold": "간편식사 + 과자류 + 식품",
+      "pred": "과자류 + 식품",
+      "n": 1
+    },
+    {
+      "gold": "과자류 + 음료 + 아이스크림",
+      "pred": "음료 + 아이스크림",
+      "n": 1
+    },
+    {
+      "gold": "과자류 + 음료 + 아이스크림",
+      "pred": "과자류 + 음료 + 아이스크림",
+      "n": 1
+    },
+    {
+      "gold": "과자류 + 음료 + 아이스크림",
+      "pred": "과자류 + 음료",
+      "n": 1
+    },
+    {
+      "gold": "과자류 + 음료 + 아이스크림",
+      "pred": "간편식사 + 식품",
+      "n": 1
+    }
+  ],
+  "by_gold_category_set": {
+    "간편식사": {
+      "all3": {
+        "correct": 2,
+        "n": 3,
+        "acc": 0.6667
+      },
+      "category": {
+        "correct": 2,
+        "n": 3,
+        "acc": 0.6667
+      },
+      "nutrient": {
+        "correct": 3,
+        "n": 3,
+        "acc": 1.0
+      },
+      "direction": {
+        "correct": 3,
+        "n": 3,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 3,
+        "n": 3,
+        "acc": 1.0
+      }
+    },
+    "간편식사 + 과자류": {
+      "all3": {
+        "correct": 0,
+        "n": 1,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 1,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 0,
+        "n": 1,
+        "acc": 0.0
+      },
+      "direction": {
+        "correct": 0,
+        "n": 1,
+        "acc": 0.0
+      },
+      "nut_dir": {
+        "correct": 0,
+        "n": 1,
+        "acc": 0.0
+      }
+    },
+    "간편식사 + 과자류 + 식품": {
+      "all3": {
+        "correct": 0,
+        "n": 33,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 33,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 22,
+        "n": 33,
+        "acc": 0.6667
+      },
+      "direction": {
+        "correct": 33,
+        "n": 33,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 22,
+        "n": 33,
+        "acc": 0.6667
+      }
+    },
+    "간편식사 + 식품": {
+      "all3": {
+        "correct": 19,
+        "n": 48,
+        "acc": 0.3958
+      },
+      "category": {
+        "correct": 24,
+        "n": 48,
+        "acc": 0.5
+      },
+      "nutrient": {
+        "correct": 42,
+        "n": 48,
+        "acc": 0.875
+      },
+      "direction": {
+        "correct": 44,
+        "n": 48,
+        "acc": 0.9167
+      },
+      "nut_dir": {
+        "correct": 41,
+        "n": 48,
+        "acc": 0.8542
+      }
+    },
+    "간편식사 + 식품 + 음료": {
+      "all3": {
+        "correct": 0,
+        "n": 56,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 56,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 35,
+        "n": 56,
+        "acc": 0.625
+      },
+      "direction": {
+        "correct": 54,
+        "n": 56,
+        "acc": 0.9643
+      },
+      "nut_dir": {
+        "correct": 35,
+        "n": 56,
+        "acc": 0.625
+      }
+    },
+    "과자류": {
+      "all3": {
+        "correct": 10,
+        "n": 11,
+        "acc": 0.9091
+      },
+      "category": {
+        "correct": 10,
+        "n": 11,
+        "acc": 0.9091
+      },
+      "nutrient": {
+        "correct": 11,
+        "n": 11,
+        "acc": 1.0
+      },
+      "direction": {
+        "correct": 11,
+        "n": 11,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 11,
+        "n": 11,
+        "acc": 1.0
+      }
+    },
+    "과자류 + 식품 + 음료": {
+      "all3": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 32,
+        "n": 40,
+        "acc": 0.8
+      },
+      "direction": {
+        "correct": 35,
+        "n": 40,
+        "acc": 0.875
+      },
+      "nut_dir": {
+        "correct": 29,
+        "n": 40,
+        "acc": 0.725
+      }
+    },
+    "과자류 + 음료 + 아이스크림": {
+      "all3": {
+        "correct": 1,
+        "n": 7,
+        "acc": 0.1429
+      },
+      "category": {
+        "correct": 1,
+        "n": 7,
+        "acc": 0.1429
+      },
+      "nutrient": {
+        "correct": 6,
+        "n": 7,
+        "acc": 0.8571
+      },
+      "direction": {
+        "correct": 7,
+        "n": 7,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 6,
+        "n": 7,
+        "acc": 0.8571
+      }
+    },
+    "음료": {
+      "all3": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "category": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nutrient": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      }
+    }
+  },
+  "by_gold_nutrient": {
+    "calories": {
+      "all3": {
+        "correct": 7,
+        "n": 34,
+        "acc": 0.2059
+      },
+      "category": {
+        "correct": 7,
+        "n": 34,
+        "acc": 0.2059
+      },
+      "nutrient": {
+        "correct": 26,
+        "n": 34,
+        "acc": 0.7647
+      },
+      "direction": {
+        "correct": 34,
+        "n": 34,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 26,
+        "n": 34,
+        "acc": 0.7647
+      }
+    },
+    "carbs": {
+      "all3": {
+        "correct": 9,
+        "n": 34,
+        "acc": 0.2647
+      },
+      "category": {
+        "correct": 13,
+        "n": 34,
+        "acc": 0.3824
+      },
+      "nutrient": {
+        "correct": 20,
+        "n": 34,
+        "acc": 0.5882
+      },
+      "direction": {
+        "correct": 30,
+        "n": 34,
+        "acc": 0.8824
+      },
+      "nut_dir": {
+        "correct": 20,
+        "n": 34,
+        "acc": 0.5882
+      }
+    },
+    "fat": {
+      "all3": {
+        "correct": 5,
+        "n": 34,
+        "acc": 0.1471
+      },
+      "category": {
+        "correct": 6,
+        "n": 34,
+        "acc": 0.1765
+      },
+      "nutrient": {
+        "correct": 31,
+        "n": 34,
+        "acc": 0.9118
+      },
+      "direction": {
+        "correct": 33,
+        "n": 34,
+        "acc": 0.9706
+      },
+      "nut_dir": {
+        "correct": 30,
+        "n": 34,
+        "acc": 0.8824
+      }
+    },
+    "protein": {
+      "all3": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 35,
+        "n": 40,
+        "acc": 0.875
+      },
+      "direction": {
+        "correct": 38,
+        "n": 40,
+        "acc": 0.95
+      },
+      "nut_dir": {
+        "correct": 35,
+        "n": 40,
+        "acc": 0.875
+      }
+    },
+    "sodium": {
+      "all3": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 23,
+        "n": 40,
+        "acc": 0.575
+      },
+      "direction": {
+        "correct": 35,
+        "n": 40,
+        "acc": 0.875
+      },
+      "nut_dir": {
+        "correct": 20,
+        "n": 40,
+        "acc": 0.5
+      }
+    },
+    "sugar": {
+      "all3": {
+        "correct": 28,
+        "n": 34,
+        "acc": 0.8235
+      },
+      "category": {
+        "correct": 28,
+        "n": 34,
+        "acc": 0.8235
+      },
+      "nutrient": {
+        "correct": 33,
+        "n": 34,
+        "acc": 0.9706
+      },
+      "direction": {
+        "correct": 34,
+        "n": 34,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 33,
+        "n": 34,
+        "acc": 0.9706
+      }
+    }
+  },
+  "by_gold_direction": {
+    "high": {
+      "all3": {
+        "correct": 16,
+        "n": 128,
+        "acc": 0.125
+      },
+      "category": {
+        "correct": 17,
+        "n": 128,
+        "acc": 0.1328
+      },
+      "nutrient": {
+        "correct": 99,
+        "n": 128,
+        "acc": 0.7734
+      },
+      "direction": {
+        "correct": 120,
+        "n": 128,
+        "acc": 0.9375
+      },
+      "nut_dir": {
+        "correct": 95,
+        "n": 128,
+        "acc": 0.7422
+      }
+    },
+    "low": {
+      "all3": {
+        "correct": 33,
+        "n": 88,
+        "acc": 0.375
+      },
+      "category": {
+        "correct": 37,
+        "n": 88,
+        "acc": 0.4205
+      },
+      "nutrient": {
+        "correct": 69,
+        "n": 88,
+        "acc": 0.7841
+      },
+      "direction": {
+        "correct": 84,
+        "n": 88,
+        "acc": 0.9545
+      },
+      "nut_dir": {
+        "correct": 69,
+        "n": 88,
+        "acc": 0.7841
+      }
+    }
+  },
+  "by_situation": {
+    "S016": {
+      "all3": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      },
+      "direction": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "nut_dir": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      }
+    },
+    "S017": {
+      "all3": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "direction": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "nut_dir": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      }
+    },
+    "S034": {
+      "all3": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 8,
+        "n": 20,
+        "acc": 0.4
+      },
+      "direction": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "nut_dir": {
+        "correct": 8,
+        "n": 20,
+        "acc": 0.4
+      }
+    },
+    "S035": {
+      "all3": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 15,
+        "n": 20,
+        "acc": 0.75
+      },
+      "direction": {
+        "correct": 16,
+        "n": 20,
+        "acc": 0.8
+      },
+      "nut_dir": {
+        "correct": 12,
+        "n": 20,
+        "acc": 0.6
+      }
+    },
+    "S2008": {
+      "all3": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 8,
+        "n": 17,
+        "acc": 0.4706
+      },
+      "direction": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      },
+      "nut_dir": {
+        "correct": 8,
+        "n": 17,
+        "acc": 0.4706
+      }
+    },
+    "S2018": {
+      "all3": {
+        "correct": 9,
+        "n": 17,
+        "acc": 0.5294
+      },
+      "category": {
+        "correct": 13,
+        "n": 17,
+        "acc": 0.7647
+      },
+      "nutrient": {
+        "correct": 12,
+        "n": 17,
+        "acc": 0.7059
+      },
+      "direction": {
+        "correct": 14,
+        "n": 17,
+        "acc": 0.8235
+      },
+      "nut_dir": {
+        "correct": 12,
+        "n": 17,
+        "acc": 0.7059
+      }
+    },
+    "S2027": {
+      "all3": {
+        "correct": 5,
+        "n": 17,
+        "acc": 0.2941
+      },
+      "category": {
+        "correct": 6,
+        "n": 17,
+        "acc": 0.3529
+      },
+      "nutrient": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      },
+      "direction": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      },
+      "nut_dir": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      }
+    },
+    "S2035": {
+      "all3": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      }
+    },
+    "S2045": {
+      "all3": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 9,
+        "n": 17,
+        "acc": 0.5294
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 9,
+        "n": 17,
+        "acc": 0.5294
+      }
+    },
+    "S2053": {
+      "all3": {
+        "correct": 7,
+        "n": 17,
+        "acc": 0.4118
+      },
+      "category": {
+        "correct": 7,
+        "n": 17,
+        "acc": 0.4118
+      },
+      "nutrient": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      }
+    },
+    "S2062": {
+      "all3": {
+        "correct": 11,
+        "n": 17,
+        "acc": 0.6471
+      },
+      "category": {
+        "correct": 11,
+        "n": 17,
+        "acc": 0.6471
+      },
+      "nutrient": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      }
+    },
+    "S2072": {
+      "all3": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "category": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nutrient": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nut_dir": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      }
+    }
+  },
+  "by_author": {
+    "AI(Claude)": {
+      "all3": {
+        "correct": 0,
+        "n": 80,
+        "acc": 0.0
+      },
+      "category": {
+        "correct": 0,
+        "n": 80,
+        "acc": 0.0
+      },
+      "nutrient": {
+        "correct": 58,
+        "n": 80,
+        "acc": 0.725
+      },
+      "direction": {
+        "correct": 73,
+        "n": 80,
+        "acc": 0.9125
+      },
+      "nut_dir": {
+        "correct": 55,
+        "n": 80,
+        "acc": 0.6875
+      }
+    },
+    "종호": {
+      "all3": {
+        "correct": 49,
+        "n": 136,
+        "acc": 0.3603
+      },
+      "category": {
+        "correct": 54,
+        "n": 136,
+        "acc": 0.3971
+      },
+      "nutrient": {
+        "correct": 110,
+        "n": 136,
+        "acc": 0.8088
+      },
+      "direction": {
+        "correct": 131,
+        "n": 136,
+        "acc": 0.9632
+      },
+      "nut_dir": {
+        "correct": 109,
+        "n": 136,
+        "acc": 0.8015
+      }
+    }
+  },
+  "confusion_nutrient": {
+    "calories": {
+      "calories": 26,
+      "protein": 8,
+      "sodium": 0,
+      "carbs": 0,
+      "sugar": 0,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "protein": {
+      "calories": 4,
+      "protein": 35,
+      "sodium": 1,
+      "carbs": 0,
+      "sugar": 0,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "sodium": {
+      "calories": 12,
+      "protein": 0,
+      "sodium": 23,
+      "carbs": 1,
+      "sugar": 4,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "carbs": {
+      "calories": 8,
+      "protein": 5,
+      "sodium": 1,
+      "carbs": 20,
+      "sugar": 0,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "sugar": {
+      "calories": 1,
+      "protein": 0,
+      "sodium": 0,
+      "carbs": 0,
+      "sugar": 33,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "fat": {
+      "calories": 0,
+      "protein": 1,
+      "sodium": 1,
+      "carbs": 0,
+      "sugar": 1,
+      "fat": 31,
+      "(invalid)": 0
+    }
+  },
+  "wrong": [
+    {
+      "row": 1,
+      "상황ID": "S016",
+      "입력 문장": "우리 애가 요즘 키 크고 싶다는데 간식 뭐 사줄까",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 2,
+      "상황ID": "S016",
+      "입력 문장": "중학생 아들 간식 사러 왔는데 뭐가 좋아",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "과자류"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"과자류\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 3,
+      "상황ID": "S016",
+      "입력 문장": "애가 한창 클 나이라 잘 먹어야 하는데 뭐가 좋을지 모르겠어",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 4,
+      "상황ID": "S016",
+      "입력 문장": "아이가 학원 가기 전에 먹을 간식 추천해줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "과자류"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"과자류\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 5,
+      "상황ID": "S016",
+      "입력 문장": "딸이 키 크는 중이라 챙겨 주고 싶은데 편의점에서 뭐 살 수 있어",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 6,
+      "상황ID": "S016",
+      "입력 문장": "성장기 아이한테 줄 영양 있는 간식 추천해줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 7,
+      "상황ID": "S016",
+      "입력 문장": "크는 아이의 뼈와 근육을 생각해서 챙겨 주고 싶어",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 8,
+      "상황ID": "S016",
+      "입력 문장": "과자 대신 아이 성장에 도움 되는 간식을 찾고 있어",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 9,
+      "상황ID": "S016",
+      "입력 문장": "아이 성장에 필요한 단백질 간식 추천해줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 10,
+      "상황ID": "S016",
+      "입력 문장": "크는 애한테 고단백 간식 뭐가 좋아",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "과자류"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"과자류\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 11,
+      "상황ID": "S016",
+      "입력 문장": "애들 간식 머사줌 키크는거로",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "과자류"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"과자류\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 12,
+      "상황ID": "S016",
+      "입력 문장": "성장기 간식 추천점",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"과자류\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 13,
+      "상황ID": "S016",
+      "입력 문장": "우리애 키커야댐 먹을거 알려줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 14,
+      "상황ID": "S016",
+      "입력 문장": "성장기 아이 간식 5천원 이내로 추천해줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 15,
+      "상황ID": "S016",
+      "입력 문장": "아이 간식 3천원 안쪽으로 골라줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "과자류"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"간편식사\", \"과자류\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 16,
+      "상황ID": "S016",
+      "입력 문장": "키 크는 아이 간식 4천원 정도로 뭐가 좋아",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 17,
+      "상황ID": "S016",
+      "입력 문장": "6천원 이하로 아이 성장 간식 알려줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 18,
+      "상황ID": "S016",
+      "입력 문장": "중2 아들이 요즘 갑자기 키가 크기 시작해서 배도 자주 고파하는데 학원 끝나고 먹을 간식을 편의점에서 사 주려고 해 과자 말고 몸에 도움 되는 걸로 알려줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 19,
+      "상황ID": "S016",
+      "입력 문장": "초등학생 딸이 편식이 심해서 밥은 잘 안 먹는데 키는 크고 싶어 하거든 편의점에서 사 줄 수 있는 간식 중에 영양 되는 걸 찾고 싶어",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 20,
+      "상황ID": "S016",
+      "입력 문장": "성장기 아이 간식",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"과자류\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 21,
+      "상황ID": "S017",
+      "입력 문장": "혼자 사니까 맨날 대충 먹는데 뭐 더 먹어야 할까",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 22,
+      "상황ID": "S017",
+      "입력 문장": "자취생인데 영양 챙길 만한 거 있어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 23,
+      "상황ID": "S017",
+      "입력 문장": "맨날 라면만 먹었더니 몸이 안 좋은 것 같아",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 24,
+      "상황ID": "S017",
+      "입력 문장": "혼밥이라 반찬이 없는데 편의점에서 보충할 거 추천해줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 25,
+      "상황ID": "S017",
+      "입력 문장": "혼자 먹으니까 식단이 엉망인데 뭘 추가하면 좋아",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 26,
+      "상황ID": "S017",
+      "입력 문장": "혼자 먹는 식사에 부족한 영양을 채워주고 싶어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 27,
+      "상황ID": "S017",
+      "입력 문장": "자취하면서 놓치기 쉬운 몸에 필요한 걸 챙기고 싶어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 28,
+      "상황ID": "S017",
+      "입력 문장": "대충 때우는 끼니를 보완해줄 먹거리를 찾고 있어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 29,
+      "상황ID": "S017",
+      "입력 문장": "혼밥할 때 단백질 보충할 거 추천해줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 30,
+      "상황ID": "S017",
+      "입력 문장": "자취생 식단에 부족한 단백질 채울 걸로 골라줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 31,
+      "상황ID": "S017",
+      "입력 문장": "자취생 식단 보충할거 머있음",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 32,
+      "상황ID": "S017",
+      "입력 문장": "혼밥 영양 챙길거 추천점",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 33,
+      "상황ID": "S017",
+      "입력 문장": "맨날 라면만먹음 보충할거 알려줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 34,
+      "상황ID": "S017",
+      "입력 문장": "혼밥 식단 보충용으로 5천원 이내 추천해줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 35,
+      "상황ID": "S017",
+      "입력 문장": "자취생 영양 챙길 거 4천원 안쪽으로",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 36,
+      "상황ID": "S017",
+      "입력 문장": "혼자 먹는 끼니에 추가할 거 6천원 정도로",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 37,
+      "상황ID": "S017",
+      "입력 문장": "3천원대로 식단 보충할 거 알려줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 38,
+      "상황ID": "S017",
+      "입력 문장": "자취 3년 차인데 요리하기 귀찮아서 매일 김밥이랑 컵라면만 먹고 있거든 건강이 걱정돼서 편의점에서 식단에 하나 추가할 만한 걸 찾아줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 39,
+      "상황ID": "S017",
+      "입력 문장": "혼자 살다 보니 밥은 먹는데 반찬이랑 고기류는 거의 못 먹고 있어서 편의점에서 사 먹을 수 있는 걸로 부족한 걸 채우고 싶어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 40,
+      "상황ID": "S017",
+      "입력 문장": "혼밥 식단 보충",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "protein",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 41,
+      "상황ID": "S034",
+      "입력 문장": "어제 회식해서 속이 아직 안 좋아 짜지 않은 걸로 먹고 싶어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 42,
+      "상황ID": "S034",
+      "입력 문장": "회식하고 나서 몸이 무거운데 뭐 먹지",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 43,
+      "상황ID": "S034",
+      "입력 문장": "어제 술이랑 고기 먹었더니 오늘은 순한 게 땡겨",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "식품",
+        "음료"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"음료\", \"식품\"], \"nutrient\": \"sugar\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 44,
+      "상황ID": "S034",
+      "입력 문장": "회식 다음 날이라 속이 쓰려서 부담 없는 거 알려줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"sugar\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 45,
+      "상황ID": "S034",
+      "입력 문장": "어제 늦게까지 마셨는데 오늘은 가볍게 먹고 싶어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 46,
+      "상황ID": "S034",
+      "입력 문장": "회식으로 짜고 기름진 음식을 먹은 몸을 순하게 달래고 싶어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "식품",
+        "음료"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"음료\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 47,
+      "상황ID": "S034",
+      "입력 문장": "어제 과하게 먹은 걸 오늘은 가볍게 만회하는 식사를 하고 싶어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 48,
+      "상황ID": "S034",
+      "입력 문장": "회식 뒤라 몸이 부은 느낌이라 가볍게 비워주는 걸 먹고 싶어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 49,
+      "상황ID": "S034",
+      "입력 문장": "회식 다음 날이라 저염으로 추천해줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 50,
+      "상황ID": "S034",
+      "입력 문장": "어제 많이 먹어서 나트륨 낮은 걸로 알려줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 51,
+      "상황ID": "S034",
+      "입력 문장": "어제 회식 달림ㅠ 순한거 추천점",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sugar\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 52,
+      "상황ID": "S034",
+      "입력 문장": "회식 후 몸 안좋음 머먹지",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"sugar\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 53,
+      "상황ID": "S034",
+      "입력 문장": "어제 짠거 많이먹음 오늘은 담백한걸로",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 54,
+      "상황ID": "S034",
+      "입력 문장": "회식 다음 날 먹을 거 5천원 이내로 추천해줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 55,
+      "상황ID": "S034",
+      "입력 문장": "어제 회식해서 4천원 안쪽으로 순한 거 골라줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 56,
+      "상황ID": "S034",
+      "입력 문장": "6천원 정도로 회식 뒤 속 편한 거",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 57,
+      "상황ID": "S034",
+      "입력 문장": "3천원대로 가벼운 아침 알려줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 58,
+      "상황ID": "S034",
+      "입력 문장": "어제 부서 회식에서 삼겹살에 소주에 찌개까지 먹었는데 오늘 아침에 일어났더니 얼굴이 퉁퉁 붓고 속도 안 좋아서 편의점에서 순하게 먹을 수 있는 걸 사고 싶어",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 59,
+      "상황ID": "S034",
+      "입력 문장": "회식이 새벽까지 이어져서 자고 일어났더니 입안이 텁텁하고 몸이 무거운데 점심은 편의점에서 해결해야 하니까 속 편하고 가벼운 걸로 추천해줘",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"carbs\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 60,
+      "상황ID": "S034",
+      "입력 문장": "회식 다음 날 음식",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 61,
+      "상황ID": "S035",
+      "입력 문장": "땀을 너무 많이 흘렸더니 짭짤한 게 땡겨",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 62,
+      "상황ID": "S035",
+      "입력 문장": "한여름에 밖에서 일했더니 기운이 없어 뭐 먹을까",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 63,
+      "상황ID": "S035",
+      "입력 문장": "축구하고 땀 범벅인데 뭐 사 먹지",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 64,
+      "상황ID": "S035",
+      "입력 문장": "땀 많이 흘려서 어지러운데 편의점에서 뭐가 좋아",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "음료"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"음료\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 65,
+      "상황ID": "S035",
+      "입력 문장": "오늘 너무 더워서 땀을 뻘뻘 흘렸는데 짠 걸로 먹고 싶어",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 66,
+      "상황ID": "S035",
+      "입력 문장": "땀으로 빠져나간 걸 다시 채워줄 수 있는 걸 먹고 싶어",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "음료"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"음료\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 67,
+      "상황ID": "S035",
+      "입력 문장": "많이 흘린 땀을 보충하기 위해 짭짤한 음식을 찾고 있어",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 68,
+      "상황ID": "S035",
+      "입력 문장": "더위에 지친 몸이 회복될 수 있는 걸로 골라줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 69,
+      "상황ID": "S035",
+      "입력 문장": "땀 흘린 뒤에 염분 보충할 거 추천해줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "음료"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"음료\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 70,
+      "상황ID": "S035",
+      "입력 문장": "나트륨 높은 걸로 땀 흘린 몸 채울 거 알려줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 71,
+      "상황ID": "S035",
+      "입력 문장": "땀 쭉 뺏더니 짠게 땡김ㅠ 추천점",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 72,
+      "상황ID": "S035",
+      "입력 문장": "더워서 쓰러질듯 짭짤한거 머있음",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 73,
+      "상황ID": "S035",
+      "입력 문장": "땀범벅됨 먹을거 알려줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 74,
+      "상황ID": "S035",
+      "입력 문장": "땀 흘린 뒤 먹을 짭짤한 걸로 5천원 이내 추천해줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 75,
+      "상황ID": "S035",
+      "입력 문장": "더위 먹은 날 4천원 안쪽으로 골라줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "음료"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"음료\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 76,
+      "상황ID": "S035",
+      "입력 문장": "6천원 정도로 땀 빠진 몸 채울 거",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 77,
+      "상황ID": "S035",
+      "입력 문장": "3천원대로 짭짤한 거 알려줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 78,
+      "상황ID": "S035",
+      "입력 문장": "오늘 낮에 땡볕에서 세 시간 동안 등산을 했는데 땀이 비 오듯 흘러서 지금 몸에 힘이 하나도 없고 짭짤한 게 엄청 땡기는데 편의점에서 사 먹을 걸 추천해줘",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\", \"음료\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 79,
+      "상황ID": "S035",
+      "입력 문장": "여름 공사 현장에서 일하다가 쉬는 시간에 편의점에 왔는데 땀을 너무 많이 흘려서 어지러운 느낌이야 짭짤하게 채워줄 수 있는 걸 사고 싶어",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 80,
+      "상황ID": "S035",
+      "입력 문장": "땀 흘린 뒤 짭짤한 거",
+      "gold_cats": [
+        "과자류",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "sodium",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 81,
+      "상황ID": "S2008",
+      "입력 문장": "오늘 제주 올레길 걷는데 중간에 뭐 먹으면 힘이 날까?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"carbs\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 82,
+      "상황ID": "S2008",
+      "입력 문장": "벌써 스무 킬로 걸었어. 남은 길 걸어갈 힘 나는 거 있어?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 83,
+      "상황ID": "S2008",
+      "입력 문장": "걷기 여행 사흘째인데 점심은 뭘로 때우지?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 84,
+      "상황ID": "S2008",
+      "입력 문장": "오늘도 해 질 때까지 걸어야 해. 가방에 뭘 넣어갈까?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 85,
+      "상황ID": "S2008",
+      "입력 문장": "하루 종일 걷는 여행이라 오래 힘을 낼 수 있는 음식을 찾고 있어요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"carbs\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 86,
+      "상황ID": "S2008",
+      "입력 문장": "순례길 같은 도보 코스를 걷는 중에 에너지를 보충하고 싶습니다.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "음료"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"음료\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 87,
+      "상황ID": "S2008",
+      "입력 문장": "다음 마을까지 걸어갈 힘을 내려고 밥이나 빵을 먹으려 해요.",
+      "gold_cats": [
+        "간편식사"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"carbs\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 88,
+      "상황ID": "S2008",
+      "입력 문장": "도보 여행 중인데 탄수화물을 보충하려면 뭐가 좋을까?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"carbs\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 89,
+      "상황ID": "S2008",
+      "입력 문장": "온종일 걸으려고 탄수화물을 챙기고 싶어요. 추천 메뉴 있나요?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"carbs\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 90,
+      "상황ID": "S2008",
+      "입력 문장": "올레길 3일차ㅠㅠ 다리 후들 힘나는거 추천좀",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"carbs\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 91,
+      "상황ID": "S2008",
+      "입력 문장": "오늘 25키로 걸음ㅋㅋ 빵 머가 든든함?",
+      "gold_cats": [
+        "과자류"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"carbs\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 92,
+      "상황ID": "S2008",
+      "입력 문장": "걷는 여행 중이라 5천원 이내로 다음 마을까지 버틸 걸 사고 싶어.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 93,
+      "상황ID": "S2008",
+      "입력 문장": "오늘 코스가 아직 많이 남았어요. 7천원 안으로 김밥이나 빵을 골라주세요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 94,
+      "상황ID": "S2008",
+      "입력 문장": "4천원 정도로 하루 종일 걸을 힘을 낼 만한 게 있을까?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"carbs\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 95,
+      "상황ID": "S2008",
+      "입력 문장": "배낭여행이라 돈을 아껴야 해요. 3천원대로 오래 힘이 가는 간식을 찾아요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 96,
+      "상황ID": "S2008",
+      "입력 문장": "만원 이하로 오늘 걸으면서 먹을 끼니를 전부 사고 싶어.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 97,
+      "상황ID": "S2008",
+      "입력 문장": "며칠째 해안길을 따라 걷고 있는데 오후가 되면 힘이 쭉 빠져서요, 다음 숙소까지 아직 십 킬로는 남았으니 뭔가 먹어두고 싶어요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 98,
+      "상황ID": "S2018",
+      "입력 문장": "밥만 먹으면 배가 빵빵해져. 오늘은 뭘 먹을까?",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 103,
+      "상황ID": "S2018",
+      "입력 문장": "오늘 꽉 끼는 옷을 입어서 배가 안 부풀게 먹으려 합니다.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": true,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 106,
+      "상황ID": "S2018",
+      "입력 문장": "밥먹으면 배 빵빵ㅠㅠ 안부푸는거 추천좀",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": true,
+      "nut_ok": false,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 109,
+      "상황ID": "S2018",
+      "입력 문장": "식후 더부룩함이 심해요. 7천원 안으로 면 없는 걸 골라주세요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"carbs\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 111,
+      "상황ID": "S2018",
+      "입력 문장": "만원 이하로 먹고 나서 배가 편할 곡물 없는 음식을 추천해 주세요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"carbs\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 112,
+      "상황ID": "S2018",
+      "입력 문장": "4천원으로 밥 말고 배 안 나오게 먹을 수 있는 게 있을까?",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": true,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 113,
+      "상황ID": "S2018",
+      "입력 문장": "점심에 밥만 먹으면 오후 내내 배가 빵빵해져서 바지 단추를 풀고 앉아 있을 정도인데, 오늘은 밥이나 면 없이 뭘 먹으면 좀 나을까요?",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": true,
+      "nut_ok": false,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 114,
+      "상황ID": "S2018",
+      "입력 문장": "저녁에 소개팅 약속이 있어서 배가 나와 보이면 안 되는데 면이나 밥을 먹으면 꼭 부풀더라고요, 점심으로 다른 걸 먹어야 할 것 같아요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "carbs",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "carbs",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"carbs\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 115,
+      "상황ID": "S2027",
+      "입력 문장": "오후 내내 못 먹는데 기름진 거 먹으면 오래 가겠지? 뭐 먹을까?",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 117,
+      "상황ID": "S2027",
+      "입력 문장": "금방 배고파지는 건 싫어. 기름기 있어서 오래 가는 거 없나?",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 118,
+      "상황ID": "S2027",
+      "입력 문장": "기름진 음식으로 포만감을 오래 유지하고 싶어요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 120,
+      "상황ID": "S2027",
+      "입력 문장": "소화가 천천히 되는 기름진 한 끼를 찾고 있어요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 121,
+      "상황ID": "S2027",
+      "입력 문장": "지방이 많으면 배가 오래 간다던데 뭐가 있을까?",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": true,
+      "nut_ok": true,
+      "dir_ok": false,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 122,
+      "상황ID": "S2027",
+      "입력 문장": "포만감 오래 가게 지방 많은 메뉴로 추천해 주세요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 123,
+      "상황ID": "S2027",
+      "입력 문장": "기름진거 먹고 오래 버티고싶음ㅠ 머있어",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 126,
+      "상황ID": "S2027",
+      "입력 문장": "다음 끼니까지 멀어서요. 7천원 안으로 기름기 있는 메뉴를 골라주세요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 127,
+      "상황ID": "S2027",
+      "입력 문장": "6천원 정도로 천천히 소화되는 기름진 음식이 있을까?",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 128,
+      "상황ID": "S2027",
+      "입력 문장": "만원 이하로 오래 든든한 기름진 메뉴를 찾고 있어요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 129,
+      "상황ID": "S2027",
+      "입력 문장": "4천원으로 오래 안 꺼지는 기름진 간식 있어?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "과자류"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"과자류\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 130,
+      "상황ID": "S2027",
+      "입력 문장": "오늘 오후 일정이 빽빽해서 저녁 전까지 뭘 먹을 시간이 전혀 없을 것 같은데, 기름진 걸 먹으면 오래 간다니까 그런 걸로 든든히 먹어둘까요?",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 132,
+      "상황ID": "S2035",
+      "입력 문장": "엄마 드릴 간식 사려는데 기름진 건 못 드셔. 뭐가 좋을까?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "과자류",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"과자류\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 133,
+      "상황ID": "S2035",
+      "입력 문장": "할머니 댁 가는 길인데 느끼하지 않은 간식 뭐 있어?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 134,
+      "상황ID": "S2035",
+      "입력 문장": "아버지가 튀긴 걸 싫어하셔. 뭐 사다 드리지?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 135,
+      "상황ID": "S2035",
+      "입력 문장": "부모님께 드릴 기름기 적은 간식을 찾고 있어요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 136,
+      "상황ID": "S2035",
+      "입력 문장": "어르신이 드시기 좋은 담백한 음식을 사 가려고 합니다.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "sodium",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"sodium\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 137,
+      "상황ID": "S2035",
+      "입력 문장": "병문안 갈 때 들고 갈 느끼하지 않은 메뉴를 원해요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 138,
+      "상황ID": "S2035",
+      "입력 문장": "부모님 간식으로 지방 적은 걸 찾고 있어요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 139,
+      "상황ID": "S2035",
+      "입력 문장": "어머니가 드실 저지방 간식을 추천해 주세요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 140,
+      "상황ID": "S2035",
+      "입력 문장": "엄마 간식 사가야됨ㅠ 안기름진거 추천좀",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 141,
+      "상황ID": "S2035",
+      "입력 문장": "할머니가 튀김 못드심 ㅜ 담백한거 머있어",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 142,
+      "상황ID": "S2035",
+      "입력 문장": "부모님 드릴 간식으로 5천원 이내에 기름기 없는 거 있어?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 143,
+      "상황ID": "S2035",
+      "입력 문장": "할머니 댁에 가져가려고요. 만원 정도로 담백한 걸 골라주세요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 144,
+      "상황ID": "S2035",
+      "입력 문장": "7천원 정도로 어르신이 드실 안 느끼한 간식을 찾아.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 145,
+      "상황ID": "S2035",
+      "입력 문장": "아버지 드릴 건데 4천원으로 튀기지 않은 게 있을까?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 146,
+      "상황ID": "S2035",
+      "입력 문장": "8천원까지 쓸게요. 어머니가 드시기 편한 담백한 메뉴 부탁드려요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 147,
+      "상황ID": "S2035",
+      "입력 문장": "이번 주말에 시골 부모님 댁에 가는데 아버지가 요즘 기름진 걸 드시면 소화를 못 시키셔서요, 담백하게 드실 만한 걸 조금 사 가려고 해요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "fat",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"fat\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 148,
+      "상황ID": "S2035",
+      "입력 문장": "어머니가 드시고 싶은 게 없다고 하셔서 뭘 사 가야 할지 고민인데, 튀긴 건 분명 안 좋아하실 테니 그런 건 빼고 뭐가 괜찮을까요?",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "fat",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"sugar\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 149,
+      "상황ID": "S2045",
+      "입력 문장": "아기 수유 중인데 왜 이렇게 배가 고프지? 뭐 먹을까?",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 150,
+      "상황ID": "S2045",
+      "입력 문장": "새벽 수유하고 나니까 허기져. 뭐가 좋을까?",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 151,
+      "상황ID": "S2045",
+      "입력 문장": "모유 먹이는 동안은 많이 먹으라던데 뭘 사 먹지?",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 152,
+      "상황ID": "S2045",
+      "입력 문장": "수유하고 나서 찾아오는 배고픔을 달랠 넉넉한 음식을 찾고 있어요.",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 153,
+      "상황ID": "S2045",
+      "입력 문장": "모유 수유로 늘어난 식사량을 채우고 싶습니다.",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 154,
+      "상황ID": "S2045",
+      "입력 문장": "출산 후 수유 기간에 든든히 먹을 메뉴를 원해요.",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 155,
+      "상황ID": "S2045",
+      "입력 문장": "수유 중엔 열량이 더 필요하대요. 뭘 먹으면 좋을까요?",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 156,
+      "상황ID": "S2045",
+      "입력 문장": "모유 수유 때문에 칼로리 넉넉한 메뉴를 찾고 있어.",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 157,
+      "상황ID": "S2045",
+      "입력 문장": "수유중인데 넘 배고픔ㅠㅠ 머 먹지",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 158,
+      "상황ID": "S2045",
+      "입력 문장": "모유수유 허기 ㄷㄷ 든든한거 추천좀",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 159,
+      "상황ID": "S2045",
+      "입력 문장": "수유 중이라 배가 고픈데 7천원 정도로 든든한 메뉴가 있을까요?",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 160,
+      "상황ID": "S2045",
+      "입력 문장": "남편 편에 5천원 줘서 사 오라고 할 건데, 수유할 때 먹을 걸 추천해 줘.",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 161,
+      "상황ID": "S2045",
+      "입력 문장": "수유 후 허기가 심해요, 만 원으로 며칠 먹을 걸 사고 싶어요.",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 162,
+      "상황ID": "S2045",
+      "입력 문장": "6,500원으로 모유 수유 중 먹기 좋은 끼니가 뭘까?",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 163,
+      "상황ID": "S2045",
+      "입력 문장": "4천원대 간식 중에 수유 사이에 먹을 만한 게 궁금해요.",
+      "gold_cats": [
+        "간편식사",
+        "과자류",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "protein",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"protein\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 164,
+      "상황ID": "S2045",
+      "입력 문장": "아기를 낳은 지 석 달쯤 됐는데 수유를 하고 나면 정말 참기 힘들 만큼 배가 고파서요, 새벽에도 바로 먹을 수 있는 걸 미리 사다 두려고요.",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 165,
+      "상황ID": "S2045",
+      "입력 문장": "모유 수유 중인데 요즘 하루 종일 먹어도 허기가 안 가시고 아기 보느라 밥을 차릴 시간도 없어서, 편의점에서 간단히 많이 먹을 만한 걸 찾아요.",
+      "gold_cats": [
+        "간편식사",
+        "식품",
+        "음료"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 166,
+      "상황ID": "S2053",
+      "입력 문장": "다음 주 건강검진인데 몸무게 좀 줄이고 가고 싶어. 뭐 먹지?",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 169,
+      "상황ID": "S2053",
+      "입력 문장": "검진 전에 체중을 조금 줄이려고 가볍게 먹고 싶어요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 170,
+      "상황ID": "S2053",
+      "입력 문장": "신체검사를 앞두고 끼니를 가볍게 줄이려 합니다.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 171,
+      "상황ID": "S2053",
+      "입력 문장": "군 입대 신체검사 전까지 체중을 맞출 메뉴를 찾아요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 172,
+      "상황ID": "S2053",
+      "입력 문장": "건강검진 전까지 칼로리 낮은 걸로 먹고 싶어요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 178,
+      "상황ID": "S2053",
+      "입력 문장": "검진 전까지 점심을 3천원대로 작게 먹으려고 합니다.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 179,
+      "상황ID": "S2053",
+      "입력 문장": "6,500원에 몸무게 걱정 없는 메뉴가 있으면 알려줘.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 180,
+      "상황ID": "S2053",
+      "입력 문장": "군대 신검 전에 만 원으로 사흘 치 끼니를 준비하고 싶어요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 181,
+      "상황ID": "S2053",
+      "입력 문장": "회사 건강검진이 다음 주인데 작년에 체중 때문에 의사 선생님께 한 소리 들었던 게 생각나서요, 그때까지만이라도 양을 줄여보려고 해요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 182,
+      "상황ID": "S2053",
+      "입력 문장": "입대 전 신체검사에 체중 기준이 있다고 들어서 조금 신경이 쓰이는데, 며칠 동안 어떻게 먹어야 할지 몰라서 편의점 메뉴부터 찾아보고 있어요.",
+      "gold_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "gold_nutrient": "calories",
+      "gold_direction": "low",
+      "pred_cats": [
+        "간편식사"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "low",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\"], \"nutrient\": \"calories\", \"direction\": \"low\"}"
+    },
+    {
+      "row": 184,
+      "상황ID": "S2062",
+      "입력 문장": "애가 병원 다녀와서 안 그쳐. 달달한 거 하나 사줄까?",
+      "gold_cats": [
+        "과자류",
+        "음료",
+        "아이스크림"
+      ],
+      "gold_nutrient": "sugar",
+      "gold_direction": "high",
+      "pred_cats": [
+        "음료",
+        "아이스크림"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"아이스크림\", \"음료\"], \"nutrient\": \"sugar\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 190,
+      "상황ID": "S2062",
+      "입력 문장": "오늘만 당류 신경 안 쓰고 애 달래줄 간식을 살래요.",
+      "gold_cats": [
+        "과자류",
+        "음료",
+        "아이스크림"
+      ],
+      "gold_nutrient": "sugar",
+      "gold_direction": "high",
+      "pred_cats": [
+        "과자류",
+        "아이스크림"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"과자류\", \"아이스크림\"], \"nutrient\": \"sugar\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 192,
+      "상황ID": "S2062",
+      "입력 문장": "조카 떼쓴다 ㄷㄷ 달달한거 추천좀",
+      "gold_cats": [
+        "과자류",
+        "음료",
+        "아이스크림"
+      ],
+      "gold_nutrient": "sugar",
+      "gold_direction": "high",
+      "pred_cats": [
+        "과자류",
+        "아이스크림"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"과자류\", \"아이스크림\"], \"nutrient\": \"sugar\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 195,
+      "상황ID": "S2062",
+      "입력 문장": "주사 맞은 아이에게 줄 달콤한 간식을 2,000원으로 찾아요.",
+      "gold_cats": [
+        "과자류",
+        "음료",
+        "아이스크림"
+      ],
+      "gold_nutrient": "sugar",
+      "gold_direction": "high",
+      "pred_cats": [
+        "과자류",
+        "음료"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"과자류\", \"음료\"], \"nutrient\": \"sugar\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 196,
+      "상황ID": "S2062",
+      "입력 문장": "5천원으로 아이가 좋아할 달달한 간식을 살 수 있을까?",
+      "gold_cats": [
+        "과자류",
+        "음료",
+        "아이스크림"
+      ],
+      "gold_nutrient": "sugar",
+      "gold_direction": "high",
+      "pred_cats": [
+        "과자류",
+        "아이스크림"
+      ],
+      "pred_nutrient": "sugar",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": true,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"과자류\", \"아이스크림\"], \"nutrient\": \"sugar\", \"direction\": \"high\"}"
+    },
+    {
+      "row": 197,
+      "상황ID": "S2062",
+      "입력 문장": "1,500원에 우는 아이 그치게 할 만한 게 뭘까요?",
+      "gold_cats": [
+        "과자류",
+        "음료",
+        "아이스크림"
+      ],
+      "gold_nutrient": "sugar",
+      "gold_direction": "high",
+      "pred_cats": [
+        "간편식사",
+        "식품"
+      ],
+      "pred_nutrient": "calories",
+      "pred_direction": "high",
+      "cat_ok": false,
+      "nut_ok": false,
+      "dir_ok": true,
+      "raw_output": "{\"category\": [\"간편식사\", \"식품\"], \"nutrient\": \"calories\", \"direction\": \"high\"}"
+    }
+  ]
+}

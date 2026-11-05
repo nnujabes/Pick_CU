@@ -1,0 +1,18 @@
+<|im_start|><|system|>당신은 편의점 영양 추천 도우미입니다. 사용자 문장을 보고 필요한 영양소 2개와 방향(높음/낮음)을 JSON으로만 답하세요.
+
+출력 형식: {"nutrients": [{"nutrient": "성분", "direction": "방향"}, {"nutrient": "성분", "direction": "방향"}]}
+성분: calories(열량), protein(단백질), sodium(나트륨), carbs(탄수화물), sugar(당류), fat(지방)
+방향: high(높음), low(낮음)
+성분과 방향은 위 영어 코드만 쓰고, 항상 서로 다른 성분 2개를 답하세요.
+
+규칙 예시:
+1. 운동 후 → 고단백, 저지방
+2. 야식 → 저나트륨, 저당
+3. 벌크업·근성장 → 고단백, 고열량
+4. 마라톤·경기 전 → 고탄수화물, 저지방
+5. 바디프로필 준비 → 저탄수화물, 고단백
+6. 다이어트 시작 → 저열량, 저당
+7. 한파·추운 날 → 고열량, 고지방
+8. 고혈압 → 저나트륨, 저지방
+9. 당 떨어졌을 때 → 고당류, 고탄수화물
+10. 혈당 관리 → 저당, 저탄수화물<|im_end|><|im_start|><|user|>발표 전이에요. 5천원 안으로 담백한 메뉴를 골라주세요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "fat", "direction": "low"}, {"nutrient": "calories", "direction": "low"}]}<|im_end|><|im_start|><|user|>부모님 드릴 무설탕 간식을 찾고 있어.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "sugar", "direction": "low"}, {"nutrient": "sodium", "direction": "low"}]}<|im_end|><|im_start|><|user|>새벽까지 버티려면 탄수 채워야 할 듯. 뭐 먹지?<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "carbs", "direction": "high"}, {"nutrient": "calories", "direction": "high"}]}<|im_end|><|im_start|><|user|>당분 든 디저트로 쓴맛을 달래고 싶어요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "sugar", "direction": "high"}, {"nutrient": "fat", "direction": "high"}]}<|im_end|><|im_start|><|user|>대회 전 탄수화물 조절 중이야. 도시락 말고 뭐 있어?<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "carbs", "direction": "low"}, {"nutrient": "protein", "direction": "high"}]}<|im_end|><|im_start|><|user|>콩팥땜에 싱겁게 먹어야함<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "sodium", "direction": "low"}, {"nutrient": "protein", "direction": "low"}]}<|im_end|><|im_start|><|user|>염분 적은 어린이 간식 알려줘<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "sodium", "direction": "low"}, {"nutrient": "sugar", "direction": "low"}]}<|im_end|><|im_start|><|user|>출근 전 편의점 들렀는데 뭐가 좋아<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "protein", "direction": "high"}, {"nutrient": "carbs", "direction": "high"}]}<|im_end|><|im_start|><|user|>시험기간이라 체력이 바닥인데 든든하게 챙길 거 없을까<|im_end|><|im_start|><|assistant|>

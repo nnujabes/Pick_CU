@@ -1,0 +1,48 @@
+{
+  "model": "skt/A.X-4.0-Light",
+  "revision": "ba21c20ea1b31ded1ec3e2fb432335077dc4be98",
+  "quant": "4bit NF4 double-quant, compute bf16",
+  "lora": {
+    "r": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "target": "all linear"
+  },
+  "lr": 0.0002,
+  "sched": "cosine, warmup 3% of max steps",
+  "max_epochs": 10,
+  "early_stopping": {
+    "metric": "val exact (sentence)",
+    "patience": 3,
+    "rule": "개선 없는 epoch가 patience번 연속이면 중단"
+  },
+  "micro_bs": 8,
+  "accum": 2,
+  "effective_bs": 16,
+  "steps_per_epoch": 160,
+  "max_len": 384,
+  "grad_checkpointing": true,
+  "seed": 42,
+  "versions": {
+    "torch": "2.6.0+cu124",
+    "transformers": "5.20.2",
+    "peft": "0.21.2"
+  },
+  "inputs_md5": {
+    "train_csv": "5bafa13379ee3ba455547934822ae32b",
+    "dev_csv": "f9ca187cd59294c7ab56af291b57f750"
+  },
+  "system_prompt_sha256": "06818f0f2ba2c5ac7f05454846c37e9054766184d62cd521b6afe0eab479b556",
+  "val_situations": [
+    "S013",
+    "S024",
+    "S030",
+    "S2015",
+    "S2021",
+    "S2033",
+    "S2044",
+    "S2061",
+    "S2066"
+  ],
+  "dev_eval": "best epoch 확정 후 1회"
+}

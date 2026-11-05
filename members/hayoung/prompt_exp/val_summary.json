@@ -1,0 +1,2552 @@
+{
+  "split": {
+    "val_situations": [
+      "S006",
+      "S007",
+      "S014",
+      "S020",
+      "S021",
+      "S031",
+      "S2002",
+      "S2003",
+      "S2017",
+      "S2020",
+      "S2025",
+      "S2029",
+      "S2048",
+      "S2050",
+      "S2051",
+      "S2057",
+      "S2058",
+      "S2059"
+    ],
+    "n_val": 540,
+    "n_pool": 2160
+  },
+  "k": 8,
+  "max_per_situation": 2,
+  "variants": {
+    "P0_base": {
+      "overall": {
+        "exact": {
+          "correct": 96,
+          "n": 540,
+          "acc": 0.1778
+        },
+        "pair": {
+          "correct": 567,
+          "n": 1080,
+          "acc": 0.525
+        },
+        "at_least_one": {
+          "correct": 471,
+          "n": 540,
+          "acc": 0.8722
+        },
+        "nutrient_only_sentence": {
+          "correct": 125,
+          "n": 540,
+          "acc": 0.2315
+        },
+        "nutrient_only_pair": {
+          "correct": 607,
+          "n": 1080,
+          "acc": 0.562
+        },
+        "direction_only_sentence": {
+          "correct": 314,
+          "n": 540,
+          "acc": 0.5815
+        },
+        "direction_only_pair": {
+          "correct": 811,
+          "n": 1080,
+          "acc": 0.7509
+        },
+        "direction_when_nutrient_found": {
+          "correct": 567,
+          "n": 607,
+          "acc": 0.9341
+        },
+        "first": {
+          "correct": 420,
+          "n": 540,
+          "acc": 0.7778
+        },
+        "second": {
+          "correct": 147,
+          "n": 540,
+          "acc": 0.2722
+        }
+      },
+      "counts": {
+        "n_items": {
+          "0": 14,
+          "1": 8,
+          "2": 518
+        },
+        "one_item": 8,
+        "three_or_more_items": 0,
+        "same_nutrient_twice": 0,
+        "invalid_value_sentences": 42,
+        "parse_fail": 13,
+        "schema_invalid_but_parsed": 1,
+        "truncated_at_max_new_tokens": 18
+      },
+      "by_situation": {
+        "S006": {
+          "gold": "protein/high, calories/high",
+          "exact": {
+            "correct": 3,
+            "n": 30,
+            "acc": 0.1
+          },
+          "pair": {
+            "correct": 29,
+            "n": 60,
+            "acc": 0.4833
+          },
+          "first": {
+            "correct": 25,
+            "n": 30,
+            "acc": 0.8333
+          },
+          "second": {
+            "correct": 4,
+            "n": 30,
+            "acc": 0.1333
+          }
+        },
+        "S007": {
+          "gold": "protein/high, sodium/low",
+          "exact": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          },
+          "pair": {
+            "correct": 24,
+            "n": 60,
+            "acc": 0.4
+          },
+          "first": {
+            "correct": 24,
+            "n": 30,
+            "acc": 0.8
+          },
+          "second": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          }
+        },
+        "S014": {
+          "gold": "protein/high, fat/low",
+          "exact": {
+            "correct": 13,
+            "n": 30,
+            "acc": 0.4333
+          },
+          "pair": {
+            "correct": 41,
+            "n": 60,
+            "acc": 0.6833
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 14,
+            "n": 30,
+            "acc": 0.4667
+          }
+        },
+        "S020": {
+          "gold": "sodium/low, calories/low",
+          "exact": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          },
+          "pair": {
+            "correct": 26,
+            "n": 60,
+            "acc": 0.4333
+          },
+          "first": {
+            "correct": 26,
+            "n": 30,
+            "acc": 0.8667
+          },
+          "second": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          }
+        },
+        "S021": {
+          "gold": "sodium/low, fat/low",
+          "exact": {
+            "correct": 19,
+            "n": 30,
+            "acc": 0.6333
+          },
+          "pair": {
+            "correct": 46,
+            "n": 60,
+            "acc": 0.7667
+          },
+          "first": {
+            "correct": 26,
+            "n": 30,
+            "acc": 0.8667
+          },
+          "second": {
+            "correct": 20,
+            "n": 30,
+            "acc": 0.6667
+          }
+        },
+        "S031": {
+          "gold": "sodium/low, sugar/low",
+          "exact": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          },
+          "pair": {
+            "correct": 29,
+            "n": 60,
+            "acc": 0.4833
+          },
+          "first": {
+            "correct": 26,
+            "n": 30,
+            "acc": 0.8667
+          },
+          "second": {
+            "correct": 3,
+            "n": 30,
+            "acc": 0.1
+          }
+        },
+        "S2002": {
+          "gold": "carbs/high, calories/high",
+          "exact": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          },
+          "pair": {
+            "correct": 30,
+            "n": 60,
+            "acc": 0.5
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          }
+        },
+        "S2003": {
+          "gold": "carbs/high, sugar/high",
+          "exact": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          },
+          "pair": {
+            "correct": 36,
+            "n": 60,
+            "acc": 0.6
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          }
+        },
+        "S2017": {
+          "gold": "carbs/low, protein/high",
+          "exact": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          },
+          "pair": {
+            "correct": 27,
+            "n": 60,
+            "acc": 0.45
+          },
+          "first": {
+            "correct": 15,
+            "n": 30,
+            "acc": 0.5
+          },
+          "second": {
+            "correct": 12,
+            "n": 30,
+            "acc": 0.4
+          }
+        },
+        "S2020": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          },
+          "pair": {
+            "correct": 34,
+            "n": 60,
+            "acc": 0.5667
+          },
+          "first": {
+            "correct": 25,
+            "n": 30,
+            "acc": 0.8333
+          },
+          "second": {
+            "correct": 9,
+            "n": 30,
+            "acc": 0.3
+          }
+        },
+        "S2025": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 19,
+            "n": 30,
+            "acc": 0.6333
+          },
+          "pair": {
+            "correct": 49,
+            "n": 60,
+            "acc": 0.8167
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 22,
+            "n": 30,
+            "acc": 0.7333
+          }
+        },
+        "S2029": {
+          "gold": "fat/low, calories/low",
+          "exact": {
+            "correct": 1,
+            "n": 30,
+            "acc": 0.0333
+          },
+          "pair": {
+            "correct": 26,
+            "n": 60,
+            "acc": 0.4333
+          },
+          "first": {
+            "correct": 25,
+            "n": 30,
+            "acc": 0.8333
+          },
+          "second": {
+            "correct": 1,
+            "n": 30,
+            "acc": 0.0333
+          }
+        },
+        "S2048": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 5,
+            "n": 30,
+            "acc": 0.1667
+          },
+          "pair": {
+            "correct": 29,
+            "n": 60,
+            "acc": 0.4833
+          },
+          "first": {
+            "correct": 13,
+            "n": 30,
+            "acc": 0.4333
+          },
+          "second": {
+            "correct": 16,
+            "n": 30,
+            "acc": 0.5333
+          }
+        },
+        "S2050": {
+          "gold": "calories/low, sugar/low",
+          "exact": {
+            "correct": 3,
+            "n": 30,
+            "acc": 0.1
+          },
+          "pair": {
+            "correct": 14,
+            "n": 60,
+            "acc": 0.2333
+          },
+          "first": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          },
+          "second": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          }
+        },
+        "S2051": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          },
+          "pair": {
+            "correct": 32,
+            "n": 60,
+            "acc": 0.5333
+          },
+          "first": {
+            "correct": 14,
+            "n": 30,
+            "acc": 0.4667
+          },
+          "second": {
+            "correct": 18,
+            "n": 30,
+            "acc": 0.6
+          }
+        },
+        "S2057": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 27,
+            "n": 60,
+            "acc": 0.45
+          },
+          "first": {
+            "correct": 25,
+            "n": 30,
+            "acc": 0.8333
+          },
+          "second": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          }
+        },
+        "S2058": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          },
+          "pair": {
+            "correct": 36,
+            "n": 60,
+            "acc": 0.6
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          }
+        },
+        "S2059": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 4,
+            "n": 30,
+            "acc": 0.1333
+          },
+          "pair": {
+            "correct": 32,
+            "n": 60,
+            "acc": 0.5333
+          },
+          "first": {
+            "correct": 26,
+            "n": 30,
+            "acc": 0.8667
+          },
+          "second": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          }
+        }
+      },
+      "sec": 372.7
+    },
+    "P1_format": {
+      "overall": {
+        "exact": {
+          "correct": 110,
+          "n": 540,
+          "acc": 0.2037
+        },
+        "pair": {
+          "correct": 590,
+          "n": 1080,
+          "acc": 0.5463
+        },
+        "at_least_one": {
+          "correct": 480,
+          "n": 540,
+          "acc": 0.8889
+        },
+        "nutrient_only_sentence": {
+          "correct": 136,
+          "n": 540,
+          "acc": 0.2519
+        },
+        "nutrient_only_pair": {
+          "correct": 623,
+          "n": 1080,
+          "acc": 0.5769
+        },
+        "direction_only_sentence": {
+          "correct": 363,
+          "n": 540,
+          "acc": 0.6722
+        },
+        "direction_only_pair": {
+          "correct": 883,
+          "n": 1080,
+          "acc": 0.8176
+        },
+        "direction_when_nutrient_found": {
+          "correct": 590,
+          "n": 623,
+          "acc": 0.947
+        },
+        "first": {
+          "correct": 442,
+          "n": 540,
+          "acc": 0.8185
+        },
+        "second": {
+          "correct": 148,
+          "n": 540,
+          "acc": 0.2741
+        }
+      },
+      "counts": {
+        "n_items": {
+          "0": 6,
+          "2": 534
+        },
+        "one_item": 0,
+        "three_or_more_items": 0,
+        "same_nutrient_twice": 0,
+        "invalid_value_sentences": 26,
+        "parse_fail": 6,
+        "schema_invalid_but_parsed": 0,
+        "truncated_at_max_new_tokens": 4
+      },
+      "by_situation": {
+        "S006": {
+          "gold": "protein/high, calories/high",
+          "exact": {
+            "correct": 4,
+            "n": 30,
+            "acc": 0.1333
+          },
+          "pair": {
+            "correct": 23,
+            "n": 60,
+            "acc": 0.3833
+          },
+          "first": {
+            "correct": 13,
+            "n": 30,
+            "acc": 0.4333
+          },
+          "second": {
+            "correct": 10,
+            "n": 30,
+            "acc": 0.3333
+          }
+        },
+        "S007": {
+          "gold": "protein/high, sodium/low",
+          "exact": {
+            "correct": 3,
+            "n": 30,
+            "acc": 0.1
+          },
+          "pair": {
+            "correct": 27,
+            "n": 60,
+            "acc": 0.45
+          },
+          "first": {
+            "correct": 16,
+            "n": 30,
+            "acc": 0.5333
+          },
+          "second": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          }
+        },
+        "S014": {
+          "gold": "protein/high, fat/low",
+          "exact": {
+            "correct": 5,
+            "n": 30,
+            "acc": 0.1667
+          },
+          "pair": {
+            "correct": 24,
+            "n": 60,
+            "acc": 0.4
+          },
+          "first": {
+            "correct": 18,
+            "n": 30,
+            "acc": 0.6
+          },
+          "second": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          }
+        },
+        "S020": {
+          "gold": "sodium/low, calories/low",
+          "exact": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          },
+          "pair": {
+            "correct": 28,
+            "n": 60,
+            "acc": 0.4667
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 1,
+            "n": 30,
+            "acc": 0.0333
+          }
+        },
+        "S021": {
+          "gold": "sodium/low, fat/low",
+          "exact": {
+            "correct": 25,
+            "n": 30,
+            "acc": 0.8333
+          },
+          "pair": {
+            "correct": 54,
+            "n": 60,
+            "acc": 0.9
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          }
+        },
+        "S031": {
+          "gold": "sodium/low, sugar/low",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 32,
+            "n": 60,
+            "acc": 0.5333
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 5,
+            "n": 30,
+            "acc": 0.1667
+          }
+        },
+        "S2002": {
+          "gold": "carbs/high, calories/high",
+          "exact": {
+            "correct": 1,
+            "n": 30,
+            "acc": 0.0333
+          },
+          "pair": {
+            "correct": 31,
+            "n": 60,
+            "acc": 0.5167
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 1,
+            "n": 30,
+            "acc": 0.0333
+          }
+        },
+        "S2003": {
+          "gold": "carbs/high, sugar/high",
+          "exact": {
+            "correct": 15,
+            "n": 30,
+            "acc": 0.5
+          },
+          "pair": {
+            "correct": 45,
+            "n": 60,
+            "acc": 0.75
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 15,
+            "n": 30,
+            "acc": 0.5
+          }
+        },
+        "S2017": {
+          "gold": "carbs/low, protein/high",
+          "exact": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          },
+          "pair": {
+            "correct": 27,
+            "n": 60,
+            "acc": 0.45
+          },
+          "first": {
+            "correct": 19,
+            "n": 30,
+            "acc": 0.6333
+          },
+          "second": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          }
+        },
+        "S2020": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 4,
+            "n": 30,
+            "acc": 0.1333
+          },
+          "pair": {
+            "correct": 32,
+            "n": 60,
+            "acc": 0.5333
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 4,
+            "n": 30,
+            "acc": 0.1333
+          }
+        },
+        "S2025": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          },
+          "pair": {
+            "correct": 36,
+            "n": 60,
+            "acc": 0.6
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          }
+        },
+        "S2029": {
+          "gold": "fat/low, calories/low",
+          "exact": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          },
+          "pair": {
+            "correct": 26,
+            "n": 60,
+            "acc": 0.4333
+          },
+          "first": {
+            "correct": 26,
+            "n": 30,
+            "acc": 0.8667
+          },
+          "second": {
+            "correct": 0,
+            "n": 30,
+            "acc": 0.0
+          }
+        },
+        "S2048": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 3,
+            "n": 30,
+            "acc": 0.1
+          },
+          "pair": {
+            "correct": 30,
+            "n": 60,
+            "acc": 0.5
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 3,
+            "n": 30,
+            "acc": 0.1
+          }
+        },
+        "S2050": {
+          "gold": "calories/low, sugar/low",
+          "exact": {
+            "correct": 18,
+            "n": 30,
+            "acc": 0.6
+          },
+          "pair": {
+            "correct": 42,
+            "n": 60,
+            "acc": 0.7
+          },
+          "first": {
+            "correct": 21,
+            "n": 30,
+            "acc": 0.7
+          },
+          "second": {
+            "correct": 21,
+            "n": 30,
+            "acc": 0.7
+          }
+        },
+        "S2051": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 3,
+            "n": 30,
+            "acc": 0.1
+          },
+          "pair": {
+            "correct": 27,
+            "n": 60,
+            "acc": 0.45
+          },
+          "first": {
+            "correct": 21,
+            "n": 30,
+            "acc": 0.7
+          },
+          "second": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          }
+        },
+        "S2057": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 30,
+            "n": 60,
+            "acc": 0.5
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          }
+        },
+        "S2058": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 9,
+            "n": 30,
+            "acc": 0.3
+          },
+          "pair": {
+            "correct": 37,
+            "n": 60,
+            "acc": 0.6167
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 9,
+            "n": 30,
+            "acc": 0.3
+          }
+        },
+        "S2059": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 10,
+            "n": 30,
+            "acc": 0.3333
+          },
+          "pair": {
+            "correct": 39,
+            "n": 60,
+            "acc": 0.65
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 12,
+            "n": 30,
+            "acc": 0.4
+          }
+        }
+      },
+      "sec": 357.5
+    },
+    "P2_static": {
+      "overall": {
+        "exact": {
+          "correct": 232,
+          "n": 540,
+          "acc": 0.4296
+        },
+        "pair": {
+          "correct": 743,
+          "n": 1080,
+          "acc": 0.688
+        },
+        "at_least_one": {
+          "correct": 511,
+          "n": 540,
+          "acc": 0.9463
+        },
+        "nutrient_only_sentence": {
+          "correct": 250,
+          "n": 540,
+          "acc": 0.463
+        },
+        "nutrient_only_pair": {
+          "correct": 774,
+          "n": 1080,
+          "acc": 0.7167
+        },
+        "direction_only_sentence": {
+          "correct": 435,
+          "n": 540,
+          "acc": 0.8056
+        },
+        "direction_only_pair": {
+          "correct": 965,
+          "n": 1080,
+          "acc": 0.8935
+        },
+        "direction_when_nutrient_found": {
+          "correct": 743,
+          "n": 774,
+          "acc": 0.9599
+        },
+        "first": {
+          "correct": 478,
+          "n": 540,
+          "acc": 0.8852
+        },
+        "second": {
+          "correct": 265,
+          "n": 540,
+          "acc": 0.4907
+        }
+      },
+      "counts": {
+        "n_items": {
+          "2": 540
+        },
+        "one_item": 0,
+        "three_or_more_items": 0,
+        "same_nutrient_twice": 0,
+        "invalid_value_sentences": 28,
+        "parse_fail": 0,
+        "schema_invalid_but_parsed": 0,
+        "truncated_at_max_new_tokens": 0
+      },
+      "by_situation": {
+        "S006": {
+          "gold": "protein/high, calories/high",
+          "exact": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          },
+          "pair": {
+            "correct": 40,
+            "n": 60,
+            "acc": 0.6667
+          },
+          "first": {
+            "correct": 18,
+            "n": 30,
+            "acc": 0.6
+          },
+          "second": {
+            "correct": 22,
+            "n": 30,
+            "acc": 0.7333
+          }
+        },
+        "S007": {
+          "gold": "protein/high, sodium/low",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 31,
+            "n": 60,
+            "acc": 0.5167
+          },
+          "first": {
+            "correct": 24,
+            "n": 30,
+            "acc": 0.8
+          },
+          "second": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          }
+        },
+        "S014": {
+          "gold": "protein/high, fat/low",
+          "exact": {
+            "correct": 12,
+            "n": 30,
+            "acc": 0.4
+          },
+          "pair": {
+            "correct": 37,
+            "n": 60,
+            "acc": 0.6167
+          },
+          "first": {
+            "correct": 19,
+            "n": 30,
+            "acc": 0.6333
+          },
+          "second": {
+            "correct": 18,
+            "n": 30,
+            "acc": 0.6
+          }
+        },
+        "S020": {
+          "gold": "sodium/low, calories/low",
+          "exact": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          },
+          "pair": {
+            "correct": 35,
+            "n": 60,
+            "acc": 0.5833
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          }
+        },
+        "S021": {
+          "gold": "sodium/low, fat/low",
+          "exact": {
+            "correct": 10,
+            "n": 30,
+            "acc": 0.3333
+          },
+          "pair": {
+            "correct": 39,
+            "n": 60,
+            "acc": 0.65
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 12,
+            "n": 30,
+            "acc": 0.4
+          }
+        },
+        "S031": {
+          "gold": "sodium/low, sugar/low",
+          "exact": {
+            "correct": 13,
+            "n": 30,
+            "acc": 0.4333
+          },
+          "pair": {
+            "correct": 43,
+            "n": 60,
+            "acc": 0.7167
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 13,
+            "n": 30,
+            "acc": 0.4333
+          }
+        },
+        "S2002": {
+          "gold": "carbs/high, calories/high",
+          "exact": {
+            "correct": 20,
+            "n": 30,
+            "acc": 0.6667
+          },
+          "pair": {
+            "correct": 50,
+            "n": 60,
+            "acc": 0.8333
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 20,
+            "n": 30,
+            "acc": 0.6667
+          }
+        },
+        "S2003": {
+          "gold": "carbs/high, sugar/high",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 31,
+            "n": 60,
+            "acc": 0.5167
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          }
+        },
+        "S2017": {
+          "gold": "carbs/low, protein/high",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 29,
+            "n": 60,
+            "acc": 0.4833
+          },
+          "first": {
+            "correct": 25,
+            "n": 30,
+            "acc": 0.8333
+          },
+          "second": {
+            "correct": 4,
+            "n": 30,
+            "acc": 0.1333
+          }
+        },
+        "S2020": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 9,
+            "n": 30,
+            "acc": 0.3
+          },
+          "pair": {
+            "correct": 39,
+            "n": 60,
+            "acc": 0.65
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 9,
+            "n": 30,
+            "acc": 0.3
+          }
+        },
+        "S2025": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          },
+          "pair": {
+            "correct": 40,
+            "n": 60,
+            "acc": 0.6667
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          }
+        },
+        "S2029": {
+          "gold": "fat/low, calories/low",
+          "exact": {
+            "correct": 17,
+            "n": 30,
+            "acc": 0.5667
+          },
+          "pair": {
+            "correct": 46,
+            "n": 60,
+            "acc": 0.7667
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 17,
+            "n": 30,
+            "acc": 0.5667
+          }
+        },
+        "S2048": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "pair": {
+            "correct": 57,
+            "n": 60,
+            "acc": 0.95
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          }
+        },
+        "S2050": {
+          "gold": "calories/low, sugar/low",
+          "exact": {
+            "correct": 3,
+            "n": 30,
+            "acc": 0.1
+          },
+          "pair": {
+            "correct": 28,
+            "n": 60,
+            "acc": 0.4667
+          },
+          "first": {
+            "correct": 22,
+            "n": 30,
+            "acc": 0.7333
+          },
+          "second": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          }
+        },
+        "S2051": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 23,
+            "n": 30,
+            "acc": 0.7667
+          },
+          "pair": {
+            "correct": 48,
+            "n": 60,
+            "acc": 0.8
+          },
+          "first": {
+            "correct": 23,
+            "n": 30,
+            "acc": 0.7667
+          },
+          "second": {
+            "correct": 25,
+            "n": 30,
+            "acc": 0.8333
+          }
+        },
+        "S2057": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 21,
+            "n": 30,
+            "acc": 0.7
+          },
+          "pair": {
+            "correct": 50,
+            "n": 60,
+            "acc": 0.8333
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 21,
+            "n": 30,
+            "acc": 0.7
+          }
+        },
+        "S2058": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "pair": {
+            "correct": 60,
+            "n": 60,
+            "acc": 1.0
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          }
+        },
+        "S2059": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          },
+          "pair": {
+            "correct": 40,
+            "n": 60,
+            "acc": 0.6667
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 12,
+            "n": 30,
+            "acc": 0.4
+          }
+        }
+      },
+      "sec": 361.4
+    },
+    "P3_tfidf": {
+      "overall": {
+        "exact": {
+          "correct": 214,
+          "n": 540,
+          "acc": 0.3963
+        },
+        "pair": {
+          "correct": 732,
+          "n": 1080,
+          "acc": 0.6778
+        },
+        "at_least_one": {
+          "correct": 518,
+          "n": 540,
+          "acc": 0.9593
+        },
+        "nutrient_only_sentence": {
+          "correct": 227,
+          "n": 540,
+          "acc": 0.4204
+        },
+        "nutrient_only_pair": {
+          "correct": 752,
+          "n": 1080,
+          "acc": 0.6963
+        },
+        "direction_only_sentence": {
+          "correct": 445,
+          "n": 540,
+          "acc": 0.8241
+        },
+        "direction_only_pair": {
+          "correct": 978,
+          "n": 1080,
+          "acc": 0.9056
+        },
+        "direction_when_nutrient_found": {
+          "correct": 732,
+          "n": 752,
+          "acc": 0.9734
+        },
+        "first": {
+          "correct": 480,
+          "n": 540,
+          "acc": 0.8889
+        },
+        "second": {
+          "correct": 252,
+          "n": 540,
+          "acc": 0.4667
+        }
+      },
+      "counts": {
+        "n_items": {
+          "2": 540
+        },
+        "one_item": 0,
+        "three_or_more_items": 0,
+        "same_nutrient_twice": 0,
+        "invalid_value_sentences": 27,
+        "parse_fail": 0,
+        "schema_invalid_but_parsed": 0,
+        "truncated_at_max_new_tokens": 0
+      },
+      "by_situation": {
+        "S006": {
+          "gold": "protein/high, calories/high",
+          "exact": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          },
+          "pair": {
+            "correct": 40,
+            "n": 60,
+            "acc": 0.6667
+          },
+          "first": {
+            "correct": 15,
+            "n": 30,
+            "acc": 0.5
+          },
+          "second": {
+            "correct": 25,
+            "n": 30,
+            "acc": 0.8333
+          }
+        },
+        "S007": {
+          "gold": "protein/high, sodium/low",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 31,
+            "n": 60,
+            "acc": 0.5167
+          },
+          "first": {
+            "correct": 22,
+            "n": 30,
+            "acc": 0.7333
+          },
+          "second": {
+            "correct": 9,
+            "n": 30,
+            "acc": 0.3
+          }
+        },
+        "S014": {
+          "gold": "protein/high, fat/low",
+          "exact": {
+            "correct": 4,
+            "n": 30,
+            "acc": 0.1333
+          },
+          "pair": {
+            "correct": 29,
+            "n": 60,
+            "acc": 0.4833
+          },
+          "first": {
+            "correct": 22,
+            "n": 30,
+            "acc": 0.7333
+          },
+          "second": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          }
+        },
+        "S020": {
+          "gold": "sodium/low, calories/low",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 30,
+            "n": 60,
+            "acc": 0.5
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          }
+        },
+        "S021": {
+          "gold": "sodium/low, fat/low",
+          "exact": {
+            "correct": 14,
+            "n": 30,
+            "acc": 0.4667
+          },
+          "pair": {
+            "correct": 44,
+            "n": 60,
+            "acc": 0.7333
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 14,
+            "n": 30,
+            "acc": 0.4667
+          }
+        },
+        "S031": {
+          "gold": "sodium/low, sugar/low",
+          "exact": {
+            "correct": 17,
+            "n": 30,
+            "acc": 0.5667
+          },
+          "pair": {
+            "correct": 47,
+            "n": 60,
+            "acc": 0.7833
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 17,
+            "n": 30,
+            "acc": 0.5667
+          }
+        },
+        "S2002": {
+          "gold": "carbs/high, calories/high",
+          "exact": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          },
+          "pair": {
+            "correct": 41,
+            "n": 60,
+            "acc": 0.6833
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 12,
+            "n": 30,
+            "acc": 0.4
+          }
+        },
+        "S2003": {
+          "gold": "carbs/high, sugar/high",
+          "exact": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          },
+          "pair": {
+            "correct": 38,
+            "n": 60,
+            "acc": 0.6333
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          }
+        },
+        "S2017": {
+          "gold": "carbs/low, protein/high",
+          "exact": {
+            "correct": 10,
+            "n": 30,
+            "acc": 0.3333
+          },
+          "pair": {
+            "correct": 40,
+            "n": 60,
+            "acc": 0.6667
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 13,
+            "n": 30,
+            "acc": 0.4333
+          }
+        },
+        "S2020": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 5,
+            "n": 30,
+            "acc": 0.1667
+          },
+          "pair": {
+            "correct": 35,
+            "n": 60,
+            "acc": 0.5833
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 5,
+            "n": 30,
+            "acc": 0.1667
+          }
+        },
+        "S2025": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          },
+          "pair": {
+            "correct": 37,
+            "n": 60,
+            "acc": 0.6167
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          }
+        },
+        "S2029": {
+          "gold": "fat/low, calories/low",
+          "exact": {
+            "correct": 15,
+            "n": 30,
+            "acc": 0.5
+          },
+          "pair": {
+            "correct": 43,
+            "n": 60,
+            "acc": 0.7167
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 15,
+            "n": 30,
+            "acc": 0.5
+          }
+        },
+        "S2048": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 12,
+            "n": 30,
+            "acc": 0.4
+          },
+          "pair": {
+            "correct": 41,
+            "n": 60,
+            "acc": 0.6833
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 13,
+            "n": 30,
+            "acc": 0.4333
+          }
+        },
+        "S2050": {
+          "gold": "calories/low, sugar/low",
+          "exact": {
+            "correct": 12,
+            "n": 30,
+            "acc": 0.4
+          },
+          "pair": {
+            "correct": 36,
+            "n": 60,
+            "acc": 0.6
+          },
+          "first": {
+            "correct": 21,
+            "n": 30,
+            "acc": 0.7
+          },
+          "second": {
+            "correct": 15,
+            "n": 30,
+            "acc": 0.5
+          }
+        },
+        "S2051": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          },
+          "pair": {
+            "correct": 38,
+            "n": 60,
+            "acc": 0.6333
+          },
+          "first": {
+            "correct": 25,
+            "n": 30,
+            "acc": 0.8333
+          },
+          "second": {
+            "correct": 13,
+            "n": 30,
+            "acc": 0.4333
+          }
+        },
+        "S2057": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 23,
+            "n": 30,
+            "acc": 0.7667
+          },
+          "pair": {
+            "correct": 52,
+            "n": 60,
+            "acc": 0.8667
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 23,
+            "n": 30,
+            "acc": 0.7667
+          }
+        },
+        "S2058": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "pair": {
+            "correct": 60,
+            "n": 60,
+            "acc": 1.0
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          }
+        },
+        "S2059": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 20,
+            "n": 30,
+            "acc": 0.6667
+          },
+          "pair": {
+            "correct": 50,
+            "n": 60,
+            "acc": 0.8333
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 23,
+            "n": 30,
+            "acc": 0.7667
+          }
+        }
+      },
+      "sec": 366.1,
+      "retrieval_only_no_AX": {
+        "exact": {
+          "correct": 121,
+          "n": 540,
+          "acc": 0.2241
+        },
+        "pair": {
+          "correct": 483,
+          "n": 1080,
+          "acc": 0.4472
+        },
+        "at_least_one": {
+          "correct": 362,
+          "n": 540,
+          "acc": 0.6704
+        },
+        "nutrient_only_sentence": {
+          "correct": 147,
+          "n": 540,
+          "acc": 0.2722
+        },
+        "nutrient_only_pair": {
+          "correct": 605,
+          "n": 1080,
+          "acc": 0.5602
+        },
+        "direction_only_sentence": {
+          "correct": 325,
+          "n": 540,
+          "acc": 0.6019
+        },
+        "direction_only_pair": {
+          "correct": 758,
+          "n": 1080,
+          "acc": 0.7019
+        },
+        "direction_when_nutrient_found": {
+          "correct": 483,
+          "n": 605,
+          "acc": 0.7983
+        },
+        "first": {
+          "correct": 290,
+          "n": 540,
+          "acc": 0.537
+        },
+        "second": {
+          "correct": 193,
+          "n": 540,
+          "acc": 0.3574
+        }
+      }
+    },
+    "P4_embed": {
+      "overall": {
+        "exact": {
+          "correct": 191,
+          "n": 540,
+          "acc": 0.3537
+        },
+        "pair": {
+          "correct": 705,
+          "n": 1080,
+          "acc": 0.6528
+        },
+        "at_least_one": {
+          "correct": 514,
+          "n": 540,
+          "acc": 0.9519
+        },
+        "nutrient_only_sentence": {
+          "correct": 207,
+          "n": 540,
+          "acc": 0.3833
+        },
+        "nutrient_only_pair": {
+          "correct": 731,
+          "n": 1080,
+          "acc": 0.6769
+        },
+        "direction_only_sentence": {
+          "correct": 444,
+          "n": 540,
+          "acc": 0.8222
+        },
+        "direction_only_pair": {
+          "correct": 974,
+          "n": 1080,
+          "acc": 0.9019
+        },
+        "direction_when_nutrient_found": {
+          "correct": 705,
+          "n": 731,
+          "acc": 0.9644
+        },
+        "first": {
+          "correct": 479,
+          "n": 540,
+          "acc": 0.887
+        },
+        "second": {
+          "correct": 226,
+          "n": 540,
+          "acc": 0.4185
+        }
+      },
+      "counts": {
+        "n_items": {
+          "2": 540
+        },
+        "one_item": 0,
+        "three_or_more_items": 0,
+        "same_nutrient_twice": 0,
+        "invalid_value_sentences": 30,
+        "parse_fail": 0,
+        "schema_invalid_but_parsed": 0,
+        "truncated_at_max_new_tokens": 0
+      },
+      "by_situation": {
+        "S006": {
+          "gold": "protein/high, calories/high",
+          "exact": {
+            "correct": 12,
+            "n": 30,
+            "acc": 0.4
+          },
+          "pair": {
+            "correct": 40,
+            "n": 60,
+            "acc": 0.6667
+          },
+          "first": {
+            "correct": 17,
+            "n": 30,
+            "acc": 0.5667
+          },
+          "second": {
+            "correct": 23,
+            "n": 30,
+            "acc": 0.7667
+          }
+        },
+        "S007": {
+          "gold": "protein/high, sodium/low",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 31,
+            "n": 60,
+            "acc": 0.5167
+          },
+          "first": {
+            "correct": 23,
+            "n": 30,
+            "acc": 0.7667
+          },
+          "second": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          }
+        },
+        "S014": {
+          "gold": "protein/high, fat/low",
+          "exact": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          },
+          "pair": {
+            "correct": 32,
+            "n": 60,
+            "acc": 0.5333
+          },
+          "first": {
+            "correct": 22,
+            "n": 30,
+            "acc": 0.7333
+          },
+          "second": {
+            "correct": 10,
+            "n": 30,
+            "acc": 0.3333
+          }
+        },
+        "S020": {
+          "gold": "sodium/low, calories/low",
+          "exact": {
+            "correct": 4,
+            "n": 30,
+            "acc": 0.1333
+          },
+          "pair": {
+            "correct": 34,
+            "n": 60,
+            "acc": 0.5667
+          },
+          "first": {
+            "correct": 27,
+            "n": 30,
+            "acc": 0.9
+          },
+          "second": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          }
+        },
+        "S021": {
+          "gold": "sodium/low, fat/low",
+          "exact": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          },
+          "pair": {
+            "correct": 37,
+            "n": 60,
+            "acc": 0.6167
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          }
+        },
+        "S031": {
+          "gold": "sodium/low, sugar/low",
+          "exact": {
+            "correct": 18,
+            "n": 30,
+            "acc": 0.6
+          },
+          "pair": {
+            "correct": 48,
+            "n": 60,
+            "acc": 0.8
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 18,
+            "n": 30,
+            "acc": 0.6
+          }
+        },
+        "S2002": {
+          "gold": "carbs/high, calories/high",
+          "exact": {
+            "correct": 14,
+            "n": 30,
+            "acc": 0.4667
+          },
+          "pair": {
+            "correct": 44,
+            "n": 60,
+            "acc": 0.7333
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 15,
+            "n": 30,
+            "acc": 0.5
+          }
+        },
+        "S2003": {
+          "gold": "carbs/high, sugar/high",
+          "exact": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          },
+          "pair": {
+            "correct": 30,
+            "n": 60,
+            "acc": 0.5
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 2,
+            "n": 30,
+            "acc": 0.0667
+          }
+        },
+        "S2017": {
+          "gold": "carbs/low, protein/high",
+          "exact": {
+            "correct": 14,
+            "n": 30,
+            "acc": 0.4667
+          },
+          "pair": {
+            "correct": 44,
+            "n": 60,
+            "acc": 0.7333
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 15,
+            "n": 30,
+            "acc": 0.5
+          }
+        },
+        "S2020": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          },
+          "pair": {
+            "correct": 36,
+            "n": 60,
+            "acc": 0.6
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 7,
+            "n": 30,
+            "acc": 0.2333
+          }
+        },
+        "S2025": {
+          "gold": "fat/high, protein/high",
+          "exact": {
+            "correct": 3,
+            "n": 30,
+            "acc": 0.1
+          },
+          "pair": {
+            "correct": 32,
+            "n": 60,
+            "acc": 0.5333
+          },
+          "first": {
+            "correct": 26,
+            "n": 30,
+            "acc": 0.8667
+          },
+          "second": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          }
+        },
+        "S2029": {
+          "gold": "fat/low, calories/low",
+          "exact": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          },
+          "pair": {
+            "correct": 40,
+            "n": 60,
+            "acc": 0.6667
+          },
+          "first": {
+            "correct": 29,
+            "n": 30,
+            "acc": 0.9667
+          },
+          "second": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          }
+        },
+        "S2048": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 11,
+            "n": 30,
+            "acc": 0.3667
+          },
+          "pair": {
+            "correct": 41,
+            "n": 60,
+            "acc": 0.6833
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 13,
+            "n": 30,
+            "acc": 0.4333
+          }
+        },
+        "S2050": {
+          "gold": "calories/low, sugar/low",
+          "exact": {
+            "correct": 6,
+            "n": 30,
+            "acc": 0.2
+          },
+          "pair": {
+            "correct": 30,
+            "n": 60,
+            "acc": 0.5
+          },
+          "first": {
+            "correct": 21,
+            "n": 30,
+            "acc": 0.7
+          },
+          "second": {
+            "correct": 9,
+            "n": 30,
+            "acc": 0.3
+          }
+        },
+        "S2051": {
+          "gold": "calories/low, fat/low",
+          "exact": {
+            "correct": 8,
+            "n": 30,
+            "acc": 0.2667
+          },
+          "pair": {
+            "correct": 32,
+            "n": 60,
+            "acc": 0.5333
+          },
+          "first": {
+            "correct": 23,
+            "n": 30,
+            "acc": 0.7667
+          },
+          "second": {
+            "correct": 9,
+            "n": 30,
+            "acc": 0.3
+          }
+        },
+        "S2057": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 19,
+            "n": 30,
+            "acc": 0.6333
+          },
+          "pair": {
+            "correct": 47,
+            "n": 60,
+            "acc": 0.7833
+          },
+          "first": {
+            "correct": 28,
+            "n": 30,
+            "acc": 0.9333
+          },
+          "second": {
+            "correct": 19,
+            "n": 30,
+            "acc": 0.6333
+          }
+        },
+        "S2058": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "pair": {
+            "correct": 60,
+            "n": 60,
+            "acc": 1.0
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          }
+        },
+        "S2059": {
+          "gold": "sugar/high, calories/high",
+          "exact": {
+            "correct": 17,
+            "n": 30,
+            "acc": 0.5667
+          },
+          "pair": {
+            "correct": 47,
+            "n": 60,
+            "acc": 0.7833
+          },
+          "first": {
+            "correct": 30,
+            "n": 30,
+            "acc": 1.0
+          },
+          "second": {
+            "correct": 17,
+            "n": 30,
+            "acc": 0.5667
+          }
+        }
+      },
+      "sec": 366.8,
+      "retrieval_only_no_AX": {
+        "exact": {
+          "correct": 95,
+          "n": 540,
+          "acc": 0.1759
+        },
+        "pair": {
+          "correct": 458,
+          "n": 1080,
+          "acc": 0.4241
+        },
+        "at_least_one": {
+          "correct": 363,
+          "n": 540,
+          "acc": 0.6722
+        },
+        "nutrient_only_sentence": {
+          "correct": 132,
+          "n": 540,
+          "acc": 0.2444
+        },
+        "nutrient_only_pair": {
+          "correct": 605,
+          "n": 1080,
+          "acc": 0.5602
+        },
+        "direction_only_sentence": {
+          "correct": 300,
+          "n": 540,
+          "acc": 0.5556
+        },
+        "direction_only_pair": {
+          "correct": 717,
+          "n": 1080,
+          "acc": 0.6639
+        },
+        "direction_when_nutrient_found": {
+          "correct": 458,
+          "n": 605,
+          "acc": 0.757
+        },
+        "first": {
+          "correct": 291,
+          "n": 540,
+          "acc": 0.5389
+        },
+        "second": {
+          "correct": 167,
+          "n": 540,
+          "acc": 0.3093
+        }
+      }
+    }
+  }
+}

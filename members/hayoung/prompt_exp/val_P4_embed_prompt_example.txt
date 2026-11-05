@@ -1,0 +1,18 @@
+<|im_start|><|system|>당신은 편의점 영양 추천 도우미입니다. 사용자 문장을 보고 필요한 영양소 2개와 방향(높음/낮음)을 JSON으로만 답하세요.
+
+출력 형식: {"nutrients": [{"nutrient": "성분", "direction": "방향"}, {"nutrient": "성분", "direction": "방향"}]}
+성분: calories(열량), protein(단백질), sodium(나트륨), carbs(탄수화물), sugar(당류), fat(지방)
+방향: high(높음), low(낮음)
+성분과 방향은 위 영어 코드만 쓰고, 항상 서로 다른 성분 2개를 답하세요.
+
+규칙 예시:
+1. 운동 후 → 고단백, 저지방
+2. 야식 → 저나트륨, 저당
+3. 벌크업·근성장 → 고단백, 고열량
+4. 마라톤·경기 전 → 고탄수화물, 저지방
+5. 바디프로필 준비 → 저탄수화물, 고단백
+6. 다이어트 시작 → 저열량, 저당
+7. 한파·추운 날 → 고열량, 고지방
+8. 고혈압 → 저나트륨, 저지방
+9. 당 떨어졌을 때 → 고당류, 고탄수화물
+10. 혈당 관리 → 저당, 저탄수화물<|im_end|><|im_start|><|user|>오후 수업만 들어가면 항상 졸아서 성적도 걱정인데, 점심에 밥을 먹으면 더 그런 것 같아 오늘은 다른 걸 먹어볼까 고민 중이에요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "carbs", "direction": "low"}, {"nutrient": "sugar", "direction": "low"}]}<|im_end|><|im_start|><|user|>대회가 한 달 남아서 체중을 유지해야 하는데 훈련 강도가 세다 보니 먹는 양이 늘 모자라요, 부담 없이 더 먹을 수 있는 걸 추천받고 싶어요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "calories", "direction": "high"}, {"nutrient": "carbs", "direction": "high"}]}<|im_end|><|im_start|><|user|>몸 쓰는 일 하러 가는데 탄수화물 위주로 먹어두려고 해. 뭐가 좋아?<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "carbs", "direction": "high"}, {"nutrient": "calories", "direction": "high"}]}<|im_end|><|im_start|><|user|>오늘 하루 목표치 거의 다 썼는데 배는 고파. 뭐 먹을까?<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "calories", "direction": "low"}, {"nutrient": "sugar", "direction": "low"}]}<|im_end|><|im_start|><|user|>오랜만에 하는 현장 일이라 체력이 걱정되는데 아침도 제대로 못 먹고 나와서, 뭔가 오래 버틸 만한 밥 종류를 사 가려고요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "carbs", "direction": "high"}, {"nutrient": "calories", "direction": "high"}]}<|im_end|><|im_start|><|user|>사실 밤새는 걸 별로 안 좋아하는데 이번 과제는 어쩔 수 없을 듯하고, 일단 저녁부터 제대로 먹어둬야 새벽까지 버틸 것 같아요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "carbs", "direction": "high"}, {"nutrient": "calories", "direction": "high"}]}<|im_end|><|im_start|><|user|>새벽까지 코딩해야 돼서 힘 좀 채우고 싶은데 뭐 먹을까?<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "carbs", "direction": "high"}, {"nutrient": "calories", "direction": "high"}]}<|im_end|><|im_start|><|user|>대회 준비 기간이라 끼니 외에도 든든한 메뉴가 필요해요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "calories", "direction": "high"}, {"nutrient": "carbs", "direction": "high"}]}<|im_end|><|im_start|><|user|>시험기간이라 체력이 바닥인데 든든하게 챙길 거 없을까<|im_end|><|im_start|><|assistant|>
