@@ -1,0 +1,3 @@
+# 대용량 파일은 GitHub 무료 요금제(LFS 한도) 문제로 git에 올리지 않고 팀원끼리 따로 공유한다.
+finetune_v1/adapter/best/adapter_model.safetensors
+finetune_v1.zip
