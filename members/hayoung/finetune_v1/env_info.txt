@@ -1,0 +1,8 @@
+확인 날짜: 2026-11-05
+환경: 서버 conda 환경 llm-ft
+Python: 3.10.22
+CUDA (torch.version.cuda): 12.4
+torch: 2.6.0+cu124
+GPU: NVIDIA GeForce RTX 4090 (24564 MiB)
+NVIDIA 드라이버: 580.178.04
+OS: Ubuntu 24.04.5 LTS (Linux 7.0.0-38-generic x86_64)

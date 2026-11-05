@@ -1,0 +1,6 @@
+# 서버(리눅스)에서 확인한 버전, 다른 OS에서는 검증하지 않음
+# torch==2.6.0+cu124 (CUDA 빌드는 PC의 CUDA 버전에 맞게 설치)
+transformers==5.20.2
+peft==0.21.2
+bitsandbytes==0.50.2
+accelerate==1.15.0
