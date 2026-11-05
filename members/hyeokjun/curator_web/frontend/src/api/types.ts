@@ -4,7 +4,6 @@ export type NutrientKey = "calories" | "protein" | "sodium" | "carbs" | "sugar" 
 export type Direction = "high" | "low";
 export type SortKey = "default" | "price" | "protein" | "sugar" | "calories" | "sodium";
 export type PromoKey = "" | "1+1" | "2+1";
-export type MockCase = "single" | "combo" | "ask" | "empty" | "relaxed";
 
 export interface Product extends Record<NutrientKey, number> {
   item_cd: string;

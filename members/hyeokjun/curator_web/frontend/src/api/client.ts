@@ -1,7 +1,6 @@
 import type {
   Category,
   CategorySummary,
-  MockCase,
   Parsed,
   ProductPage,
   ProductStat,
@@ -48,11 +47,8 @@ export function fetchProducts(
   return request<ProductPage>(`/products?${query}`, { signal });
 }
 
-export function postRecommend(
-  body: { text: string; categories: Category[]; pending_text: string | null },
-  mock?: MockCase,
-) {
-  return postJson<RecommendResponse>(`/recommend${mock ? `?mock=${mock}` : ""}`, body);
+export function postRecommend(body: { text: string; categories: Category[]; pending_text: string | null }) {
+  return postJson<RecommendResponse>("/recommend", body);
 }
 
 export const postReview = (body: {

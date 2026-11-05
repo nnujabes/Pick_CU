@@ -14,6 +14,7 @@ export default {
         line: "#41433b",
         fg: "#f1f2ec",
         muted: "#a6a89b",
+        soft: "#d3d5ca",
         dim: "#7d7f74",
         lime: "#d4f27a",
         "lime-ink": "#1b2109",

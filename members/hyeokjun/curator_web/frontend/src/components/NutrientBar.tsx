@@ -13,7 +13,7 @@ export function NutrientBar({ nutrient, value, direction }: Props) {
   const arrow = direction === "high" ? " ↑" : direction === "low" ? " ↓" : "";
   return (
     <div className="grid grid-cols-[76px_minmax(0,1fr)_auto] items-center gap-2 font-mono text-xs">
-      <span className="text-muted">
+      <span className="text-soft">
         {NUTRIENTS[nutrient].ko}
         {arrow}
       </span>

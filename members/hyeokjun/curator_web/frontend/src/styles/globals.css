@@ -122,6 +122,30 @@
     }
   }
 
+  /* 예시 문장: 패널 폭에 맞춰 한 줄로 놓는다. */
+  .sample-row {
+    container-type: inline-size;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    width: 100%;
+  }
+  .sample-button {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+    padding-inline: 4px;
+  }
+  @container (min-width: 390px) {
+    .sample-button {
+      font-size: 13px;
+      padding-inline: 8px;
+    }
+  }
+
   /* 추천 결과: 3D 박스와 같은 높이 안에 같은 크기의 카드를 세로 한 줄로 놓는다. */
   .results-fill {
     height: var(--stage-h);
