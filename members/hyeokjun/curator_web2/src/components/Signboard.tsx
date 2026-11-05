@@ -8,36 +8,21 @@ function Stripes() {
   );
 }
 
-function ShopWindow() {
-  return (
-    <div className="sign-window relative h-full flex-1 overflow-hidden" aria-hidden>
-      <span className="absolute left-[10%] top-3 h-1.5 w-[35%] rounded-full bg-white/90" />
-      <span className="absolute right-[12%] top-3 h-1.5 w-[28%] rounded-full bg-white/90" />
-    </div>
-  );
-}
-
-/** 벽돌 벽에 네온 간판을 단 편의점 입구. 깜빡이지 않는다. */
+/** 벽돌 벽에 단 네온 간판. 깜빡이지 않는다. */
 export function Signboard({ onHome }: { onHome: () => void }) {
   return (
-    <div className="sign-front">
-      <div className="sign-wall border-b-4 border-[#10162a]">
-        <div className="mx-auto flex max-w-5xl items-center justify-center gap-4 px-4 py-6">
-          <Stripes />
-          <button onClick={onHome} className="group shrink-0 rounded-2xl" aria-label="영양 편의점 메인으로">
-            <span className="sign-board block rounded-2xl px-6 py-4 transition-transform duration-200 group-hover:scale-[1.02] sm:px-10">
-              <span className="sign-neon block whitespace-nowrap text-5xl font-black sm:text-6xl">영양 편의점</span>
-              <span className="mt-2 block whitespace-nowrap text-center text-xs font-semibold text-white sm:text-base">
-                AI 맞춤 식단 &amp; 예산 매칭 서비스
-              </span>
+    <div className="sign-wall border-b-4 border-[#10162a]">
+      <div className="mx-auto flex max-w-5xl items-center justify-center gap-4 px-4 py-6">
+        <Stripes />
+        <button onClick={onHome} className="group shrink-0 rounded-2xl" aria-label="영양 편의점 메인으로">
+          <span className="sign-board block rounded-2xl px-6 py-4 transition-transform duration-200 group-hover:scale-[1.02] sm:px-10">
+            <span className="sign-neon block whitespace-nowrap text-5xl font-black sm:text-6xl">영양 편의점</span>
+            <span className="mt-2 block whitespace-nowrap text-center text-xs font-semibold text-white sm:text-base">
+              AI 맞춤 식단 &amp; 예산 매칭 서비스
             </span>
-          </button>
-          <Stripes />
-        </div>
-      </div>
-      <div className="mx-auto flex h-10 max-w-4xl gap-1 border-x-[10px] border-[#20283f] px-1 sm:h-12">
-        <ShopWindow />
-        <ShopWindow />
+          </span>
+        </button>
+        <Stripes />
       </div>
     </div>
   );
