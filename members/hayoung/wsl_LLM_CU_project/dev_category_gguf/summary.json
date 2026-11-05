@@ -1,0 +1,1467 @@
+{
+  "model_info": {
+    "gguf_repo": "mykor/A.X-4.0-Light-gguf",
+    "gguf_file": "A.X-4.0-Light-Q4_K_M.gguf",
+    "gguf_path": "/home/ai/models/ax-gguf/A.X-4.0-Light-Q4_K_M.gguf",
+    "gguf_sha256": "6bd9cb8ccaae2efc5c33c7b5e443c2f820d4731130df38cd24f7ba494146ead5",
+    "base_model": "skt/A.X-4.0-Light",
+    "quantization": "Q4_K_M (general.file_type=15)",
+    "chat_template": "official skt/A.X-4.0-Light tokenizer_config.json chat_template (verified identical to the GGUF-embedded one); prompt passed as token ids",
+    "n_ctx": 4096,
+    "n_gpu_layers": -1,
+    "layers_on_gpu": "28/28",
+    "max_new_tokens": 96,
+    "max_prompt_tokens": 787,
+    "decoding": {
+      "temperature": 0.0,
+      "top_k": 1,
+      "top_p": 1.0,
+      "min_p": 0.0,
+      "repeat_penalty": 1.0,
+      "seed": 42,
+      "grammar": null
+    },
+    "runtime": {
+      "llama_cpp_python": "0.3.36",
+      "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU (8GB)",
+      "python": "3.11.18",
+      "conda_env": "axgguf (WSL2 Ubuntu)"
+    },
+    "speed": {
+      "sec_per_sentence_avg": 0.829,
+      "sec_total": 179.4
+    },
+    "inputs": {
+      "dev": "/mnt/c/Users/user/Downloads/dev_category.csv",
+      "dev_md5": "103403c86413b2082bff0ded274d38b6",
+      "train": "/mnt/c/Users/user/Downloads/train_category.csv",
+      "train_md5": "3e337971d3ab0fd5d131d0af8b20958c"
+    }
+  },
+  "n": 216,
+  "prompt_fields_used": [
+    "입력 문장"
+  ],
+  "fewshot_excluded_labels": [
+    "sodium/high (train에 없음)",
+    "protein/low (train에 없음)"
+  ],
+  "overall": {
+    "nut_dir": {
+      "correct": 176,
+      "n": 216,
+      "acc": 0.8148
+    },
+    "nutrient": {
+      "correct": 180,
+      "n": 216,
+      "acc": 0.8333
+    },
+    "direction": {
+      "correct": 207,
+      "n": 216,
+      "acc": 0.9583
+    },
+    "cat_exact": {
+      "correct": 58,
+      "n": 216,
+      "acc": 0.2685
+    },
+    "cat_recall_mean": 0.6713,
+    "cat_precision_mean": 0.9398,
+    "cat_top1": {
+      "correct": 207,
+      "n": 216,
+      "acc": 0.9583
+    },
+    "overall_a_exact": {
+      "correct": 55,
+      "n": 216,
+      "acc": 0.2546
+    },
+    "overall_b_recall100": {
+      "correct": 56,
+      "n": 216,
+      "acc": 0.2593
+    }
+  },
+  "parse_fail": 0,
+  "format_notes": {},
+  "invalid_category_names": {},
+  "category": {
+    "exact": {
+      "correct": 58,
+      "n": 216,
+      "acc": 0.2685
+    },
+    "recall_mean": 0.6713,
+    "precision_mean": 0.9398,
+    "top1": {
+      "correct": 207,
+      "n": 216,
+      "acc": 0.9583
+    },
+    "micro_recall": 0.6276,
+    "micro_precision": 0.9309,
+    "recall_100_rows": 59,
+    "pred_count_mean": 1.676,
+    "pred_count_dist": {
+      "1": 70,
+      "2": 146
+    },
+    "gold_count_mean": 2.486,
+    "gold_count_dist": {
+      "1": 31,
+      "2": 49,
+      "3": 136
+    },
+    "per_category": {
+      "간편식사": {
+        "gold_count": 141,
+        "predicted_when_gold(포함)": 109,
+        "missed(빠뜨림)": 32,
+        "added_when_not_gold(잘못 추가)": 12,
+        "pred_count": 121,
+        "pred_as_top1": 101,
+        "recall": 0.773,
+        "precision": 0.9008
+      },
+      "식품": {
+        "gold_count": 177,
+        "predicted_when_gold(포함)": 136,
+        "missed(빠뜨림)": 41,
+        "added_when_not_gold(잘못 추가)": 3,
+        "pred_count": 139,
+        "pred_as_top1": 58,
+        "recall": 0.7684,
+        "precision": 0.9784
+      },
+      "과자류": {
+        "gold_count": 92,
+        "predicted_when_gold(포함)": 37,
+        "missed(빠뜨림)": 55,
+        "added_when_not_gold(잘못 추가)": 1,
+        "pred_count": 38,
+        "pred_as_top1": 25,
+        "recall": 0.4022,
+        "precision": 0.9737
+      },
+      "음료": {
+        "gold_count": 120,
+        "predicted_when_gold(포함)": 50,
+        "missed(빠뜨림)": 70,
+        "added_when_not_gold(잘못 추가)": 9,
+        "pred_count": 59,
+        "pred_as_top1": 30,
+        "recall": 0.4167,
+        "precision": 0.8475
+      },
+      "아이스크림": {
+        "gold_count": 7,
+        "predicted_when_gold(포함)": 5,
+        "missed(빠뜨림)": 2,
+        "added_when_not_gold(잘못 추가)": 0,
+        "pred_count": 5,
+        "pred_as_top1": 2,
+        "recall": 0.7143,
+        "precision": 1.0
+      }
+    },
+    "combo_gold_vs_pred": [
+      {
+        "gold": "간편식사 + 식품 + 음료",
+        "pred": "간편식사 + 식품",
+        "n": 38
+      },
+      {
+        "gold": "간편식사 + 식품",
+        "pred": "간편식사 + 식품",
+        "n": 29
+      },
+      {
+        "gold": "간편식사 + 식품 + 과자류",
+        "pred": "간편식사 + 식품",
+        "n": 18
+      },
+      {
+        "gold": "음료",
+        "pred": "음료",
+        "n": 17
+      },
+      {
+        "gold": "간편식사 + 식품",
+        "pred": "간편식사",
+        "n": 14
+      },
+      {
+        "gold": "간편식사 + 식품 + 음료",
+        "pred": "식품 + 음료",
+        "n": 12
+      },
+      {
+        "gold": "과자류",
+        "pred": "과자류",
+        "n": 10
+      },
+      {
+        "gold": "식품 + 과자류 + 음료",
+        "pred": "간편식사 + 식품",
+        "n": 9
+      },
+      {
+        "gold": "식품 + 과자류 + 음료",
+        "pred": "식품 + 과자류",
+        "n": 8
+      },
+      {
+        "gold": "식품 + 과자류 + 음료",
+        "pred": "음료",
+        "n": 8
+      },
+      {
+        "gold": "식품 + 과자류 + 음료",
+        "pred": "식품 + 음료",
+        "n": 7
+      },
+      {
+        "gold": "간편식사 + 식품 + 과자류",
+        "pred": "식품 + 과자류",
+        "n": 5
+      },
+      {
+        "gold": "간편식사 + 식품 + 과자류",
+        "pred": "식품 + 음료",
+        "n": 4
+      },
+      {
+        "gold": "간편식사 + 식품 + 과자류",
+        "pred": "과자류",
+        "n": 4
+      },
+      {
+        "gold": "과자류 + 음료 + 아이스크림",
+        "pred": "과자류 + 아이스크림",
+        "n": 4
+      },
+      {
+        "gold": "식품 + 과자류 + 음료",
+        "pred": "과자류",
+        "n": 3
+      },
+      {
+        "gold": "간편식사 + 식품 + 음료",
+        "pred": "간편식사",
+        "n": 3
+      },
+      {
+        "gold": "간편식사 + 식품",
+        "pred": "식품 + 음료",
+        "n": 3
+      },
+      {
+        "gold": "식품 + 과자류 + 음료",
+        "pred": "식품",
+        "n": 2
+      },
+      {
+        "gold": "간편식사 + 식품 + 과자류",
+        "pred": "간편식사",
+        "n": 2
+      },
+      {
+        "gold": "간편식사",
+        "pred": "간편식사",
+        "n": 2
+      },
+      {
+        "gold": "식품 + 과자류 + 음료",
+        "pred": "과자류 + 음료",
+        "n": 1
+      },
+      {
+        "gold": "식품 + 과자류 + 음료",
+        "pred": "간편식사 + 과자류",
+        "n": 1
+      },
+      {
+        "gold": "간편식사 + 식품 + 음료",
+        "pred": "음료",
+        "n": 1
+      },
+      {
+        "gold": "간편식사 + 식품 + 음료",
+        "pred": "간편식사 + 음료",
+        "n": 1
+      },
+      {
+        "gold": "식품 + 과자류 + 음료",
+        "pred": "간편식사 + 음료",
+        "n": 1
+      },
+      {
+        "gold": "간편식사",
+        "pred": "간편식사 + 식품",
+        "n": 1
+      },
+      {
+        "gold": "과자류",
+        "pred": "간편식사 + 식품",
+        "n": 1
+      },
+      {
+        "gold": "간편식사 + 과자류",
+        "pred": "간편식사",
+        "n": 1
+      },
+      {
+        "gold": "간편식사 + 식품",
+        "pred": "음료",
+        "n": 1
+      },
+      {
+        "gold": "간편식사 + 식품",
+        "pred": "과자류 + 음료",
+        "n": 1
+      },
+      {
+        "gold": "간편식사 + 식품 + 음료",
+        "pred": "식품",
+        "n": 1
+      },
+      {
+        "gold": "과자류 + 음료 + 아이스크림",
+        "pred": "음료 + 아이스크림",
+        "n": 1
+      },
+      {
+        "gold": "과자류 + 음료 + 아이스크림",
+        "pred": "과자류",
+        "n": 1
+      },
+      {
+        "gold": "과자류 + 음료 + 아이스크림",
+        "pred": "식품 + 음료",
+        "n": 1
+      }
+    ]
+  },
+  "by_gold_category": {
+    "간편식사": {
+      "nut_dir": {
+        "correct": 114,
+        "n": 141,
+        "acc": 0.8085
+      },
+      "nutrient": {
+        "correct": 114,
+        "n": 141,
+        "acc": 0.8085
+      },
+      "direction": {
+        "correct": 137,
+        "n": 141,
+        "acc": 0.9716
+      },
+      "cat_exact": {
+        "correct": 31,
+        "n": 141,
+        "acc": 0.2199
+      },
+      "cat_recall_mean": 0.6761,
+      "cat_precision_mean": 0.9574,
+      "cat_top1": {
+        "correct": 139,
+        "n": 141,
+        "acc": 0.9858
+      },
+      "overall_a_exact": {
+        "correct": 30,
+        "n": 141,
+        "acc": 0.2128
+      },
+      "overall_b_recall100": {
+        "correct": 31,
+        "n": 141,
+        "acc": 0.2199
+      }
+    },
+    "과자류": {
+      "nut_dir": {
+        "correct": 74,
+        "n": 92,
+        "acc": 0.8043
+      },
+      "nutrient": {
+        "correct": 78,
+        "n": 92,
+        "acc": 0.8478
+      },
+      "direction": {
+        "correct": 86,
+        "n": 92,
+        "acc": 0.9348
+      },
+      "cat_exact": {
+        "correct": 10,
+        "n": 92,
+        "acc": 0.1087
+      },
+      "cat_recall_mean": 0.5634,
+      "cat_precision_mean": 0.9022,
+      "cat_top1": {
+        "correct": 85,
+        "n": 92,
+        "acc": 0.9239
+      },
+      "overall_a_exact": {
+        "correct": 10,
+        "n": 92,
+        "acc": 0.1087
+      },
+      "overall_b_recall100": {
+        "correct": 10,
+        "n": 92,
+        "acc": 0.1087
+      }
+    },
+    "식품": {
+      "nut_dir": {
+        "correct": 140,
+        "n": 177,
+        "acc": 0.791
+      },
+      "nutrient": {
+        "correct": 144,
+        "n": 177,
+        "acc": 0.8136
+      },
+      "direction": {
+        "correct": 169,
+        "n": 177,
+        "acc": 0.9548
+      },
+      "cat_exact": {
+        "correct": 29,
+        "n": 177,
+        "acc": 0.1638
+      },
+      "cat_recall_mean": 0.6243,
+      "cat_precision_mean": 0.9379,
+      "cat_top1": {
+        "correct": 170,
+        "n": 177,
+        "acc": 0.9605
+      },
+      "overall_a_exact": {
+        "correct": 28,
+        "n": 177,
+        "acc": 0.1582
+      },
+      "overall_b_recall100": {
+        "correct": 28,
+        "n": 177,
+        "acc": 0.1582
+      }
+    },
+    "아이스크림": {
+      "nut_dir": {
+        "correct": 7,
+        "n": 7,
+        "acc": 1.0
+      },
+      "nutrient": {
+        "correct": 7,
+        "n": 7,
+        "acc": 1.0
+      },
+      "direction": {
+        "correct": 7,
+        "n": 7,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 7,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.5714,
+      "cat_precision_mean": 0.9286,
+      "cat_top1": {
+        "correct": 6,
+        "n": 7,
+        "acc": 0.8571
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 7,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 7,
+        "acc": 0.0
+      }
+    },
+    "음료": {
+      "nut_dir": {
+        "correct": 93,
+        "n": 120,
+        "acc": 0.775
+      },
+      "nutrient": {
+        "correct": 97,
+        "n": 120,
+        "acc": 0.8083
+      },
+      "direction": {
+        "correct": 114,
+        "n": 120,
+        "acc": 0.95
+      },
+      "cat_exact": {
+        "correct": 17,
+        "n": 120,
+        "acc": 0.1417
+      },
+      "cat_recall_mean": 0.6278,
+      "cat_precision_mean": 0.95,
+      "cat_top1": {
+        "correct": 114,
+        "n": 120,
+        "acc": 0.95
+      },
+      "overall_a_exact": {
+        "correct": 15,
+        "n": 120,
+        "acc": 0.125
+      },
+      "overall_b_recall100": {
+        "correct": 15,
+        "n": 120,
+        "acc": 0.125
+      }
+    }
+  },
+  "by_gold_nutrient": {
+    "calories": {
+      "nut_dir": {
+        "correct": 29,
+        "n": 34,
+        "acc": 0.8529
+      },
+      "nutrient": {
+        "correct": 29,
+        "n": 34,
+        "acc": 0.8529
+      },
+      "direction": {
+        "correct": 34,
+        "n": 34,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 15,
+        "n": 34,
+        "acc": 0.4412
+      },
+      "cat_recall_mean": 0.7745,
+      "cat_precision_mean": 0.9853,
+      "cat_top1": {
+        "correct": 34,
+        "n": 34,
+        "acc": 1.0
+      },
+      "overall_a_exact": {
+        "correct": 15,
+        "n": 34,
+        "acc": 0.4412
+      },
+      "overall_b_recall100": {
+        "correct": 15,
+        "n": 34,
+        "acc": 0.4412
+      }
+    },
+    "carbs": {
+      "nut_dir": {
+        "correct": 25,
+        "n": 34,
+        "acc": 0.7353
+      },
+      "nutrient": {
+        "correct": 25,
+        "n": 34,
+        "acc": 0.7353
+      },
+      "direction": {
+        "correct": 31,
+        "n": 34,
+        "acc": 0.9118
+      },
+      "cat_exact": {
+        "correct": 8,
+        "n": 34,
+        "acc": 0.2353
+      },
+      "cat_recall_mean": 0.6176,
+      "cat_precision_mean": 0.8235,
+      "cat_top1": {
+        "correct": 31,
+        "n": 34,
+        "acc": 0.9118
+      },
+      "overall_a_exact": {
+        "correct": 7,
+        "n": 34,
+        "acc": 0.2059
+      },
+      "overall_b_recall100": {
+        "correct": 8,
+        "n": 34,
+        "acc": 0.2353
+      }
+    },
+    "fat": {
+      "nut_dir": {
+        "correct": 30,
+        "n": 34,
+        "acc": 0.8824
+      },
+      "nutrient": {
+        "correct": 30,
+        "n": 34,
+        "acc": 0.8824
+      },
+      "direction": {
+        "correct": 34,
+        "n": 34,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 8,
+        "n": 34,
+        "acc": 0.2353
+      },
+      "cat_recall_mean": 0.6471,
+      "cat_precision_mean": 0.9853,
+      "cat_top1": {
+        "correct": 34,
+        "n": 34,
+        "acc": 1.0
+      },
+      "overall_a_exact": {
+        "correct": 8,
+        "n": 34,
+        "acc": 0.2353
+      },
+      "overall_b_recall100": {
+        "correct": 8,
+        "n": 34,
+        "acc": 0.2353
+      }
+    },
+    "protein": {
+      "nut_dir": {
+        "correct": 35,
+        "n": 40,
+        "acc": 0.875
+      },
+      "nutrient": {
+        "correct": 35,
+        "n": 40,
+        "acc": 0.875
+      },
+      "direction": {
+        "correct": 38,
+        "n": 40,
+        "acc": 0.95
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.575,
+      "cat_precision_mean": 0.925,
+      "cat_top1": {
+        "correct": 38,
+        "n": 40,
+        "acc": 0.95
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      }
+    },
+    "sodium": {
+      "nut_dir": {
+        "correct": 25,
+        "n": 40,
+        "acc": 0.625
+      },
+      "nutrient": {
+        "correct": 29,
+        "n": 40,
+        "acc": 0.725
+      },
+      "direction": {
+        "correct": 36,
+        "n": 40,
+        "acc": 0.9
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.5417,
+      "cat_precision_mean": 0.9375,
+      "cat_top1": {
+        "correct": 37,
+        "n": 40,
+        "acc": 0.925
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 40,
+        "acc": 0.0
+      }
+    },
+    "sugar": {
+      "nut_dir": {
+        "correct": 32,
+        "n": 34,
+        "acc": 0.9412
+      },
+      "nutrient": {
+        "correct": 32,
+        "n": 34,
+        "acc": 0.9412
+      },
+      "direction": {
+        "correct": 34,
+        "n": 34,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 27,
+        "n": 34,
+        "acc": 0.7941
+      },
+      "cat_recall_mean": 0.9118,
+      "cat_precision_mean": 0.9853,
+      "cat_top1": {
+        "correct": 33,
+        "n": 34,
+        "acc": 0.9706
+      },
+      "overall_a_exact": {
+        "correct": 25,
+        "n": 34,
+        "acc": 0.7353
+      },
+      "overall_b_recall100": {
+        "correct": 25,
+        "n": 34,
+        "acc": 0.7353
+      }
+    }
+  },
+  "by_gold_direction": {
+    "high": {
+      "nut_dir": {
+        "correct": 105,
+        "n": 128,
+        "acc": 0.8203
+      },
+      "nutrient": {
+        "correct": 109,
+        "n": 128,
+        "acc": 0.8516
+      },
+      "direction": {
+        "correct": 121,
+        "n": 128,
+        "acc": 0.9453
+      },
+      "cat_exact": {
+        "correct": 18,
+        "n": 128,
+        "acc": 0.1406
+      },
+      "cat_recall_mean": 0.6107,
+      "cat_precision_mean": 0.9297,
+      "cat_top1": {
+        "correct": 121,
+        "n": 128,
+        "acc": 0.9453
+      },
+      "overall_a_exact": {
+        "correct": 18,
+        "n": 128,
+        "acc": 0.1406
+      },
+      "overall_b_recall100": {
+        "correct": 19,
+        "n": 128,
+        "acc": 0.1484
+      }
+    },
+    "low": {
+      "nut_dir": {
+        "correct": 71,
+        "n": 88,
+        "acc": 0.8068
+      },
+      "nutrient": {
+        "correct": 71,
+        "n": 88,
+        "acc": 0.8068
+      },
+      "direction": {
+        "correct": 86,
+        "n": 88,
+        "acc": 0.9773
+      },
+      "cat_exact": {
+        "correct": 40,
+        "n": 88,
+        "acc": 0.4545
+      },
+      "cat_recall_mean": 0.7595,
+      "cat_precision_mean": 0.9545,
+      "cat_top1": {
+        "correct": 86,
+        "n": 88,
+        "acc": 0.9773
+      },
+      "overall_a_exact": {
+        "correct": 37,
+        "n": 88,
+        "acc": 0.4205
+      },
+      "overall_b_recall100": {
+        "correct": 37,
+        "n": 88,
+        "acc": 0.4205
+      }
+    }
+  },
+  "by_situation": {
+    "S016": {
+      "nut_dir": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      },
+      "nutrient": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      },
+      "direction": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.4833,
+      "cat_precision_mean": 0.85,
+      "cat_top1": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      }
+    },
+    "S017": {
+      "nut_dir": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "nutrient": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "direction": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.6667,
+      "cat_precision_mean": 1.0,
+      "cat_top1": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      }
+    },
+    "S034": {
+      "nut_dir": {
+        "correct": 13,
+        "n": 20,
+        "acc": 0.65
+      },
+      "nutrient": {
+        "correct": 13,
+        "n": 20,
+        "acc": 0.65
+      },
+      "direction": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.6333,
+      "cat_precision_mean": 1.0,
+      "cat_top1": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      }
+    },
+    "S035": {
+      "nut_dir": {
+        "correct": 12,
+        "n": 20,
+        "acc": 0.6
+      },
+      "nutrient": {
+        "correct": 16,
+        "n": 20,
+        "acc": 0.8
+      },
+      "direction": {
+        "correct": 16,
+        "n": 20,
+        "acc": 0.8
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.45,
+      "cat_precision_mean": 0.875,
+      "cat_top1": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 20,
+        "acc": 0.0
+      }
+    },
+    "S2008": {
+      "nut_dir": {
+        "correct": 13,
+        "n": 17,
+        "acc": 0.7647
+      },
+      "nutrient": {
+        "correct": 13,
+        "n": 17,
+        "acc": 0.7647
+      },
+      "direction": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.5588,
+      "cat_precision_mean": 0.8235,
+      "cat_top1": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 1,
+        "n": 17,
+        "acc": 0.0588
+      }
+    },
+    "S2018": {
+      "nut_dir": {
+        "correct": 12,
+        "n": 17,
+        "acc": 0.7059
+      },
+      "nutrient": {
+        "correct": 12,
+        "n": 17,
+        "acc": 0.7059
+      },
+      "direction": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      },
+      "cat_exact": {
+        "correct": 8,
+        "n": 17,
+        "acc": 0.4706
+      },
+      "cat_recall_mean": 0.6765,
+      "cat_precision_mean": 0.8235,
+      "cat_top1": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      },
+      "overall_a_exact": {
+        "correct": 7,
+        "n": 17,
+        "acc": 0.4118
+      },
+      "overall_b_recall100": {
+        "correct": 7,
+        "n": 17,
+        "acc": 0.4118
+      }
+    },
+    "S2027": {
+      "nut_dir": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      },
+      "nutrient": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 8,
+        "n": 17,
+        "acc": 0.4706
+      },
+      "cat_recall_mean": 0.7255,
+      "cat_precision_mean": 1.0,
+      "cat_top1": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "overall_a_exact": {
+        "correct": 8,
+        "n": 17,
+        "acc": 0.4706
+      },
+      "overall_b_recall100": {
+        "correct": 8,
+        "n": 17,
+        "acc": 0.4706
+      }
+    },
+    "S2035": {
+      "nut_dir": {
+        "correct": 14,
+        "n": 17,
+        "acc": 0.8235
+      },
+      "nutrient": {
+        "correct": 14,
+        "n": 17,
+        "acc": 0.8235
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.5686,
+      "cat_precision_mean": 0.9706,
+      "cat_top1": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      }
+    },
+    "S2045": {
+      "nut_dir": {
+        "correct": 12,
+        "n": 17,
+        "acc": 0.7059
+      },
+      "nutrient": {
+        "correct": 12,
+        "n": 17,
+        "acc": 0.7059
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.6078,
+      "cat_precision_mean": 1.0,
+      "cat_top1": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 17,
+        "acc": 0.0
+      }
+    },
+    "S2053": {
+      "nut_dir": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nutrient": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      },
+      "cat_recall_mean": 0.9412,
+      "cat_precision_mean": 0.9706,
+      "cat_top1": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "overall_a_exact": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      },
+      "overall_b_recall100": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      }
+    },
+    "S2062": {
+      "nut_dir": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "nutrient": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 10,
+        "n": 17,
+        "acc": 0.5882
+      },
+      "cat_recall_mean": 0.8235,
+      "cat_precision_mean": 0.9706,
+      "cat_top1": {
+        "correct": 16,
+        "n": 17,
+        "acc": 0.9412
+      },
+      "overall_a_exact": {
+        "correct": 10,
+        "n": 17,
+        "acc": 0.5882
+      },
+      "overall_b_recall100": {
+        "correct": 10,
+        "n": 17,
+        "acc": 0.5882
+      }
+    },
+    "S2072": {
+      "nut_dir": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      },
+      "nutrient": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      },
+      "direction": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "cat_exact": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "cat_recall_mean": 1.0,
+      "cat_precision_mean": 1.0,
+      "cat_top1": {
+        "correct": 17,
+        "n": 17,
+        "acc": 1.0
+      },
+      "overall_a_exact": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      },
+      "overall_b_recall100": {
+        "correct": 15,
+        "n": 17,
+        "acc": 0.8824
+      }
+    }
+  },
+  "by_author": {
+    "AI(Claude)": {
+      "nut_dir": {
+        "correct": 60,
+        "n": 80,
+        "acc": 0.75
+      },
+      "nutrient": {
+        "correct": 64,
+        "n": 80,
+        "acc": 0.8
+      },
+      "direction": {
+        "correct": 74,
+        "n": 80,
+        "acc": 0.925
+      },
+      "cat_exact": {
+        "correct": 0,
+        "n": 80,
+        "acc": 0.0
+      },
+      "cat_recall_mean": 0.5583,
+      "cat_precision_mean": 0.9313,
+      "cat_top1": {
+        "correct": 75,
+        "n": 80,
+        "acc": 0.9375
+      },
+      "overall_a_exact": {
+        "correct": 0,
+        "n": 80,
+        "acc": 0.0
+      },
+      "overall_b_recall100": {
+        "correct": 0,
+        "n": 80,
+        "acc": 0.0
+      }
+    },
+    "종호": {
+      "nut_dir": {
+        "correct": 116,
+        "n": 136,
+        "acc": 0.8529
+      },
+      "nutrient": {
+        "correct": 116,
+        "n": 136,
+        "acc": 0.8529
+      },
+      "direction": {
+        "correct": 133,
+        "n": 136,
+        "acc": 0.9779
+      },
+      "cat_exact": {
+        "correct": 58,
+        "n": 136,
+        "acc": 0.4265
+      },
+      "cat_recall_mean": 0.7377,
+      "cat_precision_mean": 0.9449,
+      "cat_top1": {
+        "correct": 132,
+        "n": 136,
+        "acc": 0.9706
+      },
+      "overall_a_exact": {
+        "correct": 55,
+        "n": 136,
+        "acc": 0.4044
+      },
+      "overall_b_recall100": {
+        "correct": 56,
+        "n": 136,
+        "acc": 0.4118
+      }
+    }
+  },
+  "confusion_nutrient": {
+    "calories": {
+      "calories": 29,
+      "protein": 5,
+      "sodium": 0,
+      "carbs": 0,
+      "sugar": 0,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "protein": {
+      "calories": 2,
+      "protein": 35,
+      "sodium": 1,
+      "carbs": 1,
+      "sugar": 1,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "sodium": {
+      "calories": 9,
+      "protein": 0,
+      "sodium": 29,
+      "carbs": 0,
+      "sugar": 2,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "carbs": {
+      "calories": 7,
+      "protein": 2,
+      "sodium": 0,
+      "carbs": 25,
+      "sugar": 0,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "sugar": {
+      "calories": 0,
+      "protein": 0,
+      "sodium": 2,
+      "carbs": 0,
+      "sugar": 32,
+      "fat": 0,
+      "(invalid)": 0
+    },
+    "fat": {
+      "calories": 0,
+      "protein": 1,
+      "sodium": 3,
+      "carbs": 0,
+      "sugar": 0,
+      "fat": 30,
+      "(invalid)": 0
+    }
+  }
+}

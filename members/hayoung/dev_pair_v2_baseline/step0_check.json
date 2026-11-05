@@ -1,0 +1,160 @@
+{
+  "files": {
+    "dev": {
+      "path": "data/dev_pair_v2.csv",
+      "md5": "f69ebeac536de50a5e5a5db0afac3fea",
+      "rows": 216,
+      "blank_rows": 0,
+      "utf8_bom": false,
+      "header": [
+        "상황ID",
+        "입력 문장",
+        "말투 유형",
+        "작성자",
+        "성분1",
+        "방향1",
+        "성분2",
+        "방향2"
+      ],
+      "situations": 12
+    },
+    "train": {
+      "path": "data/train_pair_v2.csv",
+      "md5": "0d2c8a438ca78a8bbf42f9dd929715e9",
+      "rows": 2820,
+      "blank_rows": 0,
+      "utf8_bom": false,
+      "header": [
+        "상황ID",
+        "입력 문장",
+        "말투 유형",
+        "작성자",
+        "성분1",
+        "방향1",
+        "성분2",
+        "방향2"
+      ],
+      "situations": 94
+    }
+  },
+  "checks": {
+    "1_utf8_and_columns": {
+      "ok": true,
+      "detail": {
+        "dev": [
+          "상황ID",
+          "입력 문장",
+          "말투 유형",
+          "작성자",
+          "성분1",
+          "방향1",
+          "성분2",
+          "방향2"
+        ],
+        "train": [
+          "상황ID",
+          "입력 문장",
+          "말투 유형",
+          "작성자",
+          "성분1",
+          "방향1",
+          "성분2",
+          "방향2"
+        ]
+      }
+    },
+    "2_counts": {
+      "ok": true,
+      "detail": {
+        "dev": [
+          216,
+          12
+        ],
+        "train": [
+          2820,
+          94
+        ]
+      }
+    },
+    "3_no_overlap_no_dup": {
+      "ok": true,
+      "detail": {
+        "situation_overlap": [],
+        "sentence_overlap": [],
+        "dup_within": {
+          "dev": [],
+          "train": []
+        }
+      }
+    },
+    "4_one_first_per_situation": {
+      "ok": true,
+      "detail": {
+        "dev": {},
+        "train": {}
+      }
+    },
+    "5_pair_table": {
+      "ok": true,
+      "detail": {
+        "dev": {
+          "mismatch_rows": 0,
+          "examples": []
+        },
+        "train": {
+          "mismatch_rows": 0,
+          "examples": []
+        }
+      }
+    },
+    "6_rule_situations_train_only": {
+      "ok": true,
+      "detail": {
+        "missing_in_train": [],
+        "present_in_dev": []
+      }
+    },
+    "7_sodium_high": {
+      "ok": true,
+      "detail": {
+        "train": [
+          "S037",
+          "S038",
+          "S039",
+          "S040"
+        ],
+        "dev": [
+          "S041"
+        ]
+      }
+    },
+    "8_md5_rows": {
+      "ok": true,
+      "detail": {
+        "dev": {
+          "md5": "f69ebeac536de50a5e5a5db0afac3fea",
+          "rows": 216
+        },
+        "train": {
+          "md5": "0d2c8a438ca78a8bbf42f9dd929715e9",
+          "rows": 2820
+        }
+      }
+    }
+  },
+  "dev_situations": {
+    "S016": "단백질높음+지방낮음 (20문장)",
+    "S017": "단백질높음+지방낮음 (20문장)",
+    "S034": "나트륨낮음+지방낮음 (20문장)",
+    "S041": "나트륨높음+당류높음 (20문장)",
+    "S2008": "당류높음+열량높음 (17문장)",
+    "S2018": "탄수화물낮음+단백질높음 (17문장)",
+    "S2027": "지방높음+열량높음 (17문장)",
+    "S2035": "지방낮음+열량낮음 (17문장)",
+    "S2045": "단백질높음+지방낮음 (17문장)",
+    "S2053": "열량낮음+지방낮음 (17문장)",
+    "S2062": "당류높음+열량높음 (17문장)",
+    "S2072": "당류낮음+열량낮음 (17문장)"
+  },
+  "all_ok": true
+}

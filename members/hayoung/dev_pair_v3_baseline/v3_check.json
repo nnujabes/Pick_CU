@@ -1,0 +1,121 @@
+{
+  "inputs_md5": {
+    "dev_v2": "f69ebeac536de50a5e5a5db0afac3fea",
+    "train_v2": "0d2c8a438ca78a8bbf42f9dd929715e9"
+  },
+  "outputs_md5": {
+    "dev_pair_v3.csv": "f9ca187cd59294c7ab56af291b57f750",
+    "train_pair_v3.csv": "5bafa13379ee3ba455547934822ae32b"
+  },
+  "checks": {
+    "rows_and_columns": {
+      "ok": true,
+      "detail": {
+        "dev": 216,
+        "train": 2820,
+        "columns_ok": true
+      }
+    },
+    "labels_identical_to_v2": {
+      "ok": true,
+      "detail": "성분1·방향1·성분2·방향2(+상황ID·말투 유형·작성자) 전부 v2와 동일"
+    },
+    "only_listed_sentences_changed": {
+      "ok": true,
+      "detail": {
+        "dev": 10,
+        "train": 59
+      }
+    },
+    "no_dup_no_overlap": {
+      "ok": true,
+      "detail": {
+        "dup": {
+          "dev": [],
+          "train": []
+        },
+        "sentence_overlap": [],
+        "situation_overlap": []
+      }
+    },
+    "rule_situations_not_in_dev": {
+      "ok": true,
+      "detail": []
+    },
+    "remaining_pattern_outside_cal_low": {
+      "ok": true,
+      "detail": [
+        {
+          "세트": "train",
+          "상황ID": "S019",
+          "문장": "야식을 먹되 다음 날 몸이 가벼운 걸로 먹고 싶어",
+          "분류": "애매"
+        },
+        {
+          "세트": "train",
+          "상황ID": "S2017",
+          "문장": "친구가 그레인 프리를 하고 몸이 가벼워졌다고 자랑하길래 저도 따라 해보려고요, 근데 사무실 근처에 편의점밖에 없어서 뭘 사야 할지 막막해요.",
+          "분류": "음식과 무관"
+        },
+        {
+          "세트": "train",
+          "상황ID": "S2033",
+          "문장": "발표 전에 지방 없는 걸로 가볍게 먹을래요.",
+          "분류": "애매"
+        },
+        {
+          "세트": "train",
+          "상황ID": "S040",
+          "문장": "혼자 조용히 맥주를 마시면서 야구 경기를 볼 예정이라 짭짤하면서도 달콤한 단짠 안주로 한두 개만 가볍게 사고 싶어",
+          "분류": "애매"
+        }
+      ]
+    },
+    "no_new_calorie_words": {
+      "ok": true,
+      "detail": []
+    },
+    "v2_inputs_unchanged": {
+      "ok": true,
+      "detail": {
+        "dev_v2": "f69ebeac536de50a5e5a5db0afac3fea",
+        "train_v2": "0d2c8a438ca78a8bbf42f9dd929715e9"
+      }
+    }
+  },
+  "edits_total": 69,
+  "edits_by_set": {
+    "dev": 10,
+    "train": 59
+  },
+  "edits_by_situation": {
+    "dev S034": 10,
+    "train S003": 1,
+    "train S004": 3,
+    "train S005": 1,
+    "train S008": 1,
+    "train S012": 1,
+    "train S013": 1,
+    "train S019": 1,
+    "train S020": 1,
+    "train S021": 4,
+    "train S023": 3,
+    "train S024": 1,
+    "train S025": 8,
+    "train S026": 2,
+    "train S027": 11,
+    "train S029": 5,
+    "train S031": 9,
+    "train S032": 3,
+    "train S2003": 1,
+    "train S2011": 1,
+    "train S2015": 1
+  },
+  "kept_cal_low": {
+    "dev": 5,
+    "train": 44
+  },
+  "ambiguous": 3,
+  "unrelated": 1,
+  "all_ok": true
+}

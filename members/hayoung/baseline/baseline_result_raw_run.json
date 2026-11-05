@@ -1,0 +1,1377 @@
+{
+  "summary": {
+    "model": "skt/A.X-4.0-Light",
+    "fine_tuned": false,
+    "eval_file": "eval.jsonl",
+    "n": 40,
+    "decoding": {
+      "do_sample": false,
+      "temperature": 0,
+      "max_new_tokens": 64,
+      "dtype": "bfloat16"
+    },
+    "nutrient_accuracy": 0.0,
+    "direction_accuracy": 0.7,
+    "both_accuracy": 0.0,
+    "parse_fail_count": 0,
+    "parse_strict_count": 40,
+    "parse_extracted_count": 0,
+    "per_nutrient": {
+      "calories": {
+        "total": 10,
+        "nutrient_correct": 0,
+        "both_correct": 0,
+        "nutrient_acc": 0.0,
+        "both_acc": 0.0
+      },
+      "protein": {
+        "total": 5,
+        "nutrient_correct": 0,
+        "both_correct": 0,
+        "nutrient_acc": 0.0,
+        "both_acc": 0.0
+      },
+      "sodium": {
+        "total": 5,
+        "nutrient_correct": 0,
+        "both_correct": 0,
+        "nutrient_acc": 0.0,
+        "both_acc": 0.0
+      },
+      "carbs": {
+        "total": 5,
+        "nutrient_correct": 0,
+        "both_correct": 0,
+        "nutrient_acc": 0.0,
+        "both_acc": 0.0
+      },
+      "sugar": {
+        "total": 10,
+        "nutrient_correct": 0,
+        "both_correct": 0,
+        "nutrient_acc": 0.0,
+        "both_acc": 0.0
+      },
+      "fat": {
+        "total": 5,
+        "nutrient_correct": 0,
+        "both_correct": 0,
+        "nutrient_acc": 0.0,
+        "both_acc": 0.0
+      }
+    },
+    "confusion_gold_to_pred_nutrient": {
+      "protein": {
+        "PARSE_FAIL": 5
+      },
+      "sodium": {
+        "PARSE_FAIL": 5
+      },
+      "calories": {
+        "PARSE_FAIL": 10
+      },
+      "sugar": {
+        "PARSE_FAIL": 10
+      },
+      "carbs": {
+        "PARSE_FAIL": 5
+      },
+      "fat": {
+        "PARSE_FAIL": 5
+      }
+    },
+    "avg_latency_sec": 0.44,
+    "total_time_sec": 17.6,
+    "env": {
+      "gpu": "NVIDIA GeForce RTX 4090",
+      "torch": "2.6.0+cu124",
+      "transformers": "5.20.2",
+      "python": "3.10.22"
+    },
+    "run_at": "2026-11-03 15:38:51"
+  },
+  "wrong": [
+    {
+      "idx": 0,
+      "user": "단백질 챙겨야 되는데",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 1,
+      "user": "단백질 섭취량 늘리고 싶어",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 2,
+      "user": "단백질 높은 제품 찾아줘",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 3,
+      "user": "단백질 많은거 추천좀",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 4,
+      "user": "단백질 20g 넘는 걸로 6천원 이내",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 5,
+      "user": "건강검진이 얼마 안 남아서 관리 중이야",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 6,
+      "user": "검진 전까지 염분 줄이면서 먹고 싶어",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sodium\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 7,
+      "user": "검진 앞두고 나트륨 낮은 걸로 추천해줘",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sodium\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 8,
+      "user": "검진 앞이라 짠거 못먹음ㅠ",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sodium\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 9,
+      "user": "검진 전 관리용으로 7천원 이내",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 10,
+      "user": "야근 중인데 힘이 하나도 없어",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 11,
+      "user": "야근하면서 에너지 채울 만한 게 필요해",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 12,
+      "user": "야근용 열량 높은 걸로 추천해줘",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 13,
+      "user": "야근각인데 에너지 충전할거 머있음",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 14,
+      "user": "야근 중 먹을 거 6천원 이내",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 15,
+      "user": "다이어트 중인데 가볍게 먹을래",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 16,
+      "user": "살 빼려고 식단 관리 중이라 칼로리 낮게 먹고 싶어",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 17,
+      "user": "다이어트용 저칼로리 식품 추천해줘",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"calories\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 18,
+      "user": "다이어트중이라 가볍게 머먹지ㅠ",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 19,
+      "user": "다이어트 식단으로 5천원 이내 추천해줘",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"calories\": \"low\",\n  \"protein\": \"high\",\n  \"sodium\": \"low\",\n  \"carbs\": \"low\",\n  \"sugar\": \"low\",\n  \"fat\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 20,
+      "user": "당뇨가 있어서 당 낮은 걸로 먹어야 해",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 21,
+      "user": "당뇨 때문에 단 거 조심하는 중이야",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 22,
+      "user": "당뇨 환자가 먹을 수 있는 저당 식품 추천해줘",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 23,
+      "user": "당뇨라 단거 못먹음ㅠ 머먹지",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 24,
+      "user": "당뇨 관리용 저당 간식 5천원 이내",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 25,
+      "user": "슈거프리 간식 찾아줘",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 26,
+      "user": "설탕 없는 간식으로 먹고 싶어",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 27,
+      "user": "슈거프리 제품 중에 추천해줘",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 28,
+      "user": "슈프 간식 머있음",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 29,
+      "user": "슈거프리 3천원 이내 추천해줘",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 30,
+      "user": "밥이나 빵 말고 다른 거 먹고 싶어",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 31,
+      "user": "탄수화물 적게 먹으려고 해",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 32,
+      "user": "저탄수 제품 추천해줘",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 33,
+      "user": "탄수 줄이는중 머있음",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 34,
+      "user": "저탄수 5천원 이내로 추천해줘",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"low\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 35,
+      "user": "에너지 오래 가는 간식 먹고 싶어",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 36,
+      "user": "든든하게 오래 가는 고지방 간식이 필요해",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"fat\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 37,
+      "user": "고지방 간식 추천해줘",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"fat\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 38,
+      "user": "고지방 간식 머있음",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"fat\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    },
+    {
+      "idx": 39,
+      "user": "고지방 간식 4천원 이내로 추천해줘",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"fat\",\n  \"direction\": \"high\"\n}\n```",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "parse_mode": "strict"
+    }
+  ],
+  "all_results": [
+    {
+      "idx": 0,
+      "user": "단백질 챙겨야 되는데",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.709
+    },
+    {
+      "idx": 1,
+      "user": "단백질 섭취량 늘리고 싶어",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.452
+    },
+    {
+      "idx": 2,
+      "user": "단백질 높은 제품 찾아줘",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 3,
+      "user": "단백질 많은거 추천좀",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 4,
+      "user": "단백질 20g 넘는 걸로 6천원 이내",
+      "gold": {
+        "nutrient": "protein",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"protein\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 5,
+      "user": "건강검진이 얼마 안 남아서 관리 중이야",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 6,
+      "user": "검진 전까지 염분 줄이면서 먹고 싶어",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sodium\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.313
+    },
+    {
+      "idx": 7,
+      "user": "검진 앞두고 나트륨 낮은 걸로 추천해줘",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sodium\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 8,
+      "user": "검진 앞이라 짠거 못먹음ㅠ",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sodium\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.313
+    },
+    {
+      "idx": 9,
+      "user": "검진 전 관리용으로 7천원 이내",
+      "gold": {
+        "nutrient": "sodium",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 10,
+      "user": "야근 중인데 힘이 하나도 없어",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 11,
+      "user": "야근하면서 에너지 채울 만한 게 필요해",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 12,
+      "user": "야근용 열량 높은 걸로 추천해줘",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 13,
+      "user": "야근각인데 에너지 충전할거 머있음",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 14,
+      "user": "야근 중 먹을 거 6천원 이내",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 15,
+      "user": "다이어트 중인데 가볍게 먹을래",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 16,
+      "user": "살 빼려고 식단 관리 중이라 칼로리 낮게 먹고 싶어",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 17,
+      "user": "다이어트용 저칼로리 식품 추천해줘",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"calories\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.313
+    },
+    {
+      "idx": 18,
+      "user": "다이어트중이라 가볍게 머먹지ㅠ",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 19,
+      "user": "다이어트 식단으로 5천원 이내 추천해줘",
+      "gold": {
+        "nutrient": "calories",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"calories\": \"low\",\n  \"protein\": \"high\",\n  \"sodium\": \"low\",\n  \"carbs\": \"low\",\n  \"sugar\": \"low\",\n  \"fat\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 1.072
+    },
+    {
+      "idx": 20,
+      "user": "당뇨가 있어서 당 낮은 걸로 먹어야 해",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.313
+    },
+    {
+      "idx": 21,
+      "user": "당뇨 때문에 단 거 조심하는 중이야",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 22,
+      "user": "당뇨 환자가 먹을 수 있는 저당 식품 추천해줘",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.313
+    },
+    {
+      "idx": 23,
+      "user": "당뇨라 단거 못먹음ㅠ 머먹지",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 24,
+      "user": "당뇨 관리용 저당 간식 5천원 이내",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.313
+    },
+    {
+      "idx": 25,
+      "user": "슈거프리 간식 찾아줘",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.313
+    },
+    {
+      "idx": 26,
+      "user": "설탕 없는 간식으로 먹고 싶어",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.313
+    },
+    {
+      "idx": 27,
+      "user": "슈거프리 제품 중에 추천해줘",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": null
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.313
+    },
+    {
+      "idx": 28,
+      "user": "슈프 간식 머있음",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"calories\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": false,
+      "both_correct": false,
+      "latency_sec": 0.45
+    },
+    {
+      "idx": 29,
+      "user": "슈거프리 3천원 이내 추천해줘",
+      "gold": {
+        "nutrient": "sugar",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"sugar\": \"low\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 30,
+      "user": "밥이나 빵 말고 다른 거 먹고 싶어",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"sugar\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 31,
+      "user": "탄수화물 적게 먹으려고 해",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.45
+    },
+    {
+      "idx": 32,
+      "user": "저탄수 제품 추천해줘",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.45
+    },
+    {
+      "idx": 33,
+      "user": "탄수 줄이는중 머있음",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.45
+    },
+    {
+      "idx": 34,
+      "user": "저탄수 5천원 이내로 추천해줘",
+      "gold": {
+        "nutrient": "carbs",
+        "direction": "low"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"low\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "low"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 35,
+      "user": "에너지 오래 가는 간식 먹고 싶어",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"carbs\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.451
+    },
+    {
+      "idx": 36,
+      "user": "든든하게 오래 가는 고지방 간식이 필요해",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"fat\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.434
+    },
+    {
+      "idx": 37,
+      "user": "고지방 간식 추천해줘",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"fat\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.433
+    },
+    {
+      "idx": 38,
+      "user": "고지방 간식 머있음",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"fat\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.433
+    },
+    {
+      "idx": 39,
+      "user": "고지방 간식 4천원 이내로 추천해줘",
+      "gold": {
+        "nutrient": "fat",
+        "direction": "high"
+      },
+      "raw_output": "```json\n{\n  \"component\": \"fat\",\n  \"direction\": \"high\"\n}\n```",
+      "parse_mode": "strict",
+      "pred": {
+        "nutrient": null,
+        "direction": "high"
+      },
+      "nutrient_correct": false,
+      "direction_correct": true,
+      "both_correct": false,
+      "latency_sec": 0.434
+    }
+  ]
+}

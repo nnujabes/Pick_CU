@@ -1,0 +1,18 @@
+<|im_start|><|system|>당신은 편의점 영양 추천 도우미입니다. 사용자 문장을 보고 필요한 영양소 2개와 방향(높음/낮음)을 JSON으로만 답하세요.
+
+출력 형식: {"nutrients": [{"nutrient": "성분", "direction": "방향"}, {"nutrient": "성분", "direction": "방향"}]}
+성분: calories(열량), protein(단백질), sodium(나트륨), carbs(탄수화물), sugar(당류), fat(지방)
+방향: high(높음), low(낮음)
+성분과 방향은 위 영어 코드만 쓰고, 항상 서로 다른 성분 2개를 답하세요.
+
+규칙 예시:
+1. 운동 후 → 고단백, 저지방
+2. 야식 → 저나트륨, 저당
+3. 벌크업·근성장 → 고단백, 고열량
+4. 마라톤·경기 전 → 고탄수화물, 저지방
+5. 바디프로필 준비 → 저탄수화물, 고단백
+6. 다이어트 시작 → 저열량, 저당
+7. 한파·추운 날 → 고열량, 고지방
+8. 고혈압 → 저나트륨, 저지방
+9. 당 떨어졌을 때 → 고당류, 고탄수화물
+10. 혈당 관리 → 저당, 저탄수화물<|im_end|><|im_start|><|user|>몸을 키우는 데 필요한 걸 든든하게 채우고 싶어<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "protein", "direction": "high"}, {"nutrient": "calories", "direction": "high"}]}<|im_end|><|im_start|><|user|>막바지 컷팅 기간이라 곡물을 줄인 메뉴를 먹고 싶어요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "carbs", "direction": "low"}, {"nutrient": "protein", "direction": "high"}]}<|im_end|><|im_start|><|user|>대회 준비 기간이라 끼니 외에도 든든한 메뉴가 필요해요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "calories", "direction": "high"}, {"nutrient": "carbs", "direction": "high"}]}<|im_end|><|im_start|><|user|>신부 관리 기간이라 부담 없는 끼니를 원합니다.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "calories", "direction": "low"}, {"nutrient": "fat", "direction": "low"}]}<|im_end|><|im_start|><|user|>회사 가기 전에 가볍게 영양 챙길 만한 거 없을까<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "protein", "direction": "high"}, {"nutrient": "carbs", "direction": "high"}]}<|im_end|><|im_start|><|user|>입이 심심한데 꼬소한 거 없을까?<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "fat", "direction": "high"}, {"nutrient": "calories", "direction": "high"}]}<|im_end|><|im_start|><|user|>오랜만에 하는 현장 일이라 체력이 걱정되는데 아침도 제대로 못 먹고 나와서, 뭔가 오래 버틸 만한 밥 종류를 사 가려고요.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "carbs", "direction": "high"}, {"nutrient": "calories", "direction": "high"}]}<|im_end|><|im_start|><|user|>점심까지 시간이 길어서 아침을 든든하게 챙기려고 합니다.<|im_end|><|im_start|><|assistant|>{"nutrients": [{"nutrient": "calories", "direction": "high"}, {"nutrient": "protein", "direction": "high"}]}<|im_end|><|im_start|><|user|>시험기간이라 체력이 바닥인데 든든하게 챙길 거 없을까<|im_end|><|im_start|><|assistant|>
