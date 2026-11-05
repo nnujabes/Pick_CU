@@ -4,7 +4,7 @@ import { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import type { Category } from "@/api/types";
 import { PANEL_WIDTH } from "@/components/SidePanel";
-import { Batch, Box, FIXTURES, FixtureShape, noRaycast, Plaque, UNIT_BOX, type FixtureSpec } from "./fixtures";
+import { Batch, Box, FIXTURES, FixtureShape, noRaycast, UNIT_BOX, type FixtureSpec } from "./fixtures";
 
 const ROOM = { halfX: 9, halfZ: 4.5, height: 3.4, doorStart: 5.7 };
 const AZIMUTH = THREE.MathUtils.degToRad(30);
@@ -543,7 +543,6 @@ export function StoreRoom({ selected, pinned, focused, highlighted, hovered, red
         <Box key={index} size={strip.size} position={strip.position} material={stripMaterials[index]} shadow={false} />
       ))}
 
-      <Plaque text="Pick CU" size={[2.4, 0.66]} position={[-8.3, 2.7, 3]} background="#d4f27a" color="#1b2109" fontScale={0.66} />
       <Entrance />
       <StoreProps />
 

@@ -6,7 +6,18 @@ API 서버는 `members/jongho/fastapi/`에 있습니다. 이 폴더는 프론트
 
 ## 실행 방법
 
-처음 한 번만 설치합니다. Python 환경에 FastAPI가 있으면 `pip install`은 건너뛰어도 됩니다.
+### 다른 컴퓨터에서 처음 실행할 때
+
+Node.js 18 이상과 Python 3.10 이상, Git이 필요합니다. 상품 DB는 저장소에 들어 있어 따로 받지 않습니다.
+
+저장소를 받습니다. 이미 받아 둔 컴퓨터라면 `git clone` 대신 저장소 폴더에서 `git switch main`과 `git pull`을 실행합니다.
+
+```bash
+git clone https://github.com/nnujabes/Pick_CU.git
+cd Pick_CU
+```
+
+저장소 루트에서 처음 한 번만 설치합니다. Python 환경에 FastAPI가 있으면 `pip install`은 건너뛰어도 됩니다.
 
 ```bash
 pip install -r members/jongho/fastapi/requirements.txt
@@ -17,12 +28,31 @@ npm install
 프론트와 백엔드를 한 번에 켭니다.
 
 ```bash
-cd members/hyeokjun/curator_web/frontend
 npm start
 ```
 
 - 화면: http://localhost:5173
 - API 문서: http://127.0.0.1:8000/docs
+- 끄기: 터미널에서 `Ctrl + C`
+
+### 다음부터 실행할 때
+
+저장소 루트에서 최신 코드를 받고 켭니다. `package.json`이나 `requirements.txt`가 바뀌었을 때만 위의 설치를 다시 합니다.
+
+```bash
+git pull
+cd members/hyeokjun/curator_web/frontend
+npm start
+```
+
+### 안 될 때
+
+| 증상 | 해결 |
+| --- | --- |
+| 포트 5173이나 8000을 이미 쓰고 있음 | 먼저 켜 둔 `npm start`를 끄고 다시 실행 |
+| `python`을 찾지 못함 | Python 설치 후 터미널을 다시 열기. API 서버는 `python` 명령으로 켜므로 그 이름으로 실행돼야 함 |
+| `No module named uvicorn` | `pip install`이 다른 Python에 설치된 경우. `python -m pip install -r members/jongho/fastapi/requirements.txt` 실행 |
+| 화면은 뜨는데 추천이 안 됨 | 터미널의 `api` 줄에서 오류 확인. 프론트만 켜는 `npm run dev`로 실행하지 않았는지 확인 |
 
 빌드 명령입니다. API 테스트는 `members/jongho/fastapi/README.md`에 있습니다.
 

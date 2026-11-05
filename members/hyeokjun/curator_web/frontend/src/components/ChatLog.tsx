@@ -105,9 +105,11 @@ export function ChatLog({ messages, loading, onQuickReply }: Props) {
   return (
     <div ref={logRef} className="chat-log flex flex-col gap-3 pr-1" role="log" aria-live="polite" aria-label="대화 기록">
       {!messages.length && (
-        <p className="max-w-[30em] text-[15px] text-muted">
-          예산, 영양, 지금 상황을 편하게 적어 주세요. 고른 카테고리 안에서 찾아 드려요.
-        </p>
+        <div className="chat-hint-box">
+          <p className="chat-hint text-muted" data-chat-hint>
+            예산, 영양, 지금 상황을 편하게 적어 주세요. 고른 카테고리 안에서 찾아 드려요.
+          </p>
+        </div>
       )}
       {messages.map((message, index) => {
         if (message.who === "user") {

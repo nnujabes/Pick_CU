@@ -87,6 +87,41 @@
     overflow-x: hidden;
   }
 
+  /* 첫 안내 문장: 패널 폭에 맞는 글씨 크기로 한 줄에 놓는다. 346px보다 좁으면 읽기 쉽게 줄을 바꾼다. */
+  .chat-hint-box {
+    container-type: inline-size;
+    width: 100%;
+  }
+  .chat-hint {
+    font-size: 12px;
+  }
+  @container (min-width: 346px) {
+    .chat-hint {
+      font-size: 11px;
+      white-space: nowrap;
+    }
+  }
+  @container (min-width: 378px) {
+    .chat-hint {
+      font-size: 12px;
+    }
+  }
+  @container (min-width: 409px) {
+    .chat-hint {
+      font-size: 13px;
+    }
+  }
+  @container (min-width: 440px) {
+    .chat-hint {
+      font-size: 14px;
+    }
+  }
+  @container (min-width: 472px) {
+    .chat-hint {
+      font-size: 15px;
+    }
+  }
+
   /* 카테고리 칩: 어느 폭에서나 한 줄로 채운다. 패널 폭에 맞춰 글씨와 여백을 단계별로 정한다. */
   .chip-row {
     container-type: inline-size;
