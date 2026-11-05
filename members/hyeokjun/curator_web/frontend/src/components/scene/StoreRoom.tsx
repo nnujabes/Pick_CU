@@ -4,16 +4,16 @@ import { Suspense, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import type { Category } from "@/api/types";
 import { PANEL_WIDTH } from "@/components/SidePanel";
-import { Batch, Box, FIXTURES, FixtureShape, noRaycast, UNIT_BOX, type FixtureSpec } from "./fixtures";
+import { Batch, Box, FIXTURES, FixtureShape, noRaycast, UNIT_BOX, WOOD_GRAIN, type FixtureSpec } from "./fixtures";
 
-const ROOM = { halfX: 9, halfZ: 4.5, height: 3.4, doorStart: 5.7 };
+const ROOM = { halfX: 9, halfZ: 4.5, height: 4.2, doorStart: 5.7 };
 const AZIMUTH = THREE.MathUtils.degToRad(30);
-const ELEVATION = THREE.MathUtils.degToRad(30);
+const ELEVATION = THREE.MathUtils.degToRad(27);
 const FOCUS_ELEVATION = THREE.MathUtils.degToRad(15);
 const CAMERA_DISTANCE = 30;
 const FOCUS_SECONDS = 0.6;
 /** 정면을 볼 때 진열대 앞면에서 이 거리보다 앞에 있는 물건은 잘라 낸다. */
-const FOCUS_CLEARANCE = 1.5;
+const FOCUS_CLEARANCE = 1.2;
 const FIT_MARGIN = 1.04;
 const BOOT_SECONDS = 0.9;
 const PIN_LIFT = 0.95;
@@ -60,11 +60,17 @@ const FIXTURE_FIT = fitPoints(
 );
 
 const LIME = new THREE.Color("#d4f27a");
-const STRIP_ON = new THREE.Color("#fffdf2");
-const STRIP_OFF = new THREE.Color("#55574d");
+const STRIP_ON = new THREE.Color("#ffe6bd");
+const STRIP_OFF = new THREE.Color("#5a5346");
+const STRIP_Y = 3.82;
 const STRIPS: { position: [number, number, number]; size: [number, number, number] }[] = [
-  ...[-6, -2, 2].map((x) => ({ position: [x, 3.14, -4.27] as [number, number, number], size: [2.6, 0.1, 0.2] as [number, number, number] })),
-  ...[-3, 0, 3].map((z) => ({ position: [-8.78, 3.14, z] as [number, number, number], size: [0.2, 0.1, 2.2] as [number, number, number] })),
+  ...[-6, -2.25, 1.8].map((x) => ({ position: [x, STRIP_Y, -4.42] as [number, number, number], size: [2.9, 0.07, 0.12] as [number, number, number] })),
+  ...[-3.15, -0.3, 2.5].map((z) => ({ position: [-8.92, STRIP_Y, z] as [number, number, number], size: [0.12, 0.07, 2.5] as [number, number, number] })),
+];
+/** 천장 조명이 바닥에 반사되는 자리 */
+const FLOOR_POOLS: [number, number][] = [
+  [-5.6, -2], [-1.6, -2.2], [2.2, -2.3], [5.6, -2.4],
+  [-6.6, 0.8], [-4.4, 1.3], [-1.2, 1.8], [2.4, 1], [3.4, 3.4], [-0.4, 3.6], [5.8, -0.5], [8, 0.8],
 ];
 
 const damp = (current: number, target: number, delta: number, speed = 7) =>
@@ -98,26 +104,39 @@ function canvasTexture(width: number, height: number, draw: (context: CanvasRend
   return texture;
 }
 
-/** 타일 한 장에 줄눈과 약간의 얼룩을 넣어 반복한다. */
+/** 큰 타일에 줄눈과 약간의 얼룩을 넣어 반복한다. */
 function useFloorTexture() {
   return useMemo(() => {
-    const texture = canvasTexture(256, 256, (context) => {
-      context.fillStyle = "#8f8d82";
-      context.fillRect(0, 0, 256, 256);
-      const tones = ["#c6c3b7", "#bfbcb0", "#cbc8bd", "#c2bfb3"];
+    const texture = canvasTexture(512, 512, (context) => {
+      context.fillStyle = "#a89d87";
+      context.fillRect(0, 0, 512, 512);
+      const tones = ["#ece2cd", "#e6dbc5", "#efe6d2", "#e9dfc9"];
       for (let row = 0; row < 2; row++) {
         for (let column = 0; column < 2; column++) {
           context.fillStyle = tones[(row * 2 + column) % tones.length];
-          context.fillRect(column * 128 + 2, row * 128 + 2, 124, 124);
+          context.fillRect(column * 256 + 2, row * 256 + 2, 252, 252);
         }
       }
     });
     texture.wrapS = THREE.RepeatWrapping;
     texture.wrapT = THREE.RepeatWrapping;
-    texture.repeat.set(ROOM.halfX, ROOM.halfZ);
+    texture.repeat.set((ROOM.halfX * 2) / 2.8, (ROOM.halfZ * 2) / 2.8);
     texture.anisotropy = 8;
     return texture;
   }, []);
+}
+
+/** 징두리 벽의 세로 홈 */
+function slatTexture(width: number) {
+  const texture = canvasTexture(64, 16, (context) => {
+    context.fillStyle = "#6f8064";
+    context.fillRect(0, 0, 64, 16);
+    context.fillStyle = "#566650";
+    for (let x = 0; x < 64; x += 16) context.fillRect(x, 0, 3, 16);
+  });
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.repeat.set(width / 0.5, 1);
+  return texture;
 }
 
 /** 가구 아래가 바닥에 붙어 보이도록 까는 부드러운 그림자 */
@@ -148,6 +167,27 @@ function glowMaterial(color: string) {
   return new THREE.MeshBasicMaterial({ map: texture, color, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false });
 }
 
+/** 벽 조명이 아래로 번지는 빛 */
+const WALL_WASH = (() => {
+  const texture = canvasTexture(256, 128, (context) => {
+    const gradient = context.createLinearGradient(0, 0, 0, 128);
+    gradient.addColorStop(0, "rgba(255,255,255,0.9)");
+    gradient.addColorStop(0.45, "rgba(255,255,255,0.3)");
+    gradient.addColorStop(1, "rgba(255,255,255,0)");
+    context.fillStyle = gradient;
+    context.fillRect(0, 0, 256, 128);
+    context.globalCompositeOperation = "destination-in";
+    const sides = context.createLinearGradient(0, 0, 256, 0);
+    sides.addColorStop(0, "rgba(0,0,0,0)");
+    sides.addColorStop(0.2, "rgba(0,0,0,1)");
+    sides.addColorStop(0.8, "rgba(0,0,0,1)");
+    sides.addColorStop(1, "rgba(0,0,0,0)");
+    context.fillStyle = sides;
+    context.fillRect(0, 0, 256, 128);
+  });
+  return new THREE.MeshBasicMaterial({ map: texture, color: "#7d5f31", transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false });
+})();
+
 function FloorDecal({ material, size, position, rotation = 0, y = 0.012 }: {
   material: THREE.Material;
   size: [number, number];
@@ -173,11 +213,11 @@ function Fixture({ spec, selected, active, highlighted, pinCount, reduced, onHov
   onActivate: Props["onActivate"];
 }) {
   const body = useMemo(() => {
-    const material = new THREE.MeshStandardMaterial({ color: spec.bodyColor, roughness: 0.55, metalness: 0.08 });
+    const material = new THREE.MeshStandardMaterial({ color: spec.bodyColor, map: spec.wood ? WOOD_GRAIN : null, roughness: 0.55, metalness: 0.06 });
     material.emissive.copy(LIME);
     material.emissiveIntensity = 0;
     return material;
-  }, [spec.bodyColor]);
+  }, [spec.bodyColor, spec.wood]);
   const warmer = useMemo(
     () => new THREE.MeshStandardMaterial({ color: "#ffcf8a", emissive: "#ff9f3d", emissiveIntensity: 0.8, transparent: true, opacity: 0.85 }),
     [],
@@ -185,7 +225,7 @@ function Fixture({ spec, selected, active, highlighted, pinCount, reduced, onHov
   const pin = useRef<THREE.Mesh>(null);
   const pinPop = useRef(0);
   const invalidate = useThree((state) => state.invalidate);
-  const glow = active || highlighted ? 0.5 : selected ? 0.16 : 0;
+  const glow = active || highlighted ? 0.2 : selected ? 0.05 : 0;
 
   useEffect(() => invalidate(), [glow, pinCount, highlighted, invalidate]);
 
@@ -248,7 +288,7 @@ function Fixture({ spec, selected, active, highlighted, pinCount, reduced, onHov
         </mesh>
       </group>
       {spec.category === "즉석조리" && (
-        <pointLight color="#ffa64d" intensity={12} distance={6} decay={2} position={[spec.position[0] - 1.2, 1.9, spec.position[2] + 0.9]} />
+        <pointLight color="#ffb060" intensity={5} distance={4} decay={2} position={[spec.position[0] - 1.36, 1.9, spec.position[2] + 0.9]} />
       )}
       {(pinCount > 0 || highlighted) && (
         <mesh
@@ -268,56 +308,77 @@ function Fixture({ spec, selected, active, highlighted, pinCount, reduced, onHov
 function Entrance() {
   const width = ROOM.halfX - ROOM.doorStart;
   const parts = useMemo(() => ({
-    frame: new THREE.MeshStandardMaterial({ color: "#2c312e", roughness: 0.45, metalness: 0.55 }),
-    night: new THREE.MeshBasicMaterial({ color: "#141b24", toneMapped: false }),
-    glass: new THREE.MeshStandardMaterial({ color: "#bcd8ea", transparent: true, opacity: 0.16, roughness: 0.05, metalness: 0.2, depthWrite: false }),
-    lamp: new THREE.MeshBasicMaterial({ color: "#f2b46a", toneMapped: false }),
-    handle: new THREE.MeshStandardMaterial({ color: "#c9ccc6", roughness: 0.3, metalness: 0.8 }),
+    frame: new THREE.MeshStandardMaterial({ color: "#2a241e", roughness: 0.4, metalness: 0.65 }),
+    view: new THREE.MeshBasicMaterial({
+      toneMapped: false,
+      map: canvasTexture(256, 256, (context) => {
+        // 유리에 비친 매장: 어두운 바탕에 흐린 선반과 불빛
+        const gradient = context.createLinearGradient(0, 0, 0, 256);
+        gradient.addColorStop(0, "#14120f");
+        gradient.addColorStop(1, "#241f18");
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, 256, 256);
+        context.filter = "blur(5px)";
+        for (let row = 0; row < 4; row++) {
+          for (let column = 0; column < 9; column++) {
+            context.fillStyle = (row + column) % 3 ? "#54442a" : "#2d3a2c";
+            context.fillRect(8 + column * 27, 60 + row * 32, 20, 20);
+          }
+        }
+        context.filter = "none";
+      }),
+    }),
+    glass: new THREE.MeshStandardMaterial({ color: "#d9e4e6", transparent: true, opacity: 0.1, roughness: 0.05, metalness: 0.3, depthWrite: false }),
+    handle: new THREE.MeshStandardMaterial({ color: "#e2e3de", roughness: 0.25, metalness: 0.3 }),
   }), []);
+  const glassHeight = ROOM.height - 0.65;
   return (
-    <group position={[ROOM.doorStart + width / 2, 0, -ROOM.halfZ - 0.08]}>
-      <Box size={[width, 3.4, 0.05]} position={[0, 1.7, -0.02]} material={parts.night} shadow={false} />
-      {([[-0.9, 2.25, 0.08], [0.35, 2.05, 0.05], [1, 2.4, 0.06]] as const).map(([x, y, size]) => (
-        <Box key={x} size={[size, size, 0.01]} position={[x, y, 0.02]} material={parts.lamp} shadow={false} />
+    <group position={[ROOM.doorStart + width / 2, 0, -ROOM.halfZ - 0.1]}>
+      <Box size={[width, ROOM.height, 0.05]} position={[0, ROOM.height / 2, -0.03]} material={parts.view} shadow={false} />
+      <Box size={[width, 0.55, 0.2]} position={[0, ROOM.height - 0.275, 0]} material={parts.frame} />
+      <Box size={[width, 0.1, 0.2]} position={[0, 0.05, 0]} material={parts.frame} />
+      {[-width / 2 + 0.06, 0, width / 2 - 0.06].map((x) => (
+        <Box key={x} size={[x === 0 ? 0.08 : 0.12, ROOM.height, 0.2]} position={[x, ROOM.height / 2, 0]} material={parts.frame} />
       ))}
-      <Box size={[width, 0.3, 0.14]} position={[0, 3.25, 0.05]} material={parts.frame} />
-      <Box size={[width, 0.08, 0.14]} position={[0, 0.04, 0.05]} material={parts.frame} />
-      {[-width / 2 + 0.04, 0, width / 2 - 0.04].map((x) => (
-        <Box key={x} size={[0.08, 3.1, 0.14]} position={[x, 1.55, 0.05]} material={parts.frame} />
+      <Box size={[width - 0.1, glassHeight, 0.02]} position={[0, 0.1 + glassHeight / 2, 0.04]} material={parts.glass} shadow={false} />
+      {[-0.17, 0.17].map((x) => (
+        <Box key={x} size={[0.045, 1.5, 0.05]} position={[x, 1.45, 0.17]} material={parts.handle} />
       ))}
-      <Box size={[width - 0.1, 3.1, 0.02]} position={[0, 1.55, 0.05]} material={parts.glass} shadow={false} />
-      <Box size={[0.04, 0.7, 0.05]} position={[-0.12, 1.2, 0.16]} material={parts.handle} />
-      <Box size={[0.04, 0.7, 0.05]} position={[0.12, 1.2, 0.16]} material={parts.handle} />
     </group>
   );
 }
 
 function StoreProps() {
   const parts = useMemo(() => ({
-    bin: new THREE.MeshStandardMaterial({ color: "#4d5359", roughness: 0.5, metalness: 0.4 }),
-    binLid: new THREE.MeshStandardMaterial({ color: "#2f3438", roughness: 0.5, metalness: 0.3 }),
-    mat: new THREE.MeshStandardMaterial({ color: "#3a4a41", roughness: 0.95 }),
-    basket: new THREE.MeshStandardMaterial({ color: "#a3543f", roughness: 0.6 }),
-    stool: new THREE.MeshStandardMaterial({ color: "#8d9490", roughness: 0.35, metalness: 0.7 }),
-    seat: new THREE.MeshStandardMaterial({ color: "#3f4640", roughness: 0.7 }),
+    bin: new THREE.MeshStandardMaterial({ color: "#c9ccc9", roughness: 0.3, metalness: 0.4 }),
+    binLid: new THREE.MeshStandardMaterial({ color: "#26282a", roughness: 0.45, metalness: 0.5 }),
+    mat: new THREE.MeshStandardMaterial({ color: "#3f4d38", roughness: 0.95 }),
+    basket: new THREE.MeshStandardMaterial({ color: "#54634c", roughness: 0.65 }),
+    basketInside: new THREE.MeshStandardMaterial({ color: "#2a3327", roughness: 0.8 }),
+    stool: new THREE.MeshStandardMaterial({ color: "#c3a06a", roughness: 0.3, metalness: 0.4 }),
+    seat: new THREE.MeshStandardMaterial({ color: "#59684f", roughness: 0.7 }),
   }), []);
   return (
     <>
-      <Box size={[2.2, 0.02, 1.2]} position={[7.35, 0.02, -3.55]} material={parts.mat} shadow={false} />
+      <Box size={[2.5, 0.025, 1.45]} position={[7, 0.02, -3.72]} material={parts.mat} shadow={false} />
       {[0, 1, 2, 3].map((index) => (
-        <Box key={index} size={[0.62, 0.11, 0.42]} position={[8.3, 0.08 + index * 0.1, -1.9]} material={parts.basket} rounded={0.02} />
+        <Box key={index} size={[0.72, 0.13, 0.52]} position={[8.4, 0.08 + index * 0.11, -1.45]} material={parts.basket} rounded={0.025} />
       ))}
-      <mesh position={[8.3, 0.36, 3.2]} material={parts.bin} castShadow raycast={noRaycast}>
-        <cylinderGeometry args={[0.26, 0.22, 0.72, 16]} />
+      <Box size={[0.6, 0.01, 0.4]} position={[8.4, 0.475, -1.45]} material={parts.basketInside} shadow={false} />
+      <mesh position={[8.65, 0.42, 4.03]} material={parts.bin} castShadow raycast={noRaycast}>
+        <cylinderGeometry args={[0.27, 0.27, 0.84, 20]} />
       </mesh>
-      <mesh position={[8.3, 0.75, 3.2]} material={parts.binLid} castShadow raycast={noRaycast}>
-        <cylinderGeometry args={[0.28, 0.28, 0.06, 16]} />
+      <mesh position={[8.65, 0.85, 4.03]} material={parts.binLid} castShadow raycast={noRaycast}>
+        <cylinderGeometry args={[0.28, 0.28, 0.04, 20]} />
       </mesh>
-      <mesh position={[-2.1, 0.33, 3.7]} material={parts.stool} castShadow raycast={noRaycast}>
-        <cylinderGeometry args={[0.03, 0.05, 0.62, 10]} />
+      <mesh position={[-2.1, 0.03, 4.07]} material={parts.stool} raycast={noRaycast}>
+        <cylinderGeometry args={[0.2, 0.22, 0.05, 18]} />
       </mesh>
-      <mesh position={[-2.1, 0.66, 3.7]} material={parts.seat} castShadow raycast={noRaycast}>
-        <cylinderGeometry args={[0.2, 0.2, 0.07, 16]} />
+      <mesh position={[-2.1, 0.38, 4.07]} material={parts.stool} castShadow raycast={noRaycast}>
+        <cylinderGeometry args={[0.03, 0.04, 0.7, 10]} />
+      </mesh>
+      <mesh position={[-2.1, 0.77, 4.07]} material={parts.seat} castShadow raycast={noRaycast}>
+        <cylinderGeometry args={[0.24, 0.24, 0.1, 18]} />
       </mesh>
     </>
   );
@@ -326,32 +387,38 @@ function StoreProps() {
 /** 3D 박스에 남는 위아래를 채우는 밤 동네: 인도, 찻길, 뒤쪽 건물과 불 켜진 창 */
 function Neighborhood() {
   const parts = useMemo(() => ({
-    road: new THREE.MeshBasicMaterial({ color: "#191a17", toneMapped: false }),
-    sidewalk: new THREE.MeshStandardMaterial({ color: "#4a4b44", roughness: 0.95 }),
-    curb: new THREE.MeshStandardMaterial({ color: "#6d6e65", roughness: 0.9 }),
-    lane: new THREE.MeshBasicMaterial({ color: "#55564d", toneMapped: false }),
-    buildingA: new THREE.MeshBasicMaterial({ color: "#26282a", toneMapped: false }),
-    buildingB: new THREE.MeshBasicMaterial({ color: "#2e2f2c", toneMapped: false }),
+    road: new THREE.MeshBasicMaterial({ color: "#171716", toneMapped: false }),
+    sidewalk: new THREE.MeshBasicMaterial({ color: "#2b2b29", toneMapped: false }),
+    curb: new THREE.MeshBasicMaterial({ color: "#4a4a46", toneMapped: false }),
+    lane: new THREE.MeshBasicMaterial({ color: "#5f5f5a", toneMapped: false }),
+    buildingA: new THREE.MeshBasicMaterial({ color: "#121315", toneMapped: false }),
+    buildingB: new THREE.MeshBasicMaterial({ color: "#191a1c", toneMapped: false }),
     window: new THREE.MeshBasicMaterial({ toneMapped: false }),
   }), []);
   const buildings = useMemo(() => [
-    { x: -10, width: 8, depth: 6, height: 8, material: parts.buildingA },
-    { x: -1.5, width: 8, depth: 6, height: 6.2, material: parts.buildingB },
-    { x: 7, width: 8, depth: 6, height: 9, material: parts.buildingA },
-    { x: 15.5, width: 8, depth: 6, height: 6.8, material: parts.buildingB },
+    { x: -14, width: 10, height: 20, material: parts.buildingB },
+    { x: -4, width: 10, height: 26, material: parts.buildingA },
+    { x: 6, width: 10, height: 20, material: parts.buildingB },
+    { x: 16, width: 10, height: 26, material: parts.buildingA },
+    { x: 26, width: 10, height: 22, material: parts.buildingB },
   ], [parts]);
   const windows = useMemo(() => {
     const items: { position: [number, number, number]; size: [number, number, number]; color: string }[] = [];
     buildings.forEach((building, buildingIndex) => {
-      for (let floor = 0; floor * 1.4 + 1 < building.height - 0.5; floor++) {
+      for (let floor = 0; floor < 13; floor++) {
         for (let column = 0; column < 5; column++) {
           // 일정하게 흩어 놓은 켜진 창. 깜빡이지 않는다.
-          const seed = (buildingIndex * 31 + floor * 17 + column * 7) % 10;
-          if (seed > 3) continue;
+          const seed = (buildingIndex * 31 + floor * 17 + column * 7) % 9;
+          if (seed > 1) continue;
           items.push({
-            position: [building.x - 3 + column * 1.5, floor * 1.4 + 1, -9.98],
-            size: [0.55, 0.65, 0.02],
-            color: seed === 0 ? "#9a7443" : "#6e6c55",
+            position: [building.x - 3.6 + column * 1.8, 1.2 + floor * 1.5, -9.98],
+            size: [0.42, 0.6, 0.02],
+            color: seed === 0 ? "#c9a771" : "#a58a5c",
+          });
+          items.push({
+            position: [building.x - 3.6 + column * 1.8, 1.2 + floor * 1.5, -9.96],
+            size: [0.025, 0.6, 0.02],
+            color: "#3b3226",
           });
         }
       }
@@ -361,18 +428,18 @@ function Neighborhood() {
   return (
     <>
       <mesh position={[0, -0.34, 0]} rotation={[-Math.PI / 2, 0, 0]} material={parts.road} raycast={noRaycast}>
-        <planeGeometry args={[90, 70]} />
+        <planeGeometry args={[110, 80]} />
       </mesh>
-      <Box size={[90, 0.2, 3]} position={[0, -0.22, 6.1]} material={parts.sidewalk} shadow={false} />
-      <Box size={[90, 0.22, 0.14]} position={[0, -0.21, 7.65]} material={parts.curb} shadow={false} />
-      <Box size={[36, 0.2, 14.6]} position={[27.1, -0.22, -2.7]} material={parts.sidewalk} shadow={false} />
-      {[-9, -3, 3, 9].map((x) => (
-        <Box key={x} size={[3, 0.01, 0.14]} position={[x, -0.32, 10.2]} material={parts.lane} shadow={false} />
+      <Box size={[110, 0.2, 2.6]} position={[0, -0.22, 5.9]} material={parts.sidewalk} shadow={false} />
+      <Box size={[110, 0.22, 0.12]} position={[0, -0.21, 7.25]} material={parts.curb} shadow={false} />
+      <Box size={[50, 0.2, 14.4]} position={[34.1, -0.22, -2.6]} material={parts.sidewalk} shadow={false} />
+      {[-11, -4, 3, 10].map((x) => (
+        <Box key={x} size={[3.4, 0.01, 0.12]} position={[x, -0.32, 10.4]} material={parts.lane} shadow={false} />
       ))}
       {buildings.map((building) => (
         <Box
           key={building.x}
-          size={[building.width, building.height, building.depth]}
+          size={[building.width, building.height, 6]}
           position={[building.x, building.height / 2 - 0.3, -13]}
           material={building.material}
           shadow={false}
@@ -400,17 +467,20 @@ export function StoreRoom({ selected, pinned, focused, highlighted, hovered, red
     look: new THREE.Vector3(),
   }), []);
 
+  const backWallWidth = ROOM.halfX + ROOM.doorStart;
+  const backWallX = (-ROOM.halfX + ROOM.doorStart) / 2;
+  const leftDepth = ROOM.halfZ * 2;
   const materials = useMemo(() => ({
-    floor: new THREE.MeshStandardMaterial({ map: floorTexture, roughness: 0.42, metalness: 0.02 }),
-    slab: new THREE.MeshStandardMaterial({ color: "#3a3b35", roughness: 0.9 }),
-    wall: new THREE.MeshStandardMaterial({ color: "#efece4", roughness: 0.85 }),
-    wainscot: new THREE.MeshStandardMaterial({ color: "#c7cbbd", roughness: 0.6 }),
-    baseboard: new THREE.MeshStandardMaterial({ color: "#5d6058", roughness: 0.6 }),
-    trim: new THREE.MeshStandardMaterial({ color: "#3d3f38", roughness: 0.6 }),
-    fridgeGlow: glowMaterial("#a9d4f5"),
-    coolerGlow: glowMaterial("#c7f0e3"),
-    warmGlow: glowMaterial("#ffa64d"),
-  }), [floorTexture]);
+    floor: new THREE.MeshStandardMaterial({ map: floorTexture, roughness: 0.32, metalness: 0.02 }),
+    slab: new THREE.MeshStandardMaterial({ color: "#d9d1bf", roughness: 0.8 }),
+    wall: new THREE.MeshStandardMaterial({ color: "#e6dcc8", roughness: 0.85 }),
+    wallCap: new THREE.MeshStandardMaterial({ color: "#6e6d68", roughness: 0.7 }),
+    wainscotBack: new THREE.MeshStandardMaterial({ map: slatTexture(backWallWidth), roughness: 0.6 }),
+    wainscotLeft: new THREE.MeshStandardMaterial({ map: slatTexture(leftDepth), roughness: 0.6 }),
+    ledge: new THREE.MeshBasicMaterial({ color: "#ffd9a0", toneMapped: false }),
+    pool: glowMaterial("#6e5634"),
+    ledGlow: glowMaterial("#a8732f"),
+  }), [floorTexture, backWallWidth, leftDepth]);
   const stripMaterials = useMemo(
     () => STRIPS.map(() => new THREE.MeshBasicMaterial({ color: STRIP_OFF.clone(), toneMapped: false })),
     [],
@@ -434,8 +504,8 @@ export function StoreRoom({ selected, pinned, focused, highlighted, hovered, red
     stripMaterials.forEach((material, index) => {
       material.color.copy(boot >= (index + 1) / stripMaterials.length ? STRIP_ON : STRIP_OFF);
     });
-    if (hemisphere.current) hemisphere.current.intensity = 0.45 + 0.9 * boot;
-    if (sun.current) sun.current.intensity = 0.3 + 1.35 * boot;
+    if (hemisphere.current) hemisphere.current.intensity = 0.5 + 0.55 * boot;
+    if (sun.current) sun.current.intensity = 0.3 + 0.65 * boot;
 
     // 진열대를 열면 0.6초 동안 정면으로 돌며 다가가고, 닫으면 돌아온다.
     const focusedSpec = FIXTURES.find((spec) => spec.category === focused) ?? null;
@@ -485,10 +555,6 @@ export function StoreRoom({ selected, pinned, focused, highlighted, hovered, red
     cam.updateProjectionMatrix();
   });
 
-  const backWallWidth = ROOM.halfX + ROOM.doorStart;
-  const backWallX = (-ROOM.halfX + ROOM.doorStart) / 2;
-  const leftDepth = ROOM.halfZ * 2;
-
   return (
     <>
       <OrthographicCamera makeDefault ref={camera} near={0.1} far={120} position={[15, 15, 22]} />
@@ -497,10 +563,11 @@ export function StoreRoom({ selected, pinned, focused, highlighted, hovered, red
         <Lightformer intensity={0.9} position={[0, 2, 12]} scale={[20, 4, 1]} />
         <Lightformer intensity={0.5} position={[12, 3, 0]} rotation={[0, -Math.PI / 2, 0]} scale={[10, 4, 1]} />
       </Environment>
-      <hemisphereLight ref={hemisphere} args={["#fffdf6", "#6b6a5e", 0.45]} />
+      <hemisphereLight ref={hemisphere} args={["#fff1d8", "#a08c6c", 0.5]} />
       <directionalLight
         ref={sun}
-        position={[6, 16, 9]}
+        color="#ffe9c9"
+        position={[5, 16, 8]}
         intensity={0.3}
         castShadow
         shadow-mapSize={[2048, 2048]}
@@ -522,26 +589,40 @@ export function StoreRoom({ selected, pinned, focused, highlighted, hovered, red
       <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} material={materials.floor} receiveShadow raycast={noRaycast}>
         <planeGeometry args={[ROOM.halfX * 2, leftDepth]} />
       </mesh>
-      <FloorDecal material={materials.fridgeGlow} size={[7, 3.2]} position={[2.2, -2.7]} y={0.03} />
-      <FloorDecal material={materials.coolerGlow} size={[5.8, 3]} position={[-3.6, -2.8]} y={0.03} />
-      <FloorDecal material={materials.warmGlow} size={[3.8, 1.8]} position={[-6.2, 4.3]} y={0.03} />
+      {FLOOR_POOLS.map((pool) => (
+        <FloorDecal key={pool.join()} material={materials.pool} size={[2.6, 2.2]} position={pool} y={0.03} />
+      ))}
+      <FloorDecal material={materials.ledGlow} size={[5.6, 0.9]} position={[-5.15, 4.5 - 0.02]} y={0.03} />
+      <FloorDecal material={materials.ledGlow} size={[4.6, 1]} position={[6.15, 2.15]} y={0.03} />
 
       {/* 뒷벽과 왼쪽 벽 */}
       <Box size={[backWallWidth, ROOM.height, 0.2]} position={[backWallX, ROOM.height / 2, -ROOM.halfZ - 0.1]} material={materials.wall} />
       <Box size={[0.2, ROOM.height, leftDepth + 0.2]} position={[-ROOM.halfX - 0.1, ROOM.height / 2, -0.1]} material={materials.wall} />
-      <Box size={[backWallWidth, 0.85, 0.03]} position={[backWallX, 0.425, -ROOM.halfZ + 0.015]} material={materials.wainscot} shadow={false} />
-      <Box size={[0.03, 0.85, leftDepth]} position={[-ROOM.halfX + 0.015, 0.425, 0]} material={materials.wainscot} shadow={false} />
-      <Box size={[backWallWidth, 0.14, 0.05]} position={[backWallX, 0.07, -ROOM.halfZ + 0.04]} material={materials.baseboard} shadow={false} />
-      <Box size={[0.05, 0.14, leftDepth]} position={[-ROOM.halfX + 0.04, 0.07, 0]} material={materials.baseboard} shadow={false} />
-      <Box size={[backWallWidth, 0.06, 0.04]} position={[backWallX, 0.87, -ROOM.halfZ + 0.03]} material={materials.trim} shadow={false} />
-      <Box size={[0.04, 0.06, leftDepth]} position={[-ROOM.halfX + 0.03, 0.87, 0]} material={materials.trim} shadow={false} />
-      <Box size={[backWallWidth + 0.2, 0.06, 0.24]} position={[backWallX - 0.1, ROOM.height + 0.03, -ROOM.halfZ - 0.1]} material={materials.trim} shadow={false} />
-      <Box size={[0.24, 0.06, leftDepth + 0.2]} position={[-ROOM.halfX - 0.1, ROOM.height + 0.03, -0.1]} material={materials.trim} shadow={false} />
+      <Box size={[backWallWidth, 0.95, 0.03]} position={[backWallX, 0.475, -ROOM.halfZ + 0.015]} material={materials.wainscotBack} shadow={false} />
+      <Box size={[0.03, 0.95, leftDepth]} position={[-ROOM.halfX + 0.015, 0.475, 0]} material={materials.wainscotLeft} shadow={false} />
+      <Box size={[backWallWidth, 0.025, 0.05]} position={[backWallX, 0.965, -ROOM.halfZ + 0.03]} material={materials.ledge} shadow={false} />
+      <Box size={[0.05, 0.025, leftDepth]} position={[-ROOM.halfX + 0.03, 0.965, 0]} material={materials.ledge} shadow={false} />
+      <Box size={[backWallWidth + 0.2, 0.14, 0.24]} position={[backWallX - 0.1, ROOM.height + 0.07, -ROOM.halfZ - 0.1]} material={materials.wallCap} shadow={false} />
+      <Box size={[0.24, 0.14, leftDepth + 0.2]} position={[-ROOM.halfX - 0.1, ROOM.height + 0.07, -0.1]} material={materials.wallCap} shadow={false} />
 
-      {/* 형광등 */}
-      {STRIPS.map((strip, index) => (
-        <Box key={index} size={strip.size} position={strip.position} material={stripMaterials[index]} shadow={false} />
-      ))}
+      {/* 벽 조명과 벽에 번지는 빛 */}
+      {STRIPS.map((strip, index) => {
+        const alongX = strip.size[0] > strip.size[2];
+        const length = Math.max(strip.size[0], strip.size[2]);
+        return (
+          <group key={index}>
+            <Box size={strip.size} position={strip.position} material={stripMaterials[index]} shadow={false} />
+            <mesh
+              position={alongX ? [strip.position[0], STRIP_Y - 1.3, -ROOM.halfZ + 0.025] : [-ROOM.halfX + 0.025, STRIP_Y - 1.3, strip.position[2]]}
+              rotation={[0, alongX ? 0 : Math.PI / 2, 0]}
+              material={WALL_WASH}
+              raycast={noRaycast}
+            >
+              <planeGeometry args={[length + 1.6, 2.6]} />
+            </mesh>
+          </group>
+        );
+      })}
 
       <Entrance />
       <StoreProps />
