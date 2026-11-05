@@ -70,7 +70,7 @@ npm run build
 | `POST /reviews` | 리뷰 저장. 같은 브라우저의 같은 조합은 수정 |
 | `GET /reviews` | 바코드, 조합, 브라우저별 최신 리뷰 |
 
-mock 응답은 개발 서버 화면의 "mock 응답 확인"에서 볼 수 있습니다. DB가 바뀌면 저장소 루트에서 `python members/jongho/fastapi/build_mocks.py`로 다시 만듭니다.
+화면에서는 mock 응답을 쓰지 않습니다. 확인할 때는 API에 `?mock=`을 붙여 호출합니다. DB가 바뀌면 저장소 루트에서 `python members/jongho/fastapi/build_mocks.py`로 다시 만듭니다.
 
 ## 폴더 구조
 

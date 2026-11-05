@@ -39,36 +39,13 @@ function Heading({ title, meta }: { title: string; meta?: string }) {
   return (
     <div className="flex flex-wrap items-baseline gap-3">
       <h3 className="text-xl font-bold tracking-[-0.01em]">{title}</h3>
-      {meta && <span className="text-[13px] text-muted">{meta}</span>}
+      {meta && <span className="text-[13px] text-soft">{meta}</span>}
     </div>
   );
 }
 
 export function ResultsPanel({ state, selectedKey, onSelect, onAdd, onReview, onShowStore }: Props) {
-  if (state.kind === "first") {
-    return (
-      <section aria-label="추천 결과">
-        <Heading title="추천 결과" />
-        <div className="h-3" />
-        <Receipt title="아직 주문이 없어요" lines={[["추천", "- 개"], ["합계", "- 원"], ["단백질", "- g"]]}>
-          문장을 입력하면 여기에 추천 5개가 나와요.
-        </Receipt>
-      </section>
-    );
-  }
-  if (state.kind === "loading") {
-    return (
-      <section aria-label="추천 결과" aria-busy="true">
-        <Heading title="추천 결과" />
-        <div className="h-3" />
-        <div className="grid gap-3">
-          {[0, 1, 2].map((key) => (
-            <div key={key} className="h-28 animate-pulse rounded-card border border-line bg-panel" />
-          ))}
-        </div>
-      </section>
-    );
-  }
+  if (state.kind === "first" || state.kind === "loading") return null;
   if (state.kind === "error") {
     return (
       <section aria-label="추천 결과">

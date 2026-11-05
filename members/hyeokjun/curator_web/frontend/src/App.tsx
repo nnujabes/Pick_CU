@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fetchCategories, postRecommend, postReview } from "@/api/client";
-import type { Category, MockCase, Parsed, ProductStat, RecommendResponse, ResultRow, SavedReview } from "@/api/types";
+import type { Category, Parsed, ProductStat, RecommendResponse, ResultRow, SavedReview } from "@/api/types";
 import { AppPanel, SAMPLES } from "@/components/AppPanel";
 import { BasketBar } from "@/components/BasketBar";
 import { CartPanel } from "@/components/CartPanel";
@@ -25,15 +25,18 @@ type NewMessage =
   | { who: "bot"; response: RecommendResponse }
   | { who: "error"; text: string };
 
+const DEFAULT_CATEGORIES: Category[] = ["식품", "음료"];
+
 const rowKey = (row: ResultRow) => row.items.map((item) => item.item_cd).join("-");
 
 export function App() {
   const inputRef = useRef<HTMLInputElement>(null);
   const nextId = useRef(1);
+  const latestRequest = useRef(0);
   const reduced = useReducedMotion();
   const { lines, cartCount, addToCart, stats, mergeStats, replaceStats } = useStore();
 
-  const [categories, setCategories] = useState<Category[]>(["식품", "음료"]);
+  const [categories, setCategories] = useState<Category[]>(DEFAULT_CATEGORIES);
   const [categoryWarning, setCategoryWarning] = useState<string | null>(null);
   const [counts, setCounts] = useState<Partial<Record<Category, number>>>({});
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -105,12 +108,13 @@ export function App() {
     setMessages((current) => [...current, { ...message, id }]);
   }
 
-  async function ask(text: string, options: { asked?: Category[]; useMock?: MockCase; pending?: string | null } = {}) {
+  async function ask(text: string, options: { asked?: Category[]; pending?: string | null } = {}) {
     const asked = options.asked ?? categories;
     if (!asked.length) {
       setCategoryWarning("카테고리를 하나 이상 골라 주세요.");
       return;
     }
+    const requestId = ++latestRequest.current;
     setCategoryWarning(null);
     setSelectedRow(null);
     setShowStore(false);
@@ -118,21 +122,36 @@ export function App() {
     setLoading(true);
     setResults({ kind: "loading" });
     try {
-      const response = await postRecommend(
-        { text, categories: asked, pending_text: options.pending ?? null },
-        options.useMock,
-      );
+      const response = await postRecommend({ text, categories: asked, pending_text: options.pending ?? null });
+      if (requestId !== latestRequest.current) return;
       pushMessage({ who: "bot", response });
       setPendingText(response.status === "ask" ? text : null);
       setLastQuery({ text: options.pending ? `${options.pending} ${text}` : text, parsed: response.parsed });
       setResults({ kind: "response", id: nextId.current++, response });
     } catch (reason) {
+      if (requestId !== latestRequest.current) return;
       const message = reason instanceof TypeError ? API_DOWN_MESSAGE : reason instanceof Error ? reason.message : API_DOWN_MESSAGE;
       pushMessage({ who: "error", text: message });
       setResults({ kind: "error", message });
     } finally {
-      setLoading(false);
+      if (requestId === latestRequest.current) setLoading(false);
     }
+  }
+
+  /** 로고를 누르면 대화와 결과를 비우고 첫 화면으로 돌아간다. 장바구니와 리뷰는 그대로 둔다. */
+  function goHome() {
+    latestRequest.current += 1;
+    setMessages([]);
+    setPendingText(null);
+    setResults({ kind: "first" });
+    setLoading(false);
+    setSelectedRow(null);
+    setShowStore(false);
+    setLastQuery(null);
+    setProductPanel(null);
+    setOpenPanel(null);
+    changeCategories(DEFAULT_CATEGORIES);
+    focusPrompt();
   }
 
   function changeCategories(next: Category[]) {
@@ -141,9 +160,8 @@ export function App() {
   }
 
   function runSample(sample: (typeof SAMPLES)[number]) {
-    const asked = sample.categories ?? (categories.length ? categories : (["식품", "음료"] as Category[]));
-    changeCategories(asked);
-    void ask(sample.text, { asked });
+    changeCategories(sample.categories);
+    void ask(sample.text, { asked: sample.categories });
   }
 
   function addWithToast(products: Parameters<typeof addToCart>[0]) {
@@ -220,6 +238,7 @@ export function App() {
   return (
     <>
       <Header
+        onHome={goHome}
         onAllProducts={() => setProductPanel({ kind: "all" })}
         onCart={() => setOpenPanel("cart")}
         onMyReviews={() => setOpenPanel("reviews")}
@@ -236,7 +255,6 @@ export function App() {
             onAsk={(text) => void ask(text, { pending: pendingText })}
             onQuickReply={(text) => void ask(text, { pending: pendingText })}
             onSample={runSample}
-            onMock={(mock) => void ask(`[mock] ${mock}`, { useMock: mock })}
           />
         </div>
         <div className="stage-right">
@@ -254,7 +272,7 @@ export function App() {
             <Button variant="lime" className="self-start" onClick={() => setShowStore(false)}>
               추천 {resultCount}개 다시 보기
             </Button>
-          ) : (
+          ) : results.kind === "first" || results.kind === "loading" ? null : (
             <div ref={resultsRef} className="scroll-mt-20">
               <ResultsPanel
                 state={results}
