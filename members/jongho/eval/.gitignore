@@ -1,0 +1,5 @@
+# test 데이터와 test 결과에는 test 문장이 들어 있으므로 git에 올리지 않는다.
+test_pair*.csv
+test_pair*.xlsx
+results/test*/
+__pycache__/
