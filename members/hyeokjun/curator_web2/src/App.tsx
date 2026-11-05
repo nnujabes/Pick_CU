@@ -167,9 +167,9 @@ export default function App() {
         onCart={() => setIsCartOpen(true)}
       />
 
-      <main className="mx-auto max-w-5xl px-4 py-8">
-        <Signboard onHome={() => setActiveTab("home")} />
+      <Signboard onHome={() => setActiveTab("home")} />
 
+      <main className="mx-auto max-w-5xl px-4 py-8">
         {activeTab === "home" ? (
           <>
             <CategoryPicker selected={selectedCategories} onToggle={toggleCategory} />
