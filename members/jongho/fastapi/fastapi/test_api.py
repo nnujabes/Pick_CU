@@ -1,0 +1,198 @@
+"""실행 (저장소 루트에서): python -m unittest discover -s members/jongho/fastapi -p "test_*.py" """
+import sqlite3
+import tempfile
+import unittest
+from contextlib import closing
+from pathlib import Path
+from unittest import mock
+
+from fastapi.testclient import TestClient
+
+import review_store
+import service
+from main import app
+from pickcu.filter_engine import recommend
+
+client = TestClient(app)
+SESSION = "test-session-1"
+
+
+def post(text, categories, **params):
+    return client.post("/recommend", params=params, json={"text": text, "categories": categories})
+
+
+def review(barcodes, rating, session=SESSION, comment="좋아요"):
+    return client.post("/reviews", json={
+        "barcodes": barcodes, "rating": rating, "comment": comment,
+        "query_text": "단백질", "parsed_json": {"budget": None}, "session_id": session,
+    })
+
+
+class IsolatedReviewDb(unittest.TestCase):
+    """테스트마다 빈 리뷰 DB를 쓴다. 시연 데이터는 건드리지 않는다."""
+
+    def setUp(self):
+        folder = tempfile.TemporaryDirectory()
+        self.addCleanup(folder.cleanup)
+        self.db_path = Path(folder.name) / "data" / "reviews.db"
+        patch = mock.patch.object(review_store, "REVIEW_DB", self.db_path)
+        patch.start()
+        self.addCleanup(patch.stop)
+
+
+class ProductsTest(IsolatedReviewDb):
+    def test_categories_match_db(self):
+        body = client.get("/categories").json()
+        self.assertEqual(body["total"], 2154)
+        self.assertEqual(len(body["categories"]), 6)
+
+    def test_page_and_sort(self):
+        first = client.get("/products", params={"category": "음료", "sort": "price", "page": 1}).json()
+        second = client.get("/products", params={"category": "음료", "sort": "price", "page": 2}).json()
+        prices = [item["price"] for item in first["items"]]
+        self.assertEqual(len(prices), 20)
+        self.assertEqual(prices, sorted(prices))
+        self.assertFalse({i["item_cd"] for i in first["items"]} & {i["item_cd"] for i in second["items"]})
+
+    def test_all_categories_and_promo(self):
+        body = client.get("/products", params={"category": "", "size": 1}).json()
+        self.assertEqual(body["total"], 2154)
+        promo = client.get("/products", params={"promo": "1+1", "size": 100}).json()
+        self.assertEqual(promo["total"], 223)
+        self.assertTrue(all(item["event_type"] == "1+1" for item in promo["items"]))
+
+    def test_item_has_image_and_stats(self):
+        item = client.get("/products", params={"size": 1}).json()["items"][0]
+        self.assertIn("image_url", item)
+        self.assertNotIn("thumbnail_url", item)
+        self.assertEqual((item["avg_rating"], item["n_reviews"]), (None, 0))
+
+    def test_search_treats_percent_as_text(self):
+        body = client.get("/products", params={"category": "음료", "q": "%%없는상품%%"}).json()
+        self.assertEqual(body["total"], 0)
+
+    def test_unknown_category_is_rejected(self):
+        self.assertEqual(client.get("/products", params={"category": "없음"}).status_code, 400)
+
+
+class RecommendTest(IsolatedReviewDb):
+    def test_without_reviews_matches_team_engine(self):
+        nutrients = {"단백질": "high", "지방": "low", "당류": "low"}
+        ours = service.recommend_with_reviews(["간편식사", "음료"], nutrients, budget=8000)
+        theirs = recommend(["간편식사", "음료"], nutrients, budget=8000)
+        self.assertEqual(ours, theirs)
+
+    def test_single_uses_real_products(self):
+        body = post("단백질 많은 음료", ["음료"]).json()
+        self.assertEqual((body["status"], body["mode"], body["source"]), ("ok", "단품", "db"))
+        self.assertEqual(len(body["results"]), 5)
+        first = body["results"][0]
+        self.assertEqual(first["totals"]["protein"], first["items"][0]["protein"])
+        self.assertIn("image_url", first["items"][0])
+        self.assertIn("n_reviews", first["items"][0])
+
+    def test_combo_stays_within_budget(self):
+        body = post("운동 후에 먹을 거 8천원", ["간편식사", "음료"]).json()
+        self.assertEqual(body["mode"], "조합")
+        self.assertEqual(body["parsed"]["nutrients"]["sugar"], "low")
+        self.assertTrue(all(row["total_price"] <= 8000 for row in body["results"]))
+
+    def test_ask_then_answer(self):
+        ask = post("운동 끝났는데 뭐 먹지", ["식품"]).json()
+        self.assertEqual(ask["status"], "ask")
+        self.assertTrue(ask["quick_replies"])
+        answer = client.post("/recommend", json={
+            "text": ask["quick_replies"][0], "categories": ["식품"], "pending_text": "운동 끝났는데 뭐 먹지",
+        }).json()
+        self.assertEqual(answer["status"], "ok")
+
+    def test_empty_and_relaxed(self):
+        self.assertEqual(post("단백질 많이 1000원", ["과자류", "음료", "식품"]).json()["status"], "empty")
+        relaxed = post("단백질 많이 1400원", ["과자류", "음료", "식품"]).json()
+        self.assertEqual(relaxed["relaxed"]["used_budget"], 1540)
+        self.assertTrue(all(row["total_price"] <= 1540 for row in relaxed["results"]))
+
+    def test_every_mock_case_is_served_with_images(self):
+        for case, status in {"single": "ok", "combo": "ok", "ask": "ask", "empty": "empty", "relaxed": "ok"}.items():
+            body = post("무시되는 문장", ["음료"], mock=case).json()
+            self.assertEqual((body["status"], body["source"]), (status, "mock"), case)
+            for row in body["results"]:
+                self.assertTrue(all("image_url" in item for item in row["items"]))
+
+    def test_too_many_categories_are_rejected(self):
+        self.assertEqual(post("단백질", ["음료", "식품", "과자류", "아이스크림"]).status_code, 422)
+
+    def test_good_reviews_raise_a_product(self):
+        before = post("단백질 많은 음료", ["음료"]).json()["results"]
+        fifth = before[4]["items"][0]["item_cd"]
+        for index in range(30):
+            self.assertEqual(review([fifth], 5, session=f"session-{index:04d}").status_code, 200)
+        low = before[0]["items"][0]["item_cd"]
+        for index in range(30):
+            review([low], 1, session=f"other-{index:04d}")
+        after = [row["items"][0]["item_cd"] for row in post("단백질 많은 음료", ["음료"]).json()["results"]]
+        self.assertLess(after.index(fifth), 4)
+        self.assertGreater(after.index(low) if low in after else 5, 0)
+
+
+class ReviewTest(IsolatedReviewDb):
+    def setUp(self):
+        super().setUp()
+        items = client.get("/products", params={"category": "음료", "size": 2}).json()["items"]
+        self.first, self.second = items[0]["item_cd"], items[1]["item_cd"]
+
+    def rows(self, table):
+        with closing(sqlite3.connect(self.db_path)) as connection:
+            return connection.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
+
+    def test_db_is_created_with_tables(self):
+        review_store.init_db()
+        self.assertTrue(self.db_path.exists())
+        self.assertEqual((self.rows("reviews"), self.rows("review_items")), (0, 0))
+
+    def test_review_updates_product_stats(self):
+        body = review([self.first], 5).json()
+        self.assertEqual(body["product_stats"], [{"barcode": self.first, "avg_rating": 5.0, "n_reviews": 1}])
+        review([self.first], 2, session="another-session")
+        item = client.get("/products", params={"category": "음료", "size": 1}).json()["items"][0]
+        self.assertEqual((item["avg_rating"], item["n_reviews"]), (3.5, 2))
+
+    def test_same_session_and_combo_updates_instead_of_inserting(self):
+        first_id = review([self.first, self.second], 5, comment="처음").json()["review_id"]
+        second_id = review([self.second, self.first], 2, comment="수정").json()["review_id"]
+        self.assertEqual(first_id, second_id)
+        self.assertEqual((self.rows("reviews"), self.rows("review_items")), (1, 2))
+        saved = client.get("/reviews", params={"session_id": SESSION}).json()["items"][0]
+        self.assertEqual((saved["rating"], saved["comment"]), (2, "수정"))
+        self.assertIsNotNone(saved["updated_at"])
+
+    def test_list_filters_and_combo_key(self):
+        review([self.first], 4)
+        review([self.first, self.second], 3)
+        by_barcode = client.get("/reviews", params={"barcode": self.second}).json()["items"]
+        self.assertEqual(len(by_barcode), 1)
+        key = "|".join(sorted([self.first, self.second]))
+        self.assertEqual(by_barcode[0]["combo_key"], key)
+        self.assertEqual(len(client.get("/reviews", params={"combo_key": key}).json()["items"]), 1)
+        self.assertEqual(len(client.get("/reviews", params={"session_id": SESSION}).json()["items"]), 2)
+        self.assertEqual(client.get("/reviews", params={"session_id": "nobody-here"}).json()["items"], [])
+        self.assertTrue(by_barcode[0]["items"][0]["product_name"])
+
+    def test_reviews_of_removed_products_are_kept(self):
+        review([self.first], 5)
+        review_store_id = client.get("/reviews").json()["items"][0]["id"]
+        with closing(sqlite3.connect(self.db_path)) as connection, connection:
+            connection.execute("UPDATE review_items SET barcode = 'gone' WHERE review_id = ?", (review_store_id,))
+            connection.execute("UPDATE reviews SET combo_key = 'gone' WHERE id = ?", (review_store_id,))
+        items = client.get("/reviews", params={"barcode": "gone"}).json()["items"]
+        self.assertEqual(items[0]["items"][0]["product_name"], None)
+
+    def test_invalid_reviews_are_rejected(self):
+        self.assertEqual(review(["없는코드"], 5).status_code, 400)
+        self.assertEqual(review([self.first], 6).status_code, 422)
+        self.assertEqual(review([self.first], 5, comment="가" * 201).status_code, 422)
+        self.assertEqual(self.rows("reviews"), 0)
+
+
+if __name__ == "__main__":
+    unittest.main()
