@@ -12,6 +12,7 @@ import { ResultsPanel, type ResultsState } from "@/components/ResultsPanel";
 import { ReviewDialog, type ReviewTarget } from "@/components/ReviewDialog";
 import { Scene3D } from "@/components/Scene3D";
 import { ShelfDrawer, type ProductPanelState } from "@/components/ShelfDrawer";
+import { Button } from "@/components/ui/button";
 import { useReducedMotion } from "@/hooks/useMedia";
 import { useStore } from "@/store/AppStore";
 import { getSessionId } from "@/utils/storage";
@@ -46,6 +47,13 @@ export function App() {
   const [reviewsVersion, setReviewsVersion] = useState(0);
   const [lastQuery, setLastQuery] = useState<{ text: string; parsed: Parsed } | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [showStore, setShowStore] = useState(false);
+  const resultsRef = useRef<HTMLDivElement>(null);
+
+  // 추천이 나오면 편의점 모형 자리를 추천 결과가 차지한다.
+  const hasResults = results.kind === "response" && results.response.status === "ok";
+  const storeVisible = !hasResults || showStore;
+  const resultCount = results.kind === "response" ? results.response.results.length : 0;
 
   useEffect(() => {
     fetchCategories()
@@ -68,6 +76,12 @@ export function App() {
   useEffect(() => {
     if (window.matchMedia("(hover: hover)").matches) inputRef.current?.focus({ preventScroll: true });
   }, []);
+
+  // 한 열로 쌓이는 좁은 화면에서는 결과가 입력창 아래에 있어 그 위치로 옮겨 준다.
+  useEffect(() => {
+    if (!hasResults || showStore || !window.matchMedia("(max-width: 960px)").matches) return;
+    resultsRef.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  }, [hasResults, showStore, reduced, results]);
 
   const pinned = useMemo(() => {
     const map: Partial<Record<Category, number>> = {};
@@ -99,6 +113,7 @@ export function App() {
     }
     setCategoryWarning(null);
     setSelectedRow(null);
+    setShowStore(false);
     pushMessage({ who: "user", text });
     setLoading(true);
     setResults({ kind: "loading" });
@@ -214,7 +229,6 @@ export function App() {
           <AppPanel
             ref={inputRef}
             categories={categories}
-            counts={counts}
             categoryWarning={categoryWarning}
             messages={messages}
             loading={loading}
@@ -226,21 +240,32 @@ export function App() {
           />
         </div>
         <div className="stage-right">
-          <Scene3D
-            selected={categories}
-            pinned={pinned}
-            focused={productPanel?.kind === "shelf" ? productPanel.category : null}
-            highlighted={highlighted}
-            counts={counts}
-            onOpen={(category) => setProductPanel({ kind: "shelf", category })}
-          />
-          <ResultsPanel
-            state={results}
-            selectedKey={selectedRow ? rowKey(selectedRow) : null}
-            onSelect={setSelectedRow}
-            onAdd={(row) => addWithToast(row.items)}
-            onReview={reviewRow}
-          />
+          <div hidden={!storeVisible}>
+            <Scene3D
+              selected={categories}
+              pinned={pinned}
+              focused={productPanel?.kind === "shelf" ? productPanel.category : null}
+              highlighted={highlighted}
+              counts={counts}
+              onOpen={(category) => setProductPanel({ kind: "shelf", category })}
+            />
+          </div>
+          {hasResults && storeVisible ? (
+            <Button variant="lime" className="self-start" onClick={() => setShowStore(false)}>
+              추천 {resultCount}개 다시 보기
+            </Button>
+          ) : (
+            <div ref={resultsRef} className="scroll-mt-20">
+              <ResultsPanel
+                state={results}
+                selectedKey={selectedRow ? rowKey(selectedRow) : null}
+                onSelect={setSelectedRow}
+                onAdd={(row) => addWithToast(row.items)}
+                onReview={reviewRow}
+                onShowStore={() => setShowStore(true)}
+              />
+            </div>
+          )}
         </div>
       </main>
 

@@ -7,12 +7,11 @@ const MAX_CATEGORIES = 3;
 
 interface Props {
   selected: Category[];
-  counts: Partial<Record<Category, number>>;
   warning: string | null;
   onChange: (next: Category[]) => void;
 }
 
-export function CategoryChips({ selected, counts, warning, onChange }: Props) {
+export function CategoryChips({ selected, warning, onChange }: Props) {
   const [shaking, setShaking] = useState<Category | null>(null);
   const [limitHit, setLimitHit] = useState(false);
 
@@ -43,7 +42,7 @@ export function CategoryChips({ selected, counts, warning, onChange }: Props) {
   return (
     <div>
       <p className="mb-2 font-mono text-xs tracking-[0.06em] text-muted">카테고리 · 1~3개</p>
-      <div className="flex flex-wrap gap-2">
+      <div className="chip-row" data-chip-row>
         {CATEGORIES.map((category) => {
           const active = selected.includes(category);
           return (
@@ -53,7 +52,7 @@ export function CategoryChips({ selected, counts, warning, onChange }: Props) {
               aria-pressed={active}
               onClick={() => toggle(category)}
               className={cn(
-                "inline-flex items-center gap-2 rounded-chip border px-4 py-2 text-sm transition-colors",
+                "category-chip rounded-chip border py-2 transition-colors",
                 active
                   ? "border-lime bg-lime font-medium text-lime-ink"
                   : "border-line bg-panel text-fg hover:border-muted",
@@ -61,9 +60,6 @@ export function CategoryChips({ selected, counts, warning, onChange }: Props) {
               )}
             >
               {category}
-              {counts[category] != null && (
-                <span className="tnum font-mono text-xs opacity-70">{counts[category]!.toLocaleString("ko-KR")}</span>
-              )}
             </button>
           );
         })}

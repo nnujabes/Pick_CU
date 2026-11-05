@@ -425,7 +425,7 @@ export function StoreRoom({ selected, pinned, focused, highlighted, hovered, red
 
   useFrame(({ clock }, delta) => {
     const cam = camera.current;
-    if (!cam) return;
+    if (!cam || !size.width || !size.height) return;
     const time = clock.elapsedTime;
 
     // 형광등: 처음 들어올 때 한 번만 차례로 켜진다.

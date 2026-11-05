@@ -17,10 +17,10 @@ export function Header({ onAllProducts, onCart, onMyReviews }: Props) {
           Pick CU
         </p>
         <nav className="flex items-center gap-1 min-[521px]:gap-2" aria-label="주요 메뉴">
-          <Button variant="quiet" size="sm" className="px-2" onClick={onAllProducts}>
+          <Button variant="quiet" size="sm" className="px-2 max-[360px]:px-1" onClick={onAllProducts}>
             전체 상품
           </Button>
-          <Button variant="quiet" size="sm" className="px-2" onClick={onCart}>
+          <Button variant="quiet" size="sm" className="px-2 max-[360px]:px-1" onClick={onCart}>
             장바구니
             {cartCount > 0 && (
               <span className="tnum rounded-chip bg-lime px-2 font-mono text-xs font-bold text-lime-ink" aria-label={`담은 상품 ${cartCount}개`}>

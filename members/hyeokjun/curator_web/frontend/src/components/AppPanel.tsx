@@ -22,7 +22,6 @@ const MOCK_CASES: { key: MockCase; label: string }[] = [
 
 interface Props {
   categories: Category[];
-  counts: Partial<Record<Category, number>>;
   categoryWarning: string | null;
   messages: ChatMessage[];
   loading: boolean;
@@ -34,7 +33,7 @@ interface Props {
 }
 
 export const AppPanel = forwardRef<HTMLInputElement, Props>(
-  ({ categories, counts, categoryWarning, messages, loading, onCategories, onAsk, onQuickReply, onSample, onMock }, inputRef) => {
+  ({ categories, categoryWarning, messages, loading, onCategories, onAsk, onQuickReply, onSample, onMock }, inputRef) => {
     const [text, setText] = useState("");
 
     function submit(event: React.FormEvent) {
@@ -47,7 +46,7 @@ export const AppPanel = forwardRef<HTMLInputElement, Props>(
     return (
       <section id="app-panel" className="app-panel" aria-label="추천 대화">
         <h2 data-panel-title className="text-[26px] font-bold leading-tight tracking-[-0.02em]">무엇을 찾아 드릴까요?</h2>
-        <CategoryChips selected={categories} counts={counts} warning={categoryWarning} onChange={onCategories} />
+        <CategoryChips selected={categories} warning={categoryWarning} onChange={onCategories} />
         <ChatLog messages={messages} loading={loading} onQuickReply={onQuickReply} />
         {import.meta.env.DEV && (
           <details className="font-mono text-xs text-dim">
@@ -74,7 +73,7 @@ export const AppPanel = forwardRef<HTMLInputElement, Props>(
             </button>
           ))}
         </div>
-        <form onSubmit={submit} data-prompt-form className="flex gap-2 rounded-card border border-line bg-panel p-2 focus-within:border-lime">
+        <form onSubmit={submit} data-prompt-form className="flex gap-2 rounded-card border border-muted bg-panel-2 p-2 focus-within:border-lime">
           <input
             ref={inputRef}
             value={text}
@@ -82,7 +81,7 @@ export const AppPanel = forwardRef<HTMLInputElement, Props>(
             onChange={(event) => setText(event.target.value)}
             placeholder="예: 운동 후에 먹을 거 8천원으로"
             aria-label="요청 입력"
-            className="min-w-0 flex-1 bg-transparent px-3 py-3 text-[17px] outline-none placeholder:text-dim"
+            className="min-w-0 flex-1 bg-transparent px-3 py-3 text-[17px] text-fg outline-none placeholder:text-muted"
           />
           <Button variant="lime" type="submit" disabled={loading || !text.trim()}>
             추천
