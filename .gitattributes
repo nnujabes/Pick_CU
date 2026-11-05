@@ -1,2 +1,1 @@
 * text=auto
-members/hayoung/finetune_v1/adapter/**/*.safetensors filter=lfs diff=lfs merge=lfs -text

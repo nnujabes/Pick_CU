@@ -15,7 +15,7 @@ finetune_v1/
 │  ├─ query_parser.py        ← 팀원이 쓰는 함수 (parse_query)
 │  ├─ check_query_parser.py  ← 확인 테스트 (기록용)
 │  └─ train_qlora.py, prepare_data.py, bench_train.py, dev_pair_baseline.py  ← 실험 기록용
-├─ adapter/best/             ← LoRA 어댑터 (adapter_model.safetensors는 Git LFS)
+├─ adapter/best/             ← LoRA 어댑터 (adapter_model.safetensors는 git에 없음, 따로 공유)
 ├─ results/                  ← 학습·평가·확인 테스트 결과
 ├─ baseline_results/         ← 파인튜닝 전 기준 성능
 ├─ data_info/                ← 데이터 분할·수정 내역 (데이터 자체는 ../dev_pair_v3_baseline/에 있음)
@@ -84,10 +84,14 @@ parse_query("요즘 혈당이 걱정돼요")
   2. 나머지: `pip install -r members/hayoung/finetune_v1/requirements.txt`
 - **한계**: 버전은 서버(Ubuntu, Python 3.10, CUDA 12.4)에서만 확인했습니다(`env_info.txt`). Windows에서는 `bitsandbytes` 설치가 어려울 수 있습니다.
 
-## Git LFS 안내
+## 어댑터 파일 받기
 
-어댑터 본체(`adapter/best/adapter_model.safetensors`, 약 154MB)는 Git LFS로 올라갑니다.
-`git lfs install`을 한 번 실행한 뒤 clone/pull 해야 실제 파일이 받아집니다. (LFS 없이 받으면 작은 포인터 파일만 생겨 불러오기가 실패합니다.)
+어댑터 본체(`adapter/best/adapter_model.safetensors`, 161,533,192바이트)는 저장소가 GitHub 무료 요금제라 git에 올리지 않고 팀원끼리 따로 공유합니다(`members/hayoung/.gitignore`).
+받은 파일을 `adapter/best/`에 넣고 아래 해시가 맞는지 확인하세요.
+
+```
+sha256 f95d9f5e429f0f16c854c769253ee0dd4df075f91b5ea3cc29fd56b7b157cc8b
+```
 
 ## 한계
 
