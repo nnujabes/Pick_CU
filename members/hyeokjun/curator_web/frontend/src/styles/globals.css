@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: theme("colors.bg");
+  }
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+    font-size: 15px;
+    line-height: 1.6;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.lime");
+    outline-offset: 2px;
+  }
+  summary {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 헤더와 본문이 함께 쓰는 틀. 왼쪽·오른쪽 정렬선을 이 값이 정한다. */
+  .page-container {
+    width: 100%;
+    max-width: 1680px;
+    margin-inline: auto;
+    padding-inline: clamp(16px, 3vw, 48px);
+  }
+
+  .stage {
+    --header-h: 64px;
+    --stage-gap: 24px;
+    --basket-space: 0px;
+    --stage-h: clamp(560px, calc(100dvh - var(--header-h) - var(--stage-gap) * 2 - var(--basket-space)), 900px);
+    display: grid;
+    grid-template-columns: minmax(380px, 0.85fr) minmax(0, 1.4fr);
+    gap: 40px;
+    padding-top: var(--stage-gap);
+    padding-bottom: 56px;
+  }
+  .stage[data-basket="true"] {
+    --basket-space: 56px;
+    padding-bottom: 112px;
+  }
+  .stage-left,
+  .stage-right {
+    min-width: 0;
+  }
+  .stage-right {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .scene-box {
+    height: var(--stage-h);
+    width: 100%;
+  }
+  .app-panel {
+    position: sticky;
+    top: calc(var(--header-h) + var(--stage-gap));
+    height: var(--stage-h);
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .chat-log {
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* 추천 결과: 넓으면 3열, 1위는 2칸 */
+  .result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .result-card-featured {
+    grid-column: span 2;
+  }
+
+  @media (max-width: 1439px) {
+    .result-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 1280px) {
+    .stage {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    }
+  }
+  @media (max-width: 960px) {
+    .stage {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+    .scene-box {
+      height: 360px;
+    }
+    .app-panel {
+      position: static;
+      height: auto;
+    }
+    .chat-log {
+      flex: none;
+      max-height: 46vh;
+    }
+  }
+  @media (max-width: 639px) {
+    .result-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .result-card-featured {
+      grid-column: span 1;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
