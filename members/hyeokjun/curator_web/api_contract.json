@@ -1,0 +1,164 @@
+{
+  "version": "0.2",
+  "note": "parsed는 slot_eval/prompts/system_v0.txt의 A.X 출력 스키마와 같다. 영양 값 단위는 calories kcal, sodium mg, 나머지 g이다.",
+  "types": {
+    "Product": {
+      "item_cd": "string",
+      "category": "간편식사|즉석조리|과자류|아이스크림|식품|음료",
+      "product_name": "string",
+      "price": "integer",
+      "event_type": "NONE|1+1|2+1",
+      "calories": "number",
+      "protein": "number",
+      "sodium": "number",
+      "carbs": "number",
+      "sugar": "number",
+      "fat": "number",
+      "image_url": "string|null, 외부 URL"
+    },
+    "Parsed": {
+      "nutrients": {
+        "calories|carbs|protein|fat|sugar|sodium": "high|low|null"
+      },
+      "constraints": [
+        {
+          "nutrient": "string",
+          "op": ">=|<=|>|<",
+          "value": "number"
+        }
+      ],
+      "budget": "integer|null",
+      "count": "integer|null",
+      "price_priority": "boolean",
+      "need_clarification": "boolean",
+      "clarification_question": "string|null",
+      "issue": "null|category_conflict|out_of_scope"
+    }
+  },
+  "endpoints": {
+    "GET /categories": {
+      "response": {
+        "categories": [
+          {
+            "name": "string",
+            "count": "integer"
+          }
+        ],
+        "total": "integer"
+      }
+    },
+    "GET /products": {
+      "query": {
+        "category": "string, 비우면 전체",
+        "q": "string, 상품명 검색",
+        "sort": "default|price|protein|sugar|calories|sodium",
+        "promo": "1+1|2+1, 비우면 전체",
+        "page": "integer, 1부터",
+        "size": "integer, 기본 20, 최대 100"
+      },
+      "response": {
+        "total": "integer",
+        "page": "integer",
+        "size": "integer",
+        "items": [
+          "Product + { avg_rating: number|null, n_reviews: integer }"
+        ]
+      }
+    },
+    "POST /recommend": {
+      "query": {
+        "mock": "single|combo|ask|empty|relaxed, 선택. 있으면 mock_responses.json을 돌려준다"
+      },
+      "request": {
+        "text": "string, 1~300자",
+        "categories": [
+          "string, 1~3개"
+        ],
+        "pending_text": "string|null, 되묻기에 답할 때 직전 문장"
+      },
+      "response": {
+        "status": "ok|ask|empty",
+        "parsed": "Parsed",
+        "goal": "string|null",
+        "quick_replies": [
+          "string"
+        ],
+        "mode": "단품|조합|null",
+        "relaxed": "null | { message: string, original_budget: integer, used_budget: integer }",
+        "notice": "string|null",
+        "results": [
+          {
+            "rank": "integer",
+            "total_score": "number",
+            "nutrition_score": "number",
+            "price_score": "number|null",
+            "total_price": "integer",
+            "totals": {
+              "calories|protein|sodium|carbs|sugar|fat": "number"
+            },
+            "items": [
+              "Product + { nutrition_score: number, avg_rating: number|null, n_reviews: integer }"
+            ]
+          }
+        ],
+        "source": "db|mock",
+        "parser": "rule|ax"
+      }
+    },
+    "POST /reviews": {
+      "note": "같은 session_id + combo_key가 있으면 수정한다",
+      "request": {
+        "barcodes": [
+          "string, 1~30개"
+        ],
+        "rating": "integer, 1~5",
+        "comment": "string, 최대 200자",
+        "query_text": "string|null",
+        "parsed_json": "object|null",
+        "session_id": "string, 8~64자"
+      },
+      "response": {
+        "review_id": "integer",
+        "product_stats": [
+          {
+            "barcode": "string",
+            "avg_rating": "number|null",
+            "n_reviews": "integer"
+          }
+        ]
+      }
+    },
+    "GET /reviews": {
+      "query": {
+        "barcode": "string",
+        "combo_key": "string",
+        "session_id": "string",
+        "limit": "integer, 기본 20, 최대 100"
+      },
+      "response": {
+        "items": [
+          {
+            "id": "integer",
+            "combo_key": "string",
+            "rating": "integer",
+            "comment": "string|null",
+            "query_text": "string|null",
+            "created_at": "string",
+            "updated_at": "string|null",
+            "barcodes": [
+              "string"
+            ],
+            "items": [
+              {
+                "barcode": "string",
+                "product_name": "string|null, 상품 DB에 없으면 null",
+                "image_url": "string|null",
+                "category": "string|null"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

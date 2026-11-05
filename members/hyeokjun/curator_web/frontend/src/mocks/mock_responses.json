@@ -1,0 +1,645 @@
+{
+  "single": {
+    "status": "ok",
+    "parsed": {
+      "nutrients": {
+        "calories": null,
+        "carbs": null,
+        "protein": "high",
+        "fat": null,
+        "sugar": null,
+        "sodium": null
+      },
+      "constraints": [],
+      "budget": null,
+      "count": null,
+      "price_priority": false,
+      "need_clarification": false,
+      "clarification_question": null,
+      "issue": null
+    },
+    "goal": null,
+    "quick_replies": [],
+    "mode": "단품",
+    "relaxed": null,
+    "notice": null,
+    "results": [
+      {
+        "rank": 1,
+        "total_score": 99.9,
+        "nutrition_score": 99.9,
+        "price_score": null,
+        "total_price": 4900,
+        "items": [
+          {
+            "item_cd": "8801117001605",
+            "category": "음료",
+            "product_name": "닥터유)단백질말차팩450",
+            "price": 4900,
+            "event_type": "NONE",
+            "calories": 329.0,
+            "protein": 62.0,
+            "sodium": 350.0,
+            "carbs": 12.0,
+            "sugar": 3.6,
+            "fat": 3.7,
+            "nutrition_score": 99.9,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8801117001605.jpg",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 329.0,
+          "protein": 62.0,
+          "sodium": 350.0,
+          "carbs": 12.0,
+          "sugar": 3.6,
+          "fat": 3.7
+        }
+      },
+      {
+        "rank": 2,
+        "total_score": 99.4,
+        "nutrition_score": 99.4,
+        "price_score": null,
+        "total_price": 3900,
+        "items": [
+          {
+            "item_cd": "8801069422091",
+            "category": "음료",
+            "product_name": "남양)테이크핏몬스터초코",
+            "price": 3900,
+            "event_type": "NONE",
+            "calories": 204.0,
+            "protein": 47.0,
+            "sodium": 285.0,
+            "carbs": 1.5,
+            "sugar": 1.2,
+            "fat": 1.1,
+            "nutrition_score": 99.4,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8801069422091_1.png",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 204.0,
+          "protein": 47.0,
+          "sodium": 285.0,
+          "carbs": 1.5,
+          "sugar": 1.2,
+          "fat": 1.1
+        }
+      },
+      {
+        "rank": 3,
+        "total_score": 99.4,
+        "nutrition_score": 99.4,
+        "price_score": null,
+        "total_price": 3900,
+        "items": [
+          {
+            "item_cd": "8801069422701",
+            "category": "음료",
+            "product_name": "남양)테이크핏몬스터고소",
+            "price": 3900,
+            "event_type": "NONE",
+            "calories": 204.0,
+            "protein": 47.0,
+            "sodium": 285.0,
+            "carbs": 1.5,
+            "sugar": 1.2,
+            "fat": 1.1,
+            "nutrition_score": 99.4,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8801069422701_1.png",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 204.0,
+          "protein": 47.0,
+          "sodium": 285.0,
+          "carbs": 1.5,
+          "sugar": 1.2,
+          "fat": 1.1
+        }
+      },
+      {
+        "rank": 4,
+        "total_score": 99.4,
+        "nutrition_score": 99.4,
+        "price_score": null,
+        "total_price": 3900,
+        "items": [
+          {
+            "item_cd": "8801069424095",
+            "category": "음료",
+            "product_name": "남양)테이크핏몬스터딸기",
+            "price": 3900,
+            "event_type": "NONE",
+            "calories": 204.0,
+            "protein": 47.0,
+            "sodium": 285.0,
+            "carbs": 1.5,
+            "sugar": 1.2,
+            "fat": 1.1,
+            "nutrition_score": 99.4,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8801069424095.jpg",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 204.0,
+          "protein": 47.0,
+          "sodium": 285.0,
+          "carbs": 1.5,
+          "sugar": 1.2,
+          "fat": 1.1
+        }
+      },
+      {
+        "rank": 5,
+        "total_score": 98.9,
+        "nutrition_score": 98.9,
+        "price_score": null,
+        "total_price": 3900,
+        "items": [
+          {
+            "item_cd": "8809846901975",
+            "category": "음료",
+            "product_name": "매일)셀렉스고함량초코350",
+            "price": 3900,
+            "event_type": "NONE",
+            "calories": 210.0,
+            "protein": 45.0,
+            "sodium": 300.0,
+            "carbs": 4.0,
+            "sugar": 0.0,
+            "fat": 1.3,
+            "nutrition_score": 98.9,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8809846901975.png",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 210.0,
+          "protein": 45.0,
+          "sodium": 300.0,
+          "carbs": 4.0,
+          "sugar": 0.0,
+          "fat": 1.3
+        }
+      }
+    ],
+    "source": "mock",
+    "parser": "rule"
+  },
+  "combo": {
+    "status": "ok",
+    "parsed": {
+      "nutrients": {
+        "calories": null,
+        "carbs": null,
+        "protein": "high",
+        "fat": "low",
+        "sugar": "low",
+        "sodium": null
+      },
+      "constraints": [],
+      "budget": 8000,
+      "count": null,
+      "price_priority": false,
+      "need_clarification": false,
+      "clarification_question": null,
+      "issue": null
+    },
+    "goal": "운동 후",
+    "quick_replies": [],
+    "mode": "조합",
+    "relaxed": null,
+    "notice": null,
+    "results": [
+      {
+        "rank": 1,
+        "total_score": 84.3,
+        "nutrition_score": 82.3,
+        "price_score": 88.8,
+        "total_price": 7100,
+        "items": [
+          {
+            "item_cd": "8800271905514",
+            "category": "간편식사",
+            "product_name": "샌)급식대가저당치킨샌드",
+            "price": 3600,
+            "event_type": "NONE",
+            "calories": 338.0,
+            "protein": 26.0,
+            "sodium": 810.0,
+            "carbs": 45.0,
+            "sugar": 4.0,
+            "fat": 6.0,
+            "nutrition_score": 82.2,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8800271905514_1.png",
+            "avg_rating": null,
+            "n_reviews": 0
+          },
+          {
+            "item_cd": "8806006516413",
+            "category": "음료",
+            "product_name": "유한)비컴플런부스터110ml",
+            "price": 3500,
+            "event_type": "1+1",
+            "calories": 92.0,
+            "protein": 9.0,
+            "sodium": 10.0,
+            "carbs": 14.0,
+            "sugar": 0.0,
+            "fat": 0.0,
+            "nutrition_score": 82.4,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8806006516413.jpg",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 430.0,
+          "protein": 35.0,
+          "sodium": 820.0,
+          "carbs": 59.0,
+          "sugar": 4.0,
+          "fat": 6.0
+        }
+      },
+      {
+        "rank": 2,
+        "total_score": 82.4,
+        "nutrition_score": 76.0,
+        "price_score": 97.5,
+        "total_price": 7800,
+        "items": [
+          {
+            "item_cd": "8800387751883",
+            "category": "간편식사",
+            "product_name": "샌)루꼴라잠봉화덕샌드",
+            "price": 4500,
+            "event_type": "NONE",
+            "calories": 302.0,
+            "protein": 13.0,
+            "sodium": 760.0,
+            "carbs": 40.0,
+            "sugar": 2.0,
+            "fat": 10.0,
+            "nutrition_score": 67.7,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8800387751883.jpg",
+            "avg_rating": null,
+            "n_reviews": 0
+          },
+          {
+            "item_cd": "8801121033227",
+            "category": "음료",
+            "product_name": "매일)셀렉스프로핏코코넛",
+            "price": 3300,
+            "event_type": "NONE",
+            "calories": 90.0,
+            "protein": 20.0,
+            "sodium": 290.0,
+            "carbs": 4.5,
+            "sugar": 0.0,
+            "fat": 0.0,
+            "nutrition_score": 84.2,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8801121033227.jpg",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 392.0,
+          "protein": 33.0,
+          "sodium": 1050.0,
+          "carbs": 44.5,
+          "sugar": 2.0,
+          "fat": 10.0
+        }
+      },
+      {
+        "rank": 3,
+        "total_score": 81.0,
+        "nutrition_score": 74.0,
+        "price_score": 97.5,
+        "total_price": 7800,
+        "items": [
+          {
+            "item_cd": "8809954751011",
+            "category": "간편식사",
+            "product_name": "샐)블랙페퍼닭가슴살",
+            "price": 4900,
+            "event_type": "NONE",
+            "calories": 170.0,
+            "protein": 17.39,
+            "sodium": 622.27,
+            "carbs": 15.59,
+            "sugar": 6.94,
+            "fat": 4.01,
+            "nutrition_score": 73.7,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8809954751011.jpg",
+            "avg_rating": null,
+            "n_reviews": 0
+          },
+          {
+            "item_cd": "8801069415833",
+            "category": "음료",
+            "product_name": "남양)테이크핏프로틴곡물",
+            "price": 2900,
+            "event_type": "2+1",
+            "calories": 105.0,
+            "protein": 24.0,
+            "sodium": 210.0,
+            "carbs": 0.7,
+            "sugar": 0.0,
+            "fat": 0.5,
+            "nutrition_score": 74.3,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8801069415833.png",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 275.0,
+          "protein": 41.4,
+          "sodium": 832.3,
+          "carbs": 16.3,
+          "sugar": 6.9,
+          "fat": 4.5
+        }
+      },
+      {
+        "rank": 4,
+        "total_score": 81.0,
+        "nutrition_score": 74.5,
+        "price_score": 96.2,
+        "total_price": 7700,
+        "items": [
+          {
+            "item_cd": "8809895793149",
+            "category": "간편식사",
+            "product_name": "샌)햄치즈토마토샌드",
+            "price": 4200,
+            "event_type": "NONE",
+            "calories": 267.0,
+            "protein": 13.0,
+            "sodium": 780.0,
+            "carbs": 38.0,
+            "sugar": 3.0,
+            "fat": 7.0,
+            "nutrition_score": 69.3,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8809895793149.png",
+            "avg_rating": null,
+            "n_reviews": 0
+          },
+          {
+            "item_cd": "8806006516420",
+            "category": "음료",
+            "product_name": "유한)비컴플런쿨다운110ml",
+            "price": 3500,
+            "event_type": "1+1",
+            "calories": 36.0,
+            "protein": 6.0,
+            "sodium": 55.0,
+            "carbs": 3.0,
+            "sugar": 0.0,
+            "fat": 0.0,
+            "nutrition_score": 79.6,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8806006516420.jpg",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 303.0,
+          "protein": 19.0,
+          "sodium": 835.0,
+          "carbs": 41.0,
+          "sugar": 3.0,
+          "fat": 7.0
+        }
+      },
+      {
+        "rank": 5,
+        "total_score": 80.8,
+        "nutrition_score": 73.6,
+        "price_score": 97.5,
+        "total_price": 7800,
+        "items": [
+          {
+            "item_cd": "8801068944174",
+            "category": "간편식사",
+            "product_name": "샐)바질닭가슴살&계란샐",
+            "price": 3900,
+            "event_type": "NONE",
+            "calories": 66.0,
+            "protein": 7.0,
+            "sodium": 270.0,
+            "carbs": 4.0,
+            "sugar": 1.0,
+            "fat": 2.4,
+            "nutrition_score": 69.8,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8801068944174.jpg",
+            "avg_rating": null,
+            "n_reviews": 0
+          },
+          {
+            "item_cd": "8809274516802",
+            "category": "음료",
+            "product_name": "풀무원)요프로플레인150g",
+            "price": 3900,
+            "event_type": "1+1",
+            "calories": 84.0,
+            "protein": 15.0,
+            "sodium": 85.0,
+            "carbs": 6.0,
+            "sugar": 2.3,
+            "fat": 0.0,
+            "nutrition_score": 77.5,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8809274516802_1.png",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 150.0,
+          "protein": 22.0,
+          "sodium": 355.0,
+          "carbs": 10.0,
+          "sugar": 3.3,
+          "fat": 2.4
+        }
+      }
+    ],
+    "source": "mock",
+    "parser": "rule"
+  },
+  "ask": {
+    "status": "ask",
+    "parsed": {
+      "nutrients": {
+        "calories": null,
+        "carbs": null,
+        "protein": null,
+        "fat": null,
+        "sugar": null,
+        "sodium": null
+      },
+      "constraints": [],
+      "budget": null,
+      "count": null,
+      "price_priority": false,
+      "need_clarification": true,
+      "clarification_question": "근력 운동이었나요, 유산소였나요? 목표에 맞춰 골라 드릴게요.",
+      "issue": null
+    },
+    "goal": null,
+    "quick_replies": [
+      "하체 근력 운동이었어",
+      "유산소 하고 살 빼는 중"
+    ],
+    "mode": null,
+    "relaxed": null,
+    "notice": null,
+    "results": [],
+    "source": "mock",
+    "parser": "rule"
+  },
+  "empty": {
+    "status": "empty",
+    "parsed": {
+      "nutrients": {
+        "calories": null,
+        "carbs": null,
+        "protein": "high",
+        "fat": null,
+        "sugar": null,
+        "sodium": null
+      },
+      "constraints": [],
+      "budget": 1000,
+      "count": null,
+      "price_priority": false,
+      "need_clarification": false,
+      "clarification_question": null,
+      "issue": null
+    },
+    "goal": null,
+    "quick_replies": [],
+    "mode": null,
+    "relaxed": null,
+    "notice": null,
+    "results": [],
+    "source": "mock",
+    "parser": "rule"
+  },
+  "relaxed": {
+    "status": "ok",
+    "parsed": {
+      "nutrients": {
+        "calories": null,
+        "carbs": null,
+        "protein": "high",
+        "fat": null,
+        "sugar": null,
+        "sodium": null
+      },
+      "constraints": [],
+      "budget": 1400,
+      "count": null,
+      "price_priority": false,
+      "need_clarification": false,
+      "clarification_question": null,
+      "issue": null
+    },
+    "goal": null,
+    "quick_replies": [],
+    "mode": "조합",
+    "relaxed": {
+      "message": "예산 안에서는 찾지 못해 1,540원까지 넓혀서 찾았어요.",
+      "original_budget": 1400,
+      "used_budget": 1540
+    },
+    "notice": null,
+    "results": [
+      {
+        "rank": 1,
+        "total_score": 51.0,
+        "nutrition_score": 32.6,
+        "price_score": 94.2,
+        "total_price": 1450,
+        "items": [
+          {
+            "item_cd": "8410031920093",
+            "category": "과자류",
+            "product_name": "농심)츄파춥스12g",
+            "price": 300,
+            "event_type": "NONE",
+            "calories": 45.0,
+            "protein": 0.0,
+            "sodium": 0.0,
+            "carbs": 11.0,
+            "sugar": 9.0,
+            "fat": 0.0,
+            "nutrition_score": 10.2,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8410031920093.png",
+            "avg_rating": null,
+            "n_reviews": 0
+          },
+          {
+            "item_cd": "8801104250283",
+            "category": "음료",
+            "product_name": "빙그레)쥬시쿨자두180ml",
+            "price": 600,
+            "event_type": "NONE",
+            "calories": 44.0,
+            "protein": 0.0,
+            "sodium": 115.0,
+            "carbs": 11.0,
+            "sugar": 8.6,
+            "fat": 0.0,
+            "nutrition_score": 23.1,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8801104250283_1.png",
+            "avg_rating": null,
+            "n_reviews": 0
+          },
+          {
+            "item_cd": "8801045522012",
+            "category": "식품",
+            "product_name": "오뚜기)라면사리",
+            "price": 550,
+            "event_type": "NONE",
+            "calories": 485.0,
+            "protein": 9.0,
+            "sodium": 500.0,
+            "carbs": 76.0,
+            "sugar": 0.0,
+            "fat": 16.0,
+            "nutrition_score": 64.4,
+            "image_url": "https://tqklhszfkvzk6518638.edge.naverncp.com/product/8801045522012.jpg",
+            "avg_rating": null,
+            "n_reviews": 0
+          }
+        ],
+        "totals": {
+          "calories": 574.0,
+          "protein": 9.0,
+          "sodium": 615.0,
+          "carbs": 98.0,
+          "sugar": 17.6,
+          "fat": 16.0
+        }
+      }
+    ],
+    "source": "mock",
+    "parser": "rule"
+  }
+}

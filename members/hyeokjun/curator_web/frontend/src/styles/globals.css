@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: theme("colors.bg");
+  }
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+    font-size: 15px;
+    line-height: 1.6;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  :focus-visible {
+    outline: 2px solid theme("colors.lime");
+    outline-offset: 2px;
+  }
+  summary {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 헤더와 본문이 함께 쓰는 틀. 왼쪽·오른쪽 정렬선을 이 값이 정한다. */
+  .page-container {
+    width: 100%;
+    max-width: 1680px;
+    margin-inline: auto;
+    padding-inline: clamp(16px, 3vw, 48px);
+  }
+
+  .stage {
+    --header-h: 64px;
+    --stage-gap: 24px;
+    --basket-space: 0px;
+    --stage-h: clamp(560px, calc(100dvh - var(--header-h) - var(--stage-gap) * 2 - var(--basket-space)), 900px);
+    display: grid;
+    grid-template-columns: minmax(380px, 0.85fr) minmax(0, 1.4fr);
+    gap: 40px;
+    padding-top: var(--stage-gap);
+    padding-bottom: var(--stage-gap);
+  }
+  .stage[data-basket="true"] {
+    --basket-space: 56px;
+    padding-bottom: calc(var(--stage-gap) + var(--basket-space));
+  }
+  .stage-left,
+  .stage-right {
+    min-width: 0;
+  }
+  .stage-right {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .scene-box {
+    height: var(--stage-h);
+    width: 100%;
+  }
+  .app-panel {
+    position: sticky;
+    top: calc(var(--header-h) + var(--stage-gap));
+    height: var(--stage-h);
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .chat-log {
+    flex: 1 1 0;
+    min-height: 0;
+    min-width: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  /* 카테고리 칩: 어느 폭에서나 한 줄로 채운다. 패널 폭에 맞춰 글씨와 여백을 단계별로 정한다. */
+  .chip-row {
+    container-type: inline-size;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    width: 100%;
+  }
+  .category-chip {
+    flex: 1 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 12px;
+    padding-inline: 4px;
+  }
+  @container (max-width: 319px) {
+    .category-chip {
+      font-size: 11px;
+      padding-inline: 0;
+    }
+  }
+  @container (min-width: 390px) {
+    .category-chip {
+      font-size: 13px;
+      padding-inline: 8px;
+    }
+  }
+  @container (min-width: 470px) {
+    .category-chip {
+      font-size: 14px;
+      padding-inline: 12px;
+    }
+  }
+
+  /* 추천 결과: 3D 박스와 같은 높이 안에 같은 크기의 카드를 세로 한 줄로 놓는다. */
+  .results-fill {
+    height: var(--stage-h);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+  }
+  .result-list {
+    flex: 1 1 0;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: minmax(130px, 1fr);
+    gap: 8px;
+  }
+
+  /* 높이가 낮은 화면에서는 나머지 영양 줄을 숨겨 카드 5개가 한 화면에 들어오게 한다. 값은 사진 위 표에서 볼 수 있다. */
+  @media (max-height: 860px) and (min-width: 961px) {
+    .result-others {
+      display: none;
+    }
+    .result-list {
+      grid-auto-rows: minmax(112px, 1fr);
+    }
+  }
+  @media (max-width: 1280px) {
+    .stage {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    }
+  }
+  @media (max-width: 960px) {
+    .stage {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+    .scene-box {
+      height: 360px;
+    }
+    .app-panel {
+      position: static;
+      height: auto;
+    }
+    .chat-log {
+      flex: none;
+      max-height: 46vh;
+    }
+    .results-fill {
+      height: auto;
+    }
+    .result-list {
+      flex: none;
+      overflow: visible;
+      grid-auto-rows: 1fr;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
