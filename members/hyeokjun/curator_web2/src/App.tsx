@@ -6,11 +6,12 @@ import { CartDrawer, type CartEntry } from "@/components/CartDrawer";
 import { CategoryPicker } from "@/components/CategoryPicker";
 import { Header, type ServerState } from "@/components/Header";
 import { NutritionTooltip, type TooltipState } from "@/components/NutritionTooltip";
-import { PromptForm } from "@/components/PromptForm";
+import { PromptForm, type InputNotice } from "@/components/PromptForm";
 import { RatingsPage, type ReviewTarget } from "@/components/RatingsPage";
 import { Results } from "@/components/Results";
 import { Signboard } from "@/components/Signboard";
 import { comboKey, comboTitle, formatWon, shortName } from "@/utils/format";
+import { noticeFor } from "@/utils/notices";
 import { readList, writeList } from "@/utils/storage";
 
 const CART_KEY = "pickcu2.cart";
@@ -27,7 +28,7 @@ export default function App() {
   const [response, setResponse] = useState<RecommendResponse | null>(null);
   const [lastQuery, setLastQuery] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [inputNotice, setInputNotice] = useState<InputNotice | null>(null);
   const [server, setServer] = useState<ServerState>("checking");
   const [cartItems, setCartItems] = useState<CartEntry[]>(() => readList<CartEntry>(CART_KEY));
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -72,11 +73,21 @@ export default function App() {
     const pending = pendingText;
     const fullText = pending ? `${pending} ${trimmed}` : trimmed;
     setLoading(true);
-    setError(null);
+    setInputNotice(null);
     setTooltip(null);
     try {
       const next = await postRecommend({ text: trimmed, categories: selectedCategories, pending_text: pending });
       setServer("up");
+      const notice = noticeFor(next);
+      if (notice) {
+        // 이전 추천을 지우고, 쓴 문장은 고쳐 쓸 수 있게 입력창에 남긴다.
+        setResponse(null);
+        setPendingText(null);
+        setPrompt(fullText);
+        setInputNotice(notice);
+        inputRef.current?.focus();
+        return;
+      }
       setResponse(next);
       setLastQuery(fullText);
       if (next.status === "ask") {
@@ -88,7 +99,8 @@ export default function App() {
         setPrompt(fullText);
       }
     } catch (failure) {
-      setError(failure instanceof Error ? failure.message : "추천을 불러오지 못했어요.");
+      setResponse(null);
+      setInputNotice({ tone: "error", text: failure instanceof Error ? failure.message : "추천을 불러오지 못했어요." });
     } finally {
       setLoading(false);
     }
@@ -177,13 +189,13 @@ export default function App() {
               value={prompt}
               answering={pendingText !== null}
               loading={loading}
+              notice={inputNotice}
               inputRef={inputRef}
               onChange={setPrompt}
               onSubmit={() => recommend(prompt)}
             />
             <Results
               response={response}
-              error={error}
               loading={loading}
               onQuickReply={recommend}
               onCancelQuestion={cancelQuestion}
