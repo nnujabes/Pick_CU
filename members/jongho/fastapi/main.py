@@ -24,6 +24,7 @@ SortKey = Literal["default", "price", "protein", "sugar", "calories", "sodium"]
 @asynccontextmanager
 async def lifespan(_app):
     review_store.init_db()
+    service.load_parser_model()
     yield
 
 

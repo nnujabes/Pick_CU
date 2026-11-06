@@ -36,3 +36,20 @@
 31293	results/run_r16_lr2e-4/val_epoch_04/summary.json
 # 총 35개, 162180744 바이트
 # 집계 기준: MANIFEST.txt와 SHA256SUMS.txt 자신은 목록·개수·총계에서 모두 제외함 (폴더의 실제 파일 수는 이 값 + 2)
+# --- 2026-11-06 추가: test_results/ (최종 test 1회 측정 기록, 아래 크기·해시는 추가 당시 파일 기준) ---
+414	test_results/NOTE.md
+82757	test_results/base4bit/rows.csv
+50115	test_results/base4bit/summary.json
+32162	test_results/base4bit/wrong.csv
+549	test_results/env_info.txt
+81006	test_results/ft/rows.csv
+26001	test_results/ft/summary.json
+11321	test_results/ft/wrong.csv
+450	test_results/hashes.txt
+5497	test_results/run_test_eval.diff
+4495	test_results/run_test_eval.py
+989	test_results/step0_check.json
+34352	test_results/test_data/test_pair_v3_240.csv
+10650	test_results/test_summary_compare.json
+1731	test_results/test_summary_compare.md
+# 추가분 15개, 342489 바이트 (위 '총 35개' 총계에는 포함하지 않음. 실행 로그 2개는 .gitignore로 제외)

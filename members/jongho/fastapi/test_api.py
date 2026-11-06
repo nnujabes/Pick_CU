@@ -1,4 +1,8 @@
-"""실행 (저장소 루트에서): python -m unittest discover -s members/jongho/fastapi -p "test_*.py" """
+"""실행 (저장소 루트에서): python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
+
+기존 테스트는 규칙 파서 기준이다. A.X 테스트는 모델을 불러오지 못하면 건너뛴다.
+"""
+import os
 import sqlite3
 import tempfile
 import unittest
@@ -6,10 +10,13 @@ from contextlib import closing
 from pathlib import Path
 from unittest import mock
 
+os.environ["PICKCU_PARSER"] = "rule"
+
 from fastapi.testclient import TestClient
 
 import review_store
 import service
+import query_parser  # service가 불러올 경로를 추가한 뒤에 불러온다
 from main import app
 from pickcu.filter_engine import recommend
 
@@ -155,6 +162,73 @@ class RecommendTest(IsolatedReviewDb):
         after = [row["items"][0]["item_cd"] for row in post("단백질 많은 음료", ["음료"]).json()["results"]]
         self.assertLess(after.index(fifth), 4)
         self.assertGreater(after.index(low) if low in after else 5, 0)
+
+
+class ParserSelectionTest(IsolatedReviewDb):
+    """모델 없이 parse_query 결과만 바꿔 파서 선택을 확인한다."""
+
+    def setUp(self):
+        super().setUp()
+        patch = mock.patch.object(service, "MODEL_READY", True)
+        patch.start()
+        self.addCleanup(patch.stop)
+
+    def test_model_result_is_used(self):
+        result = {"budget": 3000, "nutrients": {"열량": "low", "단백질": "high"}}
+        with mock.patch.object(query_parser, "parse_query", return_value=result):
+            body = post("추천해줘 가성비 두 개", ["간편식사", "음료"]).json()
+        self.assertEqual((body["status"], body["parser"], body["goal"]), ("ok", "ax", None))
+        self.assertEqual(body["parsed"]["budget"], 3000)
+        self.assertEqual(body["parsed"]["nutrients"], {
+            "calories": "low", "carbs": None, "protein": "high", "fat": None, "sugar": None, "sodium": None,
+        })
+        self.assertEqual((body["parsed"]["count"], body["parsed"]["price_priority"]), (2, True))
+        self.assertFalse(body["parsed"]["need_clarification"])
+
+    def test_failed_parse_falls_back_to_rule(self):
+        with mock.patch.object(query_parser, "parse_query", return_value=None):
+            asked = post("뭐 먹지", ["식품"]).json()
+            answered = post("단백질 많은 음료", ["음료"]).json()
+        self.assertEqual((asked["status"], asked["parser"]), ("ask", "rule"))
+        self.assertEqual((answered["status"], answered["parser"]), ("ok", "rule"))
+
+
+class ParserLoadTest(unittest.TestCase):
+    def test_rule_setting_does_not_load_model(self):
+        with mock.patch.object(query_parser, "load_model") as load, mock.patch.object(service, "MODEL_READY", False):
+            service.load_parser_model()
+            load.assert_not_called()
+            self.assertFalse(service.MODEL_READY)
+
+    def test_load_failure_keeps_rule_parser(self):
+        with mock.patch.dict(os.environ, {"PICKCU_PARSER": "ax"}), mock.patch.object(service, "MODEL_READY", False), \
+                mock.patch.object(query_parser, "load_model", side_effect=RuntimeError("GPU 없음")), mock.patch("builtins.print"):
+            service.load_parser_model()
+            self.assertFalse(service.MODEL_READY)
+
+
+class AxParserTest(IsolatedReviewDb):
+    """실제 A.X 결과. 규남의 total_test.ipynb 출력과 같아야 한다."""
+
+    @classmethod
+    def setUpClass(cls):
+        try:
+            query_parser.load_model()
+        except Exception as error:
+            raise unittest.SkipTest(f"A.X를 불러오지 못함: {error}")
+        patch = mock.patch.object(service, "MODEL_READY", True)
+        patch.start()
+        cls.addClassCleanup(patch.stop)
+
+    def test_after_workout_with_budget(self):
+        body = post("5천원 이하로 운동 후에 먹을 거", ["간편식사", "음료"]).json()
+        self.assertEqual((body["status"], body["parser"], body["parsed"]["budget"]), ("ok", "ax", 5000))
+        self.assertEqual((body["parsed"]["nutrients"]["protein"], body["parsed"]["nutrients"]["fat"]), ("high", "low"))
+
+    def test_blood_sugar_without_budget(self):
+        body = post("요즘 혈당이 걱정돼요", ["과자류"]).json()
+        self.assertEqual((body["parser"], body["parsed"]["budget"]), ("ax", None))
+        self.assertEqual((body["parsed"]["nutrients"]["sugar"], body["parsed"]["nutrients"]["calories"]), ("low", "low"))
 
 
 class ReviewTest(IsolatedReviewDb):

@@ -11,19 +11,32 @@ python -m uvicorn main:app --app-dir members/jongho/fastapi --port 8000
 
 API 문서는 http://127.0.0.1:8000/docs 에서 볼 수 있습니다. 화면과 함께 켜려면 `members/hyeokjun/curator_web/frontend`(http://localhost:5173) 또는 `members/hyeokjun/curator_web2`(http://localhost:5174)에서 `npm start`를 실행합니다. 두 화면을 함께 쓸 때는 API 포트(8000)가 겹치므로 두 번째 화면은 `npm run dev`로 띄웁니다.
 
+### 문장 해석 (A.X)
+
+서버는 시작할 때 A.X를 한 번 불러옵니다. 불러오지 못하면 오류 없이 규칙 파서(`nlu.py`)로 동작하고, 응답의 `parser`가 `rule`이 됩니다.
+
+- NVIDIA GPU 메모리 약 5GB 이상, CUDA용 torch, `members/hayoung/finetune_v1/requirements.txt`(transformers, peft, bitsandbytes, accelerate)가 필요합니다. Windows는 bitsandbytes 설치가 어려워 WSL·Linux를 권합니다.
+- 어댑터 `adapter_model.safetensors`는 git에 없어서 따로 받아 `members/hayoung/finetune_v1/adapter/best/`에 넣습니다. 다른 곳에 두었으면 `QUERY_PARSER_ADAPTER`로 경로를 지정합니다. sha256 `f95d9f5e429f0f16c854c769253ee0dd4df075f91b5ea3cc29fd56b7b157cc8b`
+- 첫 실행 때 `skt/A.X-4.0-Light` 원본(약 15GB)을 받습니다. 모델 로딩은 서버 시작 때 한 번 하고, 이후 문장 하나에 약 3초 걸립니다(RTX 4060 기준).
+- GPU 없이 실행: `PICKCU_PARSER=rule`
+
+`npm start`는 그 환경의 `python`으로 API를 띄웁니다. Windows Python에 위 패키지가 없으면 규칙 파서로 동작하므로, A.X를 쓰려면 WSL에서 위 실행 명령으로 API를 띄우고 화면은 `npm run dev`로 켭니다.
+
 ## 테스트
 
 ```bash
 python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 ```
 
+기존 테스트는 규칙 파서 기준이라 GPU 없이 돕니다. A.X 테스트는 모델을 불러오지 못하면 건너뜁니다.
+
 ## 파일
 
 | 파일 | 역할 |
 | --- | --- |
 | `main.py` | API 경로. 형식은 `members/hyeokjun/curator_web/api_contract.json` |
-| `service.py` | 팀 엔진과 상품 DB 호출, 응답 형식 변환, 리뷰 점수 반영 |
-| `nlu.py` | 문장 해석 임시 규칙. A.X 4.0 Light를 연결하면 `parse_request`만 교체 |
+| `service.py` | 문장 해석 선택(A.X 또는 규칙), 팀 엔진과 상품 DB 호출, 응답 형식 변환, 리뷰 점수 반영 |
+| `nlu.py` | 규칙 파서. A.X를 쓸 수 없을 때의 해석과 개수·가성비 해석 |
 | `review_store.py` | 리뷰 저장. `data/reviews.db`는 자동으로 만들어지고 커밋되지 않음 |
 | `build_mocks.py` | 프론트의 `mock_responses.json` 생성 |
 | `test_api.py` | API 테스트 |
@@ -177,12 +190,12 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 | `notice` | string \| null | 요청 개수와 카테고리 수가 다를 때의 안내 문장 |
 | `results` | array | 추천 결과. 최대 5개 |
 | `source` | string | 실제 추천은 `db`, mock은 `mock` |
-| `parser` | string | 문장 해석기. 현재 `rule`, A.X 연결 시 `ax` 예정 |
+| `parser` | string | 문장 해석기. A.X 결과면 `ax`, 규칙 파서 결과면 `rule` |
 
 | `status` | 의미 | 화면 처리 |
 | --- | --- | --- |
 | `ok` | 추천 성공 | `results` 표시 |
-| `ask` | 문장 해석 결과에 영양 조건이 없음. 예산만 있어도 되묻고, 운동 종류나 다이어트 여부는 묻지 않음 | `parsed.clarification_question`과 `quick_replies`를 보여 주고, 답을 `text`로, 직전 문장을 `pending_text`로 다시 요청 |
+| `ask` | 규칙 파서의 해석 결과에 영양 조건이 없음. 예산만 있어도 되묻고, 운동 종류나 다이어트 여부는 묻지 않음. A.X 해석에 성공하면 나오지 않음 | `parsed.clarification_question`과 `quick_replies`를 보여 주고, 답을 `text`로, 직전 문장을 `pending_text`로 다시 요청 |
 | `empty` | 조건에 맞는 상품 없음 | 결과 없음 안내 |
 
 `results`의 각 항목은 다음과 같습니다.
@@ -289,7 +302,9 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 - **개수**: 추천은 카테고리마다 1개씩 담습니다. 문장의 개수가 카테고리 수와 달라도 결과 개수는 바뀌지 않고 `notice`로 안내합니다.
 - **리뷰 점수**: 조합의 `total_score`에 `10 × (상품별 R의 평균)`을 더합니다. `R = (n × 평균 + 5 × 전체평균) ÷ (n + 5) ÷ 5`이고, 리뷰가 없는 상품의 R은 `전체평균 ÷ 5`입니다. 저장된 리뷰가 하나도 없으면 점수를 더하지 않습니다.
 - **검사 순서**: 카테고리 값은 문장 해석 뒤에 검사합니다. 그래서 `ask`로 끝나는 요청은 없는 카테고리가 있어도 200을 돌려줍니다.
-- **운동 판별**: 문장에 "운동"이 있으면 운동 후(단백질 높게, 지방 낮게, 당류 낮게)로 해석합니다. "운동하기 전" 같은 운동 전 표현은 탄수화물 높게로 해석하고, "운동 안", "운동화" 같은 표현은 운동 후로 보지 않습니다. 다른 영양 조건이 없으면 되묻습니다.
+- **A.X 해석**: 영양소 2개는 A.X가, 예산은 `extract_budget`이, 개수와 가성비는 규칙 파서가 정합니다. `goal`은 `null`입니다. 모델을 쓸 수 없거나 해석에 실패하면(300자 초과, 출력 형식 오류) 규칙 파서 결과를 씁니다.
+- **A.X의 한계**: 해석에 성공하면 항상 영양소 2개를 내므로 되묻지 않습니다. "추천해줘", "뭐 먹지"나 "안녕"처럼 영양소 정보가 없는 문장에도 추천이 나옵니다.
+- **운동 판별 (규칙 파서)**: 문장에 "운동"이 있으면 운동 후(단백질 높게, 지방 낮게, 당류 낮게)로 해석합니다. "운동하기 전" 같은 운동 전 표현은 탄수화물 높게로 해석하고, "운동 안", "운동화" 같은 표현은 운동 후로 보지 않습니다. 다른 영양 조건이 없으면 되묻습니다.
 - **규칙 파서의 한계**: 키워드로만 판별해서 "운동 전부 끝났어"는 운동 전으로, "오늘 운동 쉬었어"는 운동 후로, "운동화 벗고 운동 끝났어"는 운동이 아닌 것으로 해석합니다. "1만원 미만"은 "1만원 이하"와 같이 예산 10000으로 처리하며, 예산 완화가 적용되면 그 이상도 나올 수 있습니다.
 
 ### POST /reviews
