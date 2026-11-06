@@ -98,6 +98,31 @@ parse_query("요즘 혈당이 걱정돼요")
 | `"no_condition"` | 인삿말·잡담만 있음 | 원하는 음식이나 영양 조건을 알려주세요. 예: '단백질 높고 지방 낮은 걸로 찾아줘' |
 | `None` 인데 `parse_query`가 `None` | 모델이 관계없는 문장으로 판단, 또는 응답 형식 오류·실행 오류 | 영양 조건을 이해하지 못했어요. 예: '단백질 높고 지방 낮은 걸로 찾아줘' |
 
+### `None`의 이유 받기: `parse_query_with_reason` (2026-11-06 추가, 혁준 요청)
+
+`parse_query`는 실패 이유를 로그에만 남기므로, 이유가 필요한 쪽(종호 API)은 `parse_query_with_reason(text)`를 씁니다.
+**`parse_query`의 동작과 반환값은 그대로**이며, 내부에서 `parse_query_with_reason(text)[0]`을 돌려줍니다.
+
+```python
+from query_parser import parse_query_with_reason
+parse_query_with_reason("5천원 이하로 운동 후에 먹을 거")  # ({"budget": 5000, "nutrients": {...}}, None)
+parse_query_with_reason("안녕하세요")                      # (None, "no_condition")  모델 호출 없음
+parse_query_with_reason("오늘 날씨 어때")                  # (None, "unrelated")
+```
+
+이유 코드(팀 공통, 혁준 화면·종호 API가 글자 그대로 씀):
+
+| 코드 | 뜻 | 정하는 곳 |
+| --- | --- | --- |
+| `empty` | 빈 입력 | 모델 호출 전 (`classify_failure`) |
+| `too_long` | 300자 초과 | 모델 호출 전 (`classify_failure`) |
+| `no_condition` | 인삿말·잡담·일반 요청어만 있음 | 모델 호출 전 (`classify_failure`) |
+| `unrelated` | 모델이 관계없는 문장으로 판단 (`{"nutrients": []}`) | 모델 응답 |
+| `invalid_output` | 모델 출력 형식 오류 (JSON 없음, 2개가 아님, 허용되지 않은 성분 등) | 모델 응답 |
+| `error` | 실행 중 예외 (GPU 메모리 부족 등) | 예외 처리 |
+
+성공하면 이유는 `None`입니다. 검사 순서(빈 입력 → 300자 → 인삿말 → 모델)와 로그 문구는 이전 `parse_query`와 같습니다.
+
 - 어댑터 경로: 기본은 `finetune_v1/adapter/best`. 다른 곳에 두었으면 환경변수로 바꿉니다.
   ```
   set QUERY_PARSER_ADAPTER=D:\models\adapter_best      (Windows cmd)
@@ -139,6 +164,7 @@ sha256 f95d9f5e429f0f16c854c769253ee0dd4df075f91b5ea3cc29fd56b7b157cc8b
 2026-11-06에 반영한 예산 추출(`extract_budget`, 종호 수정안 PR #22) 부분, 그리고 `code/check_query_parser.py`의 예산 단위 테스트(`BUDGET_CASES`: 기대값 4개 변경, 17개 추가)입니다.
 같은 날 조건 없는 입력 검사(`is_no_condition`, `classify_failure`, `parse_query`의 사전 검사 3줄)와 그 테스트(`NO_CONDITION_CASES` 35개, `CONDITION_CASES` 7개, 호출 흐름 3개)도 추가했습니다. 확인 결과: 조건 없는 입력 44/44, 호출 흐름 9/9, 예산 77/77, 응답 변환 13/13.
 같은 날 팀원 실험대로 시스템 프롬프트에 관계없는 문장 규칙(`UNRELATED_RULE`)을 덧붙이고 `SYSTEM_PROMPT_SHA256`을 바꿨습니다. 학습 프롬프트는 `TRAIN_SYSTEM_PROMPT`로 그대로 남겨 두고 ft_data와 같은지 확인합니다. 빈 목록 응답 검사 1개를 추가해 응답 변환은 14/14입니다.
+같은 날 `parse_query_with_reason`을 추가하고 `parse_query`는 이를 감싸게 바꿨습니다(동작·반환값 동일). 이유 코드 검사 7개를 추가했습니다.
 그래서 `SHA256SUMS.txt`의 `query_parser.py`, `check_query_parser.py` 해시는 서버 원본 기준이라 이 복사본과 다릅니다.
 `results/query_parser_check_v2/offline.json`은 수정 전 예산 함수로 만든 기록이라 그대로 두었습니다. 수정 후 확인 결과: 예산 단위 테스트 77/77, 응답 변환 13/13, 호출 흐름 4/4, train v3·dev v3의 예산 포함 774문장 모두 추출·다른 유형 2,262문장 오탐 0. (이 문단은 예산 수정 시점 기준이며, 이후 프롬프트 규칙 추가로 dev는 85.6%가 되었습니다. 위 "조건 없는 입력·관계없는 문장" 참고.)
 
