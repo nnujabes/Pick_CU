@@ -7,7 +7,7 @@
 
 | 함수 이름 | 담당자 | 입력 (이름: 타입) | 출력 (타입) | 사용하는 사람 | 예시 |
 | --- | --- | --- | --- | --- | --- |
-|  |  |  |  |  |  |
+| `budget_filter` (이전 이름 `extract_budget`) | jongho(수정안), hayoung(`query_parser.py` 반영) | `text`: str | int 또는 None. 0 이상의 예산 상한이며, 상한을 알 수 없거나 10만원을 넘으면 None | hayoung(`parse_query`), jongho(API) | `budget_filter("5천원 이하") == 5000`, `budget_filter("0.5원") == 0`, `budget_filter("1000만원으로") is None` |
 
 ## 데이터 형식 약속
 
@@ -21,3 +21,4 @@
 | 날짜 | 변경한 사람 | 바뀐 항목 | 변경 내용 | 영향받는 사람 |
 | --- | --- | --- | --- | --- |
 | 2026-11-06 | knlee | `cu_products` 테이블, `search_candidates` | `exclude_reason` 컬럼 추가. 소스·양념·조미료 21개와 식재료 3개(밀가루, 튀김가루, 쌀)를 추천 검색에서 제외. 상품은 DB에 남아 있어 전체 2,154개는 그대로이고, 추천 후보는 2,130개 | jongho(추천 결과, mock 응답), hyeokjun(화면의 추천 결과) |
+| 2026-11-06 | jongho | `extract_budget`, `POST /recommend`의 `status` | `extract_budget`의 이름을 `budget_filter`로 변경(수정안은 `members/jongho/budget_lab/budget_filter.py`, 원본 반영은 요청 중). 지출 금액 제외, 10만원 초과는 None, 1원 미만은 0. `status`에 `budget_too_low`(예산 1000원 미만) 추가. 자세한 내용은 `members/jongho/budget_lab/README_budget_filter_반영요청.md` | hayoung(`query_parser.py` 반영), hyeokjun(화면 안내, API 계약) |

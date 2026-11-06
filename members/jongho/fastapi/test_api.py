@@ -148,6 +148,10 @@ class RecommendTest(IsolatedReviewDb):
             for row in body["results"]:
                 self.assertTrue(all("image_url" in item for item in row["items"]))
 
+    def test_rule_parser_budget_below_minimum(self):
+        body = post("500원으로 뭐 먹지", ["식품"]).json()
+        self.assertEqual((body["status"], body["parser"], body["parsed"]["budget"]), ("budget_too_low", "rule", 500))
+
     def test_too_many_categories_are_rejected(self):
         self.assertEqual(post("단백질", ["음료", "식품", "과자류", "아이스크림"]).status_code, 422)
 
@@ -205,6 +209,25 @@ class ParserSelectionTest(IsolatedReviewDb):
         with mock.patch.object(query_parser, "parse_query", return_value=result):
             body = post("5천원 이하로 운동 후에 먹을 거", ["간편식사", "음료"]).json()
         self.assertEqual((body["status"], body["parser"]), ("ok", "ax"))
+
+    def test_budget_below_minimum_returns_budget_too_low(self):
+        for budget in (0, 1, 999):
+            result = {"budget": budget, "nutrients": {"단백질": "high", "지방": "low"}}
+            with mock.patch.object(query_parser, "parse_query", return_value=result):
+                body = post("운동 후에 먹을 거", ["음료"]).json()
+            self.assertEqual((body["status"], body["parser"], body["results"]), ("budget_too_low", "ax", []), budget)
+            self.assertEqual(body["parsed"]["budget"], budget)
+
+    def test_minimum_budget_is_allowed(self):
+        result = {"budget": 1000, "nutrients": {"단백질": "high", "지방": "low"}}
+        with mock.patch.object(query_parser, "parse_query", return_value=result):
+            body = post("운동 후에 먹을 거", ["음료"]).json()
+        self.assertNotEqual(body["status"], "budget_too_low")
+
+    def test_no_nutrient_comes_before_budget_too_low(self):
+        with mock.patch.object(query_parser, "parse_query", return_value=None):
+            body = post("500원", ["음료"]).json()
+        self.assertEqual(body["status"], "no_nutrient")
 
 
 class ParserLoadTest(unittest.TestCase):
