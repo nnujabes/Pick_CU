@@ -31,6 +31,7 @@ COLUMN_TO_KOREAN = {column: korean for korean, column in NUTRIENT_COLUMNS.items(
 KOREAN_TO_COLUMN = {korean: column for column, korean in COLUMN_TO_KOREAN.items()}
 MODEL_READY = False
 _model_lock = threading.Lock()
+MIN_BUDGET = 1000  # 이보다 작은 예산은 추천하지 않고 다시 입력하도록 안내한다
 NUTRITION_COLUMNS = tuple(COLUMN_TO_KOREAN)
 RELAX_BUDGET_RATE = 1.1
 # 설계의 "총점 + 0.1 × R"은 0~1 척도 기준이다. 엔진 총점은 0~100이라 같은 비중이 되도록 10을 곱한다.
@@ -235,6 +236,8 @@ def recommend_flow(text, categories, pending_text=None):
     slots = parsed.slots
     if not found:
         return build_response("no_nutrient", slots, parser=parser)
+    if slots["budget"] is not None and slots["budget"] < MIN_BUDGET:
+        return build_response("budget_too_low", slots, parser=parser)
     if slots["need_clarification"]:
         return build_response("ask", slots, quick_replies=parsed.quick_replies, parser=parser)
 

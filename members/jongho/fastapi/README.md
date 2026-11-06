@@ -181,7 +181,7 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 
 | 응답 필드 | 타입 | 설명 |
 | --- | --- | --- |
-| `status` | string | `ok`, `ask`, `empty`, `no_nutrient` 중 하나(아래 표) |
+| `status` | string | `ok`, `ask`, `empty`, `no_nutrient`, `budget_too_low` 중 하나(아래 표) |
 | `parsed` | Parsed | 문장 해석 결과 |
 | `goal` | string \| null | `다이어트`, `근력`, `벌크업`, `운동 후` 중 하나 |
 | `quick_replies` | string[] | 되물을 때 보여 줄 답변 버튼 |
@@ -198,6 +198,7 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 | `ask` | 규칙 파서의 해석 결과에 영양 조건이 없음. 예산만 있어도 되묻고, 운동 종류나 다이어트 여부는 묻지 않음. A.X를 쓰는 동안에는 나오지 않음 | `parsed.clarification_question`과 `quick_replies`를 보여 주고, 답을 `text`로, 직전 문장을 `pending_text`로 다시 요청 |
 | `empty` | 조건에 맞는 상품 없음 | 결과 없음 안내 |
 | `no_nutrient` | A.X가 문장에서 영양소 정보를 찾지 못함(`parse_query`가 `None`) | 입력창 아래에 다시 입력하라는 안내를 표시. `results`는 빈 배열 |
+| `budget_too_low` | 예산이 1000원 미만. `no_nutrient`를 먼저 확인하고, 되묻기보다 먼저 나옴 | 입력창 아래에 1000원 이상 금액으로 다시 입력하라는 안내를 표시. `results`는 빈 배열, 읽은 금액은 `parsed.budget` |
 
 `results`의 각 항목은 다음과 같습니다.
 
