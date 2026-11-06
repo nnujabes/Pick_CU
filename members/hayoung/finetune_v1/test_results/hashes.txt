@@ -1,0 +1,5 @@
+test_pair_v3_240.csv md5 (Windows 원본, WSL 사본, 측정 후): a405dcd384aa8f5777eea5add5cc1795 / a405dcd384aa8f5777eea5add5cc1795
+dev_pair_v3.csv md5: f9ca187cd59294c7ab56af291b57f750
+train_pair_v3.csv md5 (겹침 검사용): 5bafa13379ee3ba455547934822ae32b
+system prompt sha256: 06818f0f2ba2c5ac7f05454846c37e9054766184d62cd521b6afe0eab479b556
+adapter_model.safetensors sha256: f95d9f5e429f0f16c854c769253ee0dd4df075f91b5ea3cc29fd56b7b157cc8b

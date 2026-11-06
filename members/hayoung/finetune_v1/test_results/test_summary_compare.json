@@ -1,0 +1,508 @@
+{
+  "base4bit": {
+    "label": "4bit 원본(어댑터 없음)",
+    "exact": {
+      "correct": 150,
+      "n": 240,
+      "acc": 0.625
+    },
+    "pair": {
+      "correct": 369,
+      "n": 480,
+      "acc": 0.7688
+    },
+    "first": {
+      "correct": 181,
+      "n": 240,
+      "acc": 0.7542
+    },
+    "second": {
+      "correct": 188,
+      "n": 240,
+      "acc": 0.7833
+    },
+    "second_given_first": {
+      "correct": 150,
+      "n": 181,
+      "acc": 0.8287
+    },
+    "format": {
+      "json_parse_fail": 3,
+      "schema_invalid": 0,
+      "out_of_6_nutrient_or_direction_sentences": 1,
+      "invalid_values": {
+        "salt/high": 1
+      },
+      "item_count_not_2": 4,
+      "n_items_dist": {
+        "0": 3,
+        "1": 1,
+        "2": 236
+      },
+      "same_nutrient_twice": 0,
+      "truncated": 4
+    },
+    "budget_58": {
+      "correct": 31,
+      "n": 58
+    },
+    "non_budget_182": {
+      "correct": 119,
+      "n": 182
+    },
+    "by_situation": {
+      "S018": {
+        "gold": "protein/high, fat/low",
+        "exact": {
+          "correct": 15,
+          "n": 20,
+          "acc": 0.75
+        }
+      },
+      "S036": {
+        "gold": "sodium/low, fat/low",
+        "exact": {
+          "correct": 15,
+          "n": 20,
+          "acc": 0.75
+        }
+      },
+      "S2009": {
+        "gold": "carbs/high, calories/high",
+        "exact": {
+          "correct": 4,
+          "n": 20,
+          "acc": 0.2
+        }
+      },
+      "S2036": {
+        "gold": "fat/low, calories/low",
+        "exact": {
+          "correct": 9,
+          "n": 20,
+          "acc": 0.45
+        }
+      },
+      "S2054": {
+        "gold": "calories/low, fat/low",
+        "exact": {
+          "correct": 12,
+          "n": 20,
+          "acc": 0.6
+        }
+      },
+      "S2063": {
+        "gold": "sugar/high, calories/high",
+        "exact": {
+          "correct": 16,
+          "n": 20,
+          "acc": 0.8
+        }
+      },
+      "S3001": {
+        "gold": "carbs/low, protein/high",
+        "exact": {
+          "correct": 1,
+          "n": 20,
+          "acc": 0.05
+        }
+      },
+      "S3002": {
+        "gold": "fat/high, calories/high",
+        "exact": {
+          "correct": 20,
+          "n": 20,
+          "acc": 1.0
+        }
+      },
+      "S3003": {
+        "gold": "calories/high, carbs/high",
+        "exact": {
+          "correct": 17,
+          "n": 20,
+          "acc": 0.85
+        }
+      },
+      "S3004": {
+        "gold": "calories/high, carbs/high",
+        "exact": {
+          "correct": 16,
+          "n": 20,
+          "acc": 0.8
+        }
+      },
+      "S3005": {
+        "gold": "sugar/low, calories/low",
+        "exact": {
+          "correct": 15,
+          "n": 20,
+          "acc": 0.75
+        }
+      },
+      "S3006": {
+        "gold": "sodium/high, sugar/high",
+        "exact": {
+          "correct": 10,
+          "n": 20,
+          "acc": 0.5
+        }
+      }
+    },
+    "by_style": {
+      "구어체": {
+        "correct": 29,
+        "n": 50,
+        "acc": 0.58
+      },
+      "길고 두서없는 문장": {
+        "correct": 14,
+        "n": 24,
+        "acc": 0.5833
+      },
+      "목적 직접형": {
+        "correct": 28,
+        "n": 36,
+        "acc": 0.7778
+      },
+      "성분 직접 언급": {
+        "correct": 21,
+        "n": 24,
+        "acc": 0.875
+      },
+      "예산 포함": {
+        "correct": 31,
+        "n": 58,
+        "acc": 0.5345
+      },
+      "줄임말·오타": {
+        "correct": 20,
+        "n": 36,
+        "acc": 0.5556
+      },
+      "짧은 문장": {
+        "correct": 7,
+        "n": 12,
+        "acc": 0.5833
+      }
+    },
+    "wrong_patterns_top": [
+      {
+        "상황ID": "S2009",
+        "정답": "carbs/high, calories/high",
+        "예측": "carbs/high, fat/low",
+        "count": 14
+      },
+      {
+        "상황ID": "S3001",
+        "정답": "carbs/low, protein/high",
+        "예측": "protein/high, fat/low",
+        "count": 14
+      },
+      {
+        "상황ID": "S2036",
+        "정답": "fat/low, calories/low",
+        "예측": "protein/high, fat/low",
+        "count": 6
+      },
+      {
+        "상황ID": "S3005",
+        "정답": "sugar/low, calories/low",
+        "예측": "protein/high, fat/low",
+        "count": 5
+      },
+      {
+        "상황ID": "S036",
+        "정답": "sodium/low, fat/low",
+        "예측": "protein/high, fat/low",
+        "count": 4
+      },
+      {
+        "상황ID": "S3004",
+        "정답": "calories/high, carbs/high",
+        "예측": "carbs/high, fat/low",
+        "count": 4
+      },
+      {
+        "상황ID": "S3001",
+        "정답": "carbs/low, protein/high",
+        "예측": "carbs/low, fat/high",
+        "count": 3
+      },
+      {
+        "상황ID": "S3006",
+        "정답": "sodium/high, sugar/high",
+        "예측": "sodium/low, sugar/high",
+        "count": 3
+      },
+      {
+        "상황ID": "S018",
+        "정답": "protein/high, fat/low",
+        "예측": "protein/high, carbs/low",
+        "count": 2
+      },
+      {
+        "상황ID": "S018",
+        "정답": "protein/high, fat/low",
+        "예측": "",
+        "count": 2
+      }
+    ],
+    "gen_sec": 350.3,
+    "load_sec": 7.5,
+    "sec_per_sentence": 1.46,
+    "peak_alloc_gib": 4.7,
+    "test_md5_unchanged": true
+  },
+  "ft": {
+    "label": "파인튜닝(4bit+어댑터)",
+    "exact": {
+      "correct": 206,
+      "n": 240,
+      "acc": 0.8583
+    },
+    "pair": {
+      "correct": 428,
+      "n": 480,
+      "acc": 0.8917
+    },
+    "first": {
+      "correct": 207,
+      "n": 240,
+      "acc": 0.8625
+    },
+    "second": {
+      "correct": 221,
+      "n": 240,
+      "acc": 0.9208
+    },
+    "second_given_first": {
+      "correct": 206,
+      "n": 207,
+      "acc": 0.9952
+    },
+    "format": {
+      "json_parse_fail": 0,
+      "schema_invalid": 0,
+      "out_of_6_nutrient_or_direction_sentences": 1,
+      "invalid_values": {
+        "water/high": 1
+      },
+      "item_count_not_2": 0,
+      "n_items_dist": {
+        "2": 240
+      },
+      "same_nutrient_twice": 0,
+      "truncated": 0
+    },
+    "budget_58": {
+      "correct": 50,
+      "n": 58
+    },
+    "non_budget_182": {
+      "correct": 156,
+      "n": 182
+    },
+    "by_situation": {
+      "S018": {
+        "gold": "protein/high, fat/low",
+        "exact": {
+          "correct": 18,
+          "n": 20,
+          "acc": 0.9
+        }
+      },
+      "S036": {
+        "gold": "sodium/low, fat/low",
+        "exact": {
+          "correct": 14,
+          "n": 20,
+          "acc": 0.7
+        }
+      },
+      "S2009": {
+        "gold": "carbs/high, calories/high",
+        "exact": {
+          "correct": 19,
+          "n": 20,
+          "acc": 0.95
+        }
+      },
+      "S2036": {
+        "gold": "fat/low, calories/low",
+        "exact": {
+          "correct": 19,
+          "n": 20,
+          "acc": 0.95
+        }
+      },
+      "S2054": {
+        "gold": "calories/low, fat/low",
+        "exact": {
+          "correct": 19,
+          "n": 20,
+          "acc": 0.95
+        }
+      },
+      "S2063": {
+        "gold": "sugar/high, calories/high",
+        "exact": {
+          "correct": 17,
+          "n": 20,
+          "acc": 0.85
+        }
+      },
+      "S3001": {
+        "gold": "carbs/low, protein/high",
+        "exact": {
+          "correct": 9,
+          "n": 20,
+          "acc": 0.45
+        }
+      },
+      "S3002": {
+        "gold": "fat/high, calories/high",
+        "exact": {
+          "correct": 20,
+          "n": 20,
+          "acc": 1.0
+        }
+      },
+      "S3003": {
+        "gold": "calories/high, carbs/high",
+        "exact": {
+          "correct": 17,
+          "n": 20,
+          "acc": 0.85
+        }
+      },
+      "S3004": {
+        "gold": "calories/high, carbs/high",
+        "exact": {
+          "correct": 16,
+          "n": 20,
+          "acc": 0.8
+        }
+      },
+      "S3005": {
+        "gold": "sugar/low, calories/low",
+        "exact": {
+          "correct": 20,
+          "n": 20,
+          "acc": 1.0
+        }
+      },
+      "S3006": {
+        "gold": "sodium/high, sugar/high",
+        "exact": {
+          "correct": 18,
+          "n": 20,
+          "acc": 0.9
+        }
+      }
+    },
+    "by_style": {
+      "구어체": {
+        "correct": 43,
+        "n": 50,
+        "acc": 0.86
+      },
+      "길고 두서없는 문장": {
+        "correct": 21,
+        "n": 24,
+        "acc": 0.875
+      },
+      "목적 직접형": {
+        "correct": 35,
+        "n": 36,
+        "acc": 0.9722
+      },
+      "성분 직접 언급": {
+        "correct": 22,
+        "n": 24,
+        "acc": 0.9167
+      },
+      "예산 포함": {
+        "correct": 50,
+        "n": 58,
+        "acc": 0.8621
+      },
+      "줄임말·오타": {
+        "correct": 25,
+        "n": 36,
+        "acc": 0.6944
+      },
+      "짧은 문장": {
+        "correct": 10,
+        "n": 12,
+        "acc": 0.8333
+      }
+    },
+    "wrong_patterns_top": [
+      {
+        "상황ID": "S3001",
+        "정답": "carbs/low, protein/high",
+        "예측": "protein/high, fat/low",
+        "count": 8
+      },
+      {
+        "상황ID": "S036",
+        "정답": "sodium/low, fat/low",
+        "예측": "fat/low, calories/low",
+        "count": 5
+      },
+      {
+        "상황ID": "S018",
+        "정답": "protein/high, fat/low",
+        "예측": "calories/low, fat/low",
+        "count": 2
+      },
+      {
+        "상황ID": "S2063",
+        "정답": "sugar/high, calories/high",
+        "예측": "sugar/low, calories/low",
+        "count": 2
+      },
+      {
+        "상황ID": "S3001",
+        "정답": "carbs/low, protein/high",
+        "예측": "fat/low, calories/low",
+        "count": 2
+      },
+      {
+        "상황ID": "S3003",
+        "정답": "calories/high, carbs/high",
+        "예측": "protein/high, fat/low",
+        "count": 2
+      },
+      {
+        "상황ID": "S3004",
+        "정답": "calories/high, carbs/high",
+        "예측": "protein/high, fat/low",
+        "count": 2
+      },
+      {
+        "상황ID": "S3004",
+        "정답": "calories/high, carbs/high",
+        "예측": "carbs/low, protein/high",
+        "count": 2
+      },
+      {
+        "상황ID": "S036",
+        "정답": "sodium/low, fat/low",
+        "예측": "water/high, calories/low",
+        "count": 1
+      },
+      {
+        "상황ID": "S2009",
+        "정답": "carbs/high, calories/high",
+        "예측": "fat/low, calories/low",
+        "count": 1
+      }
+    ],
+    "gen_sec": 631.9,
+    "load_sec": 9.5,
+    "sec_per_sentence": 2.63,
+    "peak_alloc_gib": 4.86,
+    "test_md5_unchanged": true
+  }
+}

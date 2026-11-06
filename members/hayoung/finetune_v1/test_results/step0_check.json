@@ -1,0 +1,50 @@
+{
+  "test_columns": [
+    "상황ID",
+    "입력 문장",
+    "말투 유형",
+    "작성자",
+    "성분1",
+    "방향1",
+    "성분2",
+    "방향2"
+  ],
+  "columns_ok": true,
+  "test_rows": 240,
+  "test_situations": {
+    "S018": 20,
+    "S036": 20,
+    "S2009": 20,
+    "S2036": 20,
+    "S2054": 20,
+    "S2063": 20,
+    "S3001": 20,
+    "S3002": 20,
+    "S3003": 20,
+    "S3004": 20,
+    "S3005": 20,
+    "S3006": 20
+  },
+  "test_styles": {
+    "예산 포함": 58,
+    "구어체": 50,
+    "목적 직접형": 36,
+    "줄임말·오타": 36,
+    "성분 직접 언급": 24,
+    "길고 두서없는 문장": 24,
+    "짧은 문장": 12
+  },
+  "test_authors": {
+    "종호": 240
+  },
+  "empty_cells": 0,
+  "dev_rows": 216,
+  "train_rows": 2820,
+  "exact_sentence_overlap_dev": [],
+  "situation_overlap_dev": [],
+  "near_dup_ge_0.9_dev": [],
+  "exact_sentence_overlap_train": [],
+  "situation_overlap_train": [],
+  "near_dup_ge_0.9_train": [],
+  "test_internal_duplicates": []
+}
