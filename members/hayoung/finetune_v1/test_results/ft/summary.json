@@ -1,0 +1,1007 @@
+{
+  "split": "test_pair_v3_240 (240)",
+  "test_md5": "a405dcd384aa8f5777eea5add5cc1795",
+  "adapter": "/home/ai/work/finetune_v1/adapter/best",
+  "use_adapter": true,
+  "model": "A.X-4.0-Light 4bit NF4 + LoRA best adapter (WSL RTX 4060)",
+  "load_sec": 9.5,
+  "gen_sec": 631.9,
+  "peak_alloc_gib": 4.86,
+  "test_md5_unchanged": true,
+  "n": 240,
+  "prompt_fields_used": [
+    "입력 문장"
+  ],
+  "overall": {
+    "exact": {
+      "correct": 206,
+      "n": 240,
+      "acc": 0.8583
+    },
+    "pair": {
+      "correct": 428,
+      "n": 480,
+      "acc": 0.8917
+    },
+    "at_least_one": {
+      "correct": 222,
+      "n": 240,
+      "acc": 0.925
+    },
+    "nutrient_only_sentence": {
+      "correct": 209,
+      "n": 240,
+      "acc": 0.8708
+    },
+    "nutrient_only_pair": {
+      "correct": 441,
+      "n": 480,
+      "acc": 0.9187
+    },
+    "direction_only_sentence": {
+      "correct": 219,
+      "n": 240,
+      "acc": 0.9125
+    },
+    "direction_only_pair": {
+      "correct": 452,
+      "n": 480,
+      "acc": 0.9417
+    },
+    "direction_when_nutrient_found": {
+      "correct": 428,
+      "n": 441,
+      "acc": 0.9705
+    },
+    "first": {
+      "correct": 207,
+      "n": 240,
+      "acc": 0.8625
+    },
+    "second": {
+      "correct": 221,
+      "n": 240,
+      "acc": 0.9208
+    },
+    "second_given_first": {
+      "correct": 206,
+      "n": 207,
+      "acc": 0.9952
+    }
+  },
+  "counts": {
+    "n_items": {
+      "2": 240
+    },
+    "one_item": 0,
+    "three_or_more_items": 0,
+    "same_nutrient_twice": 0,
+    "invalid_value_sentences": 1,
+    "invalid_values": {
+      "water/high": 1
+    },
+    "parse_fail": 0,
+    "schema_invalid_but_parsed": 0,
+    "truncated_at_max_new_tokens": 0
+  },
+  "by_nutrient": {
+    "calories": {
+      "all": {
+        "correct": 147,
+        "n": 160,
+        "acc": 0.9187
+      },
+      "first": {
+        "correct": 52,
+        "n": 60,
+        "acc": 0.8667
+      },
+      "second": {
+        "correct": 95,
+        "n": 100,
+        "acc": 0.95
+      },
+      "nutrient_found": {
+        "correct": 152,
+        "n": 160,
+        "acc": 0.95
+      }
+    },
+    "carbs": {
+      "all": {
+        "correct": 61,
+        "n": 80,
+        "acc": 0.7625
+      },
+      "first": {
+        "correct": 28,
+        "n": 40,
+        "acc": 0.7
+      },
+      "second": {
+        "correct": 33,
+        "n": 40,
+        "acc": 0.825
+      },
+      "nutrient_found": {
+        "correct": 64,
+        "n": 80,
+        "acc": 0.8
+      }
+    },
+    "fat": {
+      "all": {
+        "correct": 98,
+        "n": 100,
+        "acc": 0.98
+      },
+      "first": {
+        "correct": 40,
+        "n": 40,
+        "acc": 1.0
+      },
+      "second": {
+        "correct": 58,
+        "n": 60,
+        "acc": 0.9667
+      },
+      "nutrient_found": {
+        "correct": 98,
+        "n": 100,
+        "acc": 0.98
+      }
+    },
+    "protein": {
+      "all": {
+        "correct": 35,
+        "n": 40,
+        "acc": 0.875
+      },
+      "first": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "second": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      },
+      "nutrient_found": {
+        "correct": 35,
+        "n": 40,
+        "acc": 0.875
+      }
+    },
+    "sodium": {
+      "all": {
+        "correct": 32,
+        "n": 40,
+        "acc": 0.8
+      },
+      "first": {
+        "correct": 32,
+        "n": 40,
+        "acc": 0.8
+      },
+      "second": {
+        "correct": 0,
+        "n": 0,
+        "acc": null
+      },
+      "nutrient_found": {
+        "correct": 34,
+        "n": 40,
+        "acc": 0.85
+      }
+    },
+    "sugar": {
+      "all": {
+        "correct": 55,
+        "n": 60,
+        "acc": 0.9167
+      },
+      "first": {
+        "correct": 37,
+        "n": 40,
+        "acc": 0.925
+      },
+      "second": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "nutrient_found": {
+        "correct": 58,
+        "n": 60,
+        "acc": 0.9667
+      }
+    }
+  },
+  "by_direction": {
+    "high": {
+      "all": {
+        "correct": 249,
+        "n": 280,
+        "acc": 0.8893
+      },
+      "first": {
+        "correct": 125,
+        "n": 140,
+        "acc": 0.8929
+      },
+      "second": {
+        "correct": 124,
+        "n": 140,
+        "acc": 0.8857
+      },
+      "nutrient_found": {
+        "correct": 261,
+        "n": 280,
+        "acc": 0.9321
+      }
+    },
+    "low": {
+      "all": {
+        "correct": 179,
+        "n": 200,
+        "acc": 0.895
+      },
+      "first": {
+        "correct": 82,
+        "n": 100,
+        "acc": 0.82
+      },
+      "second": {
+        "correct": 97,
+        "n": 100,
+        "acc": 0.97
+      },
+      "nutrient_found": {
+        "correct": 180,
+        "n": 200,
+        "acc": 0.9
+      }
+    }
+  },
+  "by_situation": {
+    "S018": {
+      "gold": "protein/high, fat/low",
+      "exact": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "pair": {
+        "correct": 38,
+        "n": 40,
+        "acc": 0.95
+      },
+      "first": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "second": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      }
+    },
+    "S036": {
+      "gold": "sodium/low, fat/low",
+      "exact": {
+        "correct": 14,
+        "n": 20,
+        "acc": 0.7
+      },
+      "pair": {
+        "correct": 33,
+        "n": 40,
+        "acc": 0.825
+      },
+      "first": {
+        "correct": 14,
+        "n": 20,
+        "acc": 0.7
+      },
+      "second": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      }
+    },
+    "S2009": {
+      "gold": "carbs/high, calories/high",
+      "exact": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "pair": {
+        "correct": 38,
+        "n": 40,
+        "acc": 0.95
+      },
+      "first": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "second": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      }
+    },
+    "S2036": {
+      "gold": "fat/low, calories/low",
+      "exact": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "pair": {
+        "correct": 39,
+        "n": 40,
+        "acc": 0.975
+      },
+      "first": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      },
+      "second": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      }
+    },
+    "S2054": {
+      "gold": "calories/low, fat/low",
+      "exact": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "pair": {
+        "correct": 38,
+        "n": 40,
+        "acc": 0.95
+      },
+      "first": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      },
+      "second": {
+        "correct": 19,
+        "n": 20,
+        "acc": 0.95
+      }
+    },
+    "S2063": {
+      "gold": "sugar/high, calories/high",
+      "exact": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      },
+      "pair": {
+        "correct": 34,
+        "n": 40,
+        "acc": 0.85
+      },
+      "first": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      },
+      "second": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      }
+    },
+    "S3001": {
+      "gold": "carbs/low, protein/high",
+      "exact": {
+        "correct": 9,
+        "n": 20,
+        "acc": 0.45
+      },
+      "pair": {
+        "correct": 26,
+        "n": 40,
+        "acc": 0.65
+      },
+      "first": {
+        "correct": 9,
+        "n": 20,
+        "acc": 0.45
+      },
+      "second": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      }
+    },
+    "S3002": {
+      "gold": "fat/high, calories/high",
+      "exact": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      },
+      "pair": {
+        "correct": 40,
+        "n": 40,
+        "acc": 1.0
+      },
+      "first": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      },
+      "second": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      }
+    },
+    "S3003": {
+      "gold": "calories/high, carbs/high",
+      "exact": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      },
+      "pair": {
+        "correct": 34,
+        "n": 40,
+        "acc": 0.85
+      },
+      "first": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      },
+      "second": {
+        "correct": 17,
+        "n": 20,
+        "acc": 0.85
+      }
+    },
+    "S3004": {
+      "gold": "calories/high, carbs/high",
+      "exact": {
+        "correct": 16,
+        "n": 20,
+        "acc": 0.8
+      },
+      "pair": {
+        "correct": 32,
+        "n": 40,
+        "acc": 0.8
+      },
+      "first": {
+        "correct": 16,
+        "n": 20,
+        "acc": 0.8
+      },
+      "second": {
+        "correct": 16,
+        "n": 20,
+        "acc": 0.8
+      }
+    },
+    "S3005": {
+      "gold": "sugar/low, calories/low",
+      "exact": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      },
+      "pair": {
+        "correct": 40,
+        "n": 40,
+        "acc": 1.0
+      },
+      "first": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      },
+      "second": {
+        "correct": 20,
+        "n": 20,
+        "acc": 1.0
+      }
+    },
+    "S3006": {
+      "gold": "sodium/high, sugar/high",
+      "exact": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "pair": {
+        "correct": 36,
+        "n": 40,
+        "acc": 0.9
+      },
+      "first": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      },
+      "second": {
+        "correct": 18,
+        "n": 20,
+        "acc": 0.9
+      }
+    }
+  },
+  "by_author": {
+    "종호": {
+      "gold": null,
+      "exact": {
+        "correct": 206,
+        "n": 240,
+        "acc": 0.8583
+      },
+      "pair": {
+        "correct": 428,
+        "n": 480,
+        "acc": 0.8917
+      },
+      "first": {
+        "correct": 207,
+        "n": 240,
+        "acc": 0.8625
+      },
+      "second": {
+        "correct": 221,
+        "n": 240,
+        "acc": 0.9208
+      }
+    }
+  },
+  "by_style": {
+    "구어체": {
+      "gold": null,
+      "exact": {
+        "correct": 43,
+        "n": 50,
+        "acc": 0.86
+      },
+      "pair": {
+        "correct": 88,
+        "n": 100,
+        "acc": 0.88
+      },
+      "first": {
+        "correct": 43,
+        "n": 50,
+        "acc": 0.86
+      },
+      "second": {
+        "correct": 45,
+        "n": 50,
+        "acc": 0.9
+      }
+    },
+    "길고 두서없는 문장": {
+      "gold": null,
+      "exact": {
+        "correct": 21,
+        "n": 24,
+        "acc": 0.875
+      },
+      "pair": {
+        "correct": 44,
+        "n": 48,
+        "acc": 0.9167
+      },
+      "first": {
+        "correct": 21,
+        "n": 24,
+        "acc": 0.875
+      },
+      "second": {
+        "correct": 23,
+        "n": 24,
+        "acc": 0.9583
+      }
+    },
+    "목적 직접형": {
+      "gold": null,
+      "exact": {
+        "correct": 35,
+        "n": 36,
+        "acc": 0.9722
+      },
+      "pair": {
+        "correct": 71,
+        "n": 72,
+        "acc": 0.9861
+      },
+      "first": {
+        "correct": 35,
+        "n": 36,
+        "acc": 0.9722
+      },
+      "second": {
+        "correct": 36,
+        "n": 36,
+        "acc": 1.0
+      }
+    },
+    "성분 직접 언급": {
+      "gold": null,
+      "exact": {
+        "correct": 22,
+        "n": 24,
+        "acc": 0.9167
+      },
+      "pair": {
+        "correct": 46,
+        "n": 48,
+        "acc": 0.9583
+      },
+      "first": {
+        "correct": 22,
+        "n": 24,
+        "acc": 0.9167
+      },
+      "second": {
+        "correct": 24,
+        "n": 24,
+        "acc": 1.0
+      }
+    },
+    "예산 포함": {
+      "gold": null,
+      "exact": {
+        "correct": 50,
+        "n": 58,
+        "acc": 0.8621
+      },
+      "pair": {
+        "correct": 104,
+        "n": 116,
+        "acc": 0.8966
+      },
+      "first": {
+        "correct": 50,
+        "n": 58,
+        "acc": 0.8621
+      },
+      "second": {
+        "correct": 54,
+        "n": 58,
+        "acc": 0.931
+      }
+    },
+    "줄임말·오타": {
+      "gold": null,
+      "exact": {
+        "correct": 25,
+        "n": 36,
+        "acc": 0.6944
+      },
+      "pair": {
+        "correct": 53,
+        "n": 72,
+        "acc": 0.7361
+      },
+      "first": {
+        "correct": 25,
+        "n": 36,
+        "acc": 0.6944
+      },
+      "second": {
+        "correct": 28,
+        "n": 36,
+        "acc": 0.7778
+      }
+    },
+    "짧은 문장": {
+      "gold": null,
+      "exact": {
+        "correct": 10,
+        "n": 12,
+        "acc": 0.8333
+      },
+      "pair": {
+        "correct": 22,
+        "n": 24,
+        "acc": 0.9167
+      },
+      "first": {
+        "correct": 11,
+        "n": 12,
+        "acc": 0.9167
+      },
+      "second": {
+        "correct": 11,
+        "n": 12,
+        "acc": 0.9167
+      }
+    }
+  },
+  "wrong": [
+    {
+      "row": 7,
+      "상황ID": "S018",
+      "입력 문장": "가루를 타지 않고 바로 먹을 수 있는 대체품을 찾고 있어",
+      "정답": "protein/high, fat/low",
+      "예측": "calories/low, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"calories\", \"direction\": \"low\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 11,
+      "상황ID": "S018",
+      "입력 문장": "쉐이크 대신 머먹지",
+      "정답": "protein/high, fat/low",
+      "예측": "calories/low, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"calories\", \"direction\": \"low\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 22,
+      "상황ID": "S036",
+      "입력 문장": "방금 라면 먹었는데 물이 계속 당겨 뭐 먹으면 좋아",
+      "정답": "sodium/low, fat/low",
+      "예측": "water/high, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"water\", \"direction\": \"high\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 32,
+      "상황ID": "S036",
+      "입력 문장": "라면 후 입가심 머있음",
+      "정답": "sodium/low, fat/low",
+      "예측": "fat/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"fat\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 34,
+      "상황ID": "S036",
+      "입력 문장": "라면 먹은 속 달래는 데 3천원까지만 쓸래",
+      "정답": "sodium/low, fat/low",
+      "예측": "fat/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"fat\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 35,
+      "상황ID": "S036",
+      "입력 문장": "라면 후 입가심용으로 쓸 돈은 4천원이야",
+      "정답": "sodium/low, fat/low",
+      "예측": "fat/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"fat\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 37,
+      "상황ID": "S036",
+      "입력 문장": "6천원 이하로 라면 먹고 나서 먹을 거 알려줘",
+      "정답": "sodium/low, fat/low",
+      "예측": "fat/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"fat\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 40,
+      "상황ID": "S036",
+      "입력 문장": "라면 먹은 뒤 입가심",
+      "정답": "sodium/low, fat/low",
+      "예측": "fat/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"fat\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 52,
+      "상황ID": "S2009",
+      "입력 문장": "밥 땡김ㅋㅋ 면도 ㄱㅊ 머살까",
+      "정답": "carbs/high, calories/high",
+      "예측": "fat/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"fat\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 80,
+      "상황ID": "S2036",
+      "입력 문장": "입덧 중 먹을 거",
+      "정답": "fat/low, calories/low",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 98,
+      "상황ID": "S2054",
+      "입력 문장": "오늘 저녁에 부서 회식이 있는데 고깃집이라 분명 많이 먹게 될 것 같아서요, 점심은 아주 조금만 먹고 저녁을 기다릴까 생각 중이에요.",
+      "정답": "calories/low, fat/low",
+      "예측": "calories/high, carbs/high",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"calories\", \"direction\": \"high\"}, {\"nutrient\": \"carbs\", \"direction\": \"high\"}]}"
+    },
+    {
+      "row": 102,
+      "상황ID": "S2063",
+      "입력 문장": "깜짝 파티 하려는데 케이크 대신 살 만한 거 있을까?",
+      "정답": "sugar/high, calories/high",
+      "예측": "sugar/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"sugar\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 110,
+      "상황ID": "S2063",
+      "입력 문장": "친구 생일 깜빡ㅠㅠ 케이크 대신 머있어",
+      "정답": "sugar/high, calories/high",
+      "예측": "sugar/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"sugar\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 114,
+      "상황ID": "S2063",
+      "입력 문장": "깜짝 파티 간식 예산이 만 원이야. 뭘 담을까?",
+      "정답": "sugar/high, calories/high",
+      "예측": "calories/low, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"calories\", \"direction\": \"low\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 121,
+      "상황ID": "S3001",
+      "입력 문장": "오늘 저탄 데이라 밥은 못 먹는데 근육은 지켜야 해. 뭐 사 먹지?",
+      "정답": "carbs/low, protein/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 123,
+      "상황ID": "S3001",
+      "입력 문장": "어제는 밥 실컷 먹었고 오늘은 고기랑 계란만 먹는 차례야. 편의점에 뭐 있을까?",
+      "정답": "carbs/low, protein/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 128,
+      "상황ID": "S3001",
+      "입력 문장": "오늘은 탄수화물을 거의 안 먹는 날이라 단백질 위주로 골라 주세요.",
+      "정답": "carbs/low, protein/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 129,
+      "상황ID": "S3001",
+      "입력 문장": "탄수 제한일인데 단백질은 채워야 해. 뭐가 좋아?",
+      "정답": "carbs/low, protein/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 130,
+      "상황ID": "S3001",
+      "입력 문장": "오늘 저탄데이ㅋㅋ 밥빼고 고기 머있음",
+      "정답": "carbs/low, protein/high",
+      "예측": "fat/high, calories/high",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"fat\", \"direction\": \"high\"}, {\"nutrient\": \"calories\", \"direction\": \"high\"}]}"
+    },
+    {
+      "row": 131,
+      "상황ID": "S3001",
+      "입력 문장": "카브사이클 저탄날 ㅠ 닭가슴살류 추천 ㄱ",
+      "정답": "carbs/low, protein/high",
+      "예측": "fat/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"fat\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 132,
+      "상황ID": "S3001",
+      "입력 문장": "쌀 안먹는날임 단백질 머먹징",
+      "정답": "carbs/low, protein/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 134,
+      "상황ID": "S3001",
+      "입력 문장": "쌀 빼는 날인데 지갑에 4천원 있어. 고기 쪽으로 될까?",
+      "정답": "carbs/low, protein/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 136,
+      "상황ID": "S3001",
+      "입력 문장": "3,500원 들고 왔어. 저탄날에 먹을 계란류 있어?",
+      "정답": "carbs/low, protein/high",
+      "예측": "fat/low, calories/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"fat\", \"direction\": \"low\"}, {\"nutrient\": \"calories\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 138,
+      "상황ID": "S3001",
+      "입력 문장": "월수금은 밥을 먹고 화목토는 쌀을 안 먹는 식으로 식단을 돌리고 있는데 오늘이 쌀 없는 날이라서요, 근육 안 빠지게 편의점에서 뭘 챙겨야 할지 고민이에요.",
+      "정답": "carbs/low, protein/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 139,
+      "상황ID": "S3001",
+      "입력 문장": "트레이너가 짜 준 표대로 오늘은 밥이랑 빵을 전부 빼야 하는데 회사 근처엔 편의점밖에 없고, 그렇다고 굶으면 운동 효과가 떨어질 것 같아서 고기나 달걀 같은 걸 찾고 있어요.",
+      "정답": "carbs/low, protein/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 171,
+      "상황ID": "S3003",
+      "입력 문장": "조기축구 ㄷㄷ 밥 머먹징",
+      "정답": "calories/high, carbs/high",
+      "예측": "carbs/low, protein/high",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"carbs\", \"direction\": \"low\"}, {\"nutrient\": \"protein\", \"direction\": \"high\"}]}"
+    },
+    {
+      "row": 172,
+      "상황ID": "S3003",
+      "입력 문장": "헬스 가기전ㅋㅋ 배 채울거 추천",
+      "정답": "calories/high, carbs/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 177,
+      "상황ID": "S3003",
+      "입력 문장": "7,000원 들고 왔어요, 헬스 시작 전에 배부른 걸로 부탁해요.",
+      "정답": "calories/high, carbs/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 182,
+      "상황ID": "S3004",
+      "입력 문장": "페스티벌 왔는데 줄이 너무 길어. 든든한 거 먹고 들어갈까?",
+      "정답": "calories/high, carbs/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 183,
+      "상황ID": "S3004",
+      "입력 문장": "스탠딩 공연 앞줄 잡으려면 밥 먹을 시간이 없어. 미리 뭐 먹지?",
+      "정답": "calories/high, carbs/high",
+      "예측": "carbs/low, protein/high",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"carbs\", \"direction\": \"low\"}, {\"nutrient\": \"protein\", \"direction\": \"high\"}]}"
+    },
+    {
+      "row": 192,
+      "상황ID": "S3004",
+      "입력 문장": "공연 대기줄임 밥 머먹징",
+      "정답": "calories/high, carbs/high",
+      "예측": "carbs/low, protein/high",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"carbs\", \"direction\": \"low\"}, {\"nutrient\": \"protein\", \"direction\": \"high\"}]}"
+    },
+    {
+      "row": 196,
+      "상황ID": "S3004",
+      "입력 문장": "스탠딩 들어가기 전에 5천원 쓰려고 하는데 든든한 게 뭐야?",
+      "정답": "calories/high, carbs/high",
+      "예측": "protein/high, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"protein\", \"direction\": \"high\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 222,
+      "상황ID": "S3006",
+      "입력 문장": "사우나 두 시간 했더니 소금기랑 당이 확 떨어진 느낌이야. 뭐 먹지?",
+      "정답": "sodium/high, sugar/high",
+      "예측": "sodium/low, sugar/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"sodium\", \"direction\": \"low\"}, {\"nutrient\": \"sugar\", \"direction\": \"low\"}]}"
+    },
+    {
+      "row": 230,
+      "상황ID": "S3006",
+      "입력 문장": "찜질방 나옴ㅋㅋ 땀 쩔어 단짠 머있음",
+      "정답": "sodium/high, sugar/high",
+      "예측": "sodium/low, fat/low",
+      "raw_output": "{\"nutrients\": [{\"nutrient\": \"sodium\", \"direction\": \"low\"}, {\"nutrient\": \"fat\", \"direction\": \"low\"}]}"
+    }
+  ]
+}

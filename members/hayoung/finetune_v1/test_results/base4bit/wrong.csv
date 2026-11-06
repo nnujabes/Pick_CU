@@ -1,0 +1,136 @@
+﻿row,상황ID,작성자,말투 유형,입력 문장,정답,예측,결과,맞은 쌍 수,first_ok,second_ok,n_items,same_nutrient_twice,invalid_items,parse_ok,schema_ok,truncated,raw_output
+8,S018,종호,목적 직접형,쉐이크 대신 근육에 도움 되는 걸 간단히 사서 먹고 싶어,"protein/high, fat/low","protein/high, carbs/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""carbs"", ""direction"": ""low""}]}"
+9,S018,종호,성분 직접 언급,프로틴 대신 먹을 수 있는 고단백 식품 알려줘,"protein/high, fat/low",protein/high,틀림,1,True,False,1,False,0,True,True,False,"```json{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}]}```"
+13,S018,종호,줄임말·오타,쉐이크 귀찮음 바로먹을거 알려줘,"protein/high, fat/low","protein/high, carbs/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""carbs"", ""direction"": ""low""}]}"
+14,S018,종호,예산 포함,4천원 넘지 않게 쉐이크 대신할 거 추천해줘,"protein/high, fat/low",,틀림,0,False,False,0,False,0,False,False,True,"4천원 넘지 않는 쉐이크 대체로는 다음과 같은 옵션을 고려할 수 있습니다:
+
+1. **그릭 요거트 + 과일 + 견과류**:
+   - **단백질**: 높음
+   - **지방**: 낮음
+
+2. **오트밀 + 바나나 + 아몬드 밀크**:
+   - **단백질**: 중간
+   - **지방**: 낮음
+
+3. **스무디 볼 (채소 + 과일 + 단백질 파우더)**:
+   - **단백질**: 높음
+   - **지방**: 낮음
+
+4. **통곡물 빵 + 아보카도 + 계란**:
+   - **단백질**: 높음
+   - **지방**:"
+16,S018,종호,예산 포함,쉐이크 마신 셈 칠 만한 게 3천원대에도 있을까,"protein/high, fat/low",,틀림,0,False,False,0,False,0,False,False,True,"3천원대 쉐이크 중에서 영양 추천을 위해 고려할 수 있는 옵션을 생각해 볼 수 있습니다. 일반적으로 이 가격대에서는 다음과 같은 쉐이크를 찾을 수 있습니다:
+
+1. **단백질 쉐이크**: 운동 후 회복을 위해 고단백, 저지방 옵션이 좋습니다.
+2. **스무디 볼**: 과일, 채소, 견과류 등을 포함한 스무디 볼은 저열량, 고섬유질, 고비타민을 제공할 수 있습니다.
+
+이 두 가지 옵션을 JSON 형식으로 표현하면 다음과 같습니다:
+
+```json
+{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]"
+22,S036,종호,구어체,방금 라면 먹었는데 물이 계속 당겨 뭐 먹으면 좋아,"sodium/low, fat/low","sugar/high, calories/high",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""sugar"", ""direction"": ""high""}, {""nutrient"": ""calories"", ""direction"": ""high""}]}"
+24,S036,종호,구어체,라면 국물 다 마셨더니 속이 불편해 뭐가 좋을까,"sodium/low, fat/low","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+26,S036,종호,목적 직접형,라면으로 짜게 먹은 속을 담백하게 풀어줄 걸 먹고 싶어,"sodium/low, fat/low","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+34,S036,종호,예산 포함,라면 먹은 속 달래는 데 3천원까지만 쓸래,"sodium/low, fat/low","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+37,S036,종호,예산 포함,6천원 이하로 라면 먹고 나서 먹을 거 알려줘,"sodium/low, fat/low","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+41,S2009,종호,구어체,오늘따라 빵이 너무 당기네. 뭐 먹을까?,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+42,S2009,종호,구어체,갑자기 칼국수 같은 면 요리가 미친 듯이 먹고 싶어. 뭐 있어?,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+43,S2009,종호,구어체,하루 종일 밥이랑 면 생각뿐이야. 편의점에서 뭐 사 먹지?,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+44,S2009,종호,구어체,떡볶이 떡처럼 쫀득한 게 자꾸 생각나. 편의점에 뭐 있어?,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+46,S2009,종호,목적 직접형,갓 구운 빵 같은 걸로 입맛을 달래고 싶습니다.,"carbs/high, calories/high","carbs/high, fat/high",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+47,S2009,종호,목적 직접형,삼각김밥이나 우동처럼 밥과 면 위주로 끼니를 채우려고 해요.,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+50,S2009,종호,줄임말·오타,빵 땡긴다ㅠㅠㅠ 머 먹지,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+52,S2009,종호,줄임말·오타,밥 땡김ㅋㅋ 면도 ㄱㅊ 머살까,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+53,S2009,종호,예산 포함,빵이 너무 먹고 싶은데 지갑에 3천원뿐이야. 뭐 살까?,"carbs/high, calories/high","carbs/high, sugar/high",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""sugar"", ""direction"": ""high""}]}"
+54,S2009,종호,예산 포함,면 요리가 당겨요. 5천원 안으로 뭐가 있을까요?,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+55,S2009,종호,예산 포함,쫄깃한 떡이나 빵이 생각나는데 4천원이면 충분할까?,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+56,S2009,종호,예산 포함,오늘 7천원까지는 쓸게요. 면과 빵을 실컷 먹을 수 있게 골라주세요.,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+57,S2009,종호,예산 포함,만원 이하로 빵을 잔뜩 사서 쌓아두고 먹고 싶어.,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+58,S2009,종호,길고 두서없는 문장,"요즘 빵을 안 먹으려고 했는데 오늘은 도저히 못 참겠어요, 퇴근길에 지나치던 빵집 냄새 때문인지 머릿속에 온통 빵 생각뿐이네요.","carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+59,S2009,종호,길고 두서없는 문장,"아까 드라마에서 다들 국수를 맛있게 먹는 걸 봤더니 계속 생각나고, 집에 먹을 것도 없어서 면 종류로 뭐라도 사 가려고요.","carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+60,S2009,종호,짧은 문장,빵이랑 면 생각남,"carbs/high, calories/high","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+61,S2036,종호,구어체,요즘 입덧이 심해서 기름 냄새만 맡아도 토할 것 같아. 뭐 먹지?,"fat/low, calories/low","protein/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+63,S2036,종호,구어체,온장고 앞만 지나가도 기름 냄새 때문에 괴로워. 뭘 먹을 수 있을까?,"fat/low, calories/low","protein/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+64,S2036,종호,구어체,임신하고 나서 고기 기름 냄새가 제일 힘들어. 뭐 사 먹을까?,"fat/low, calories/low","protein/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+65,S2036,종호,목적 직접형,입덧이 가라앉을 때 기름 냄새 걱정 없이 먹을 한 끼를 고르려고 해요.,"fat/low, calories/low","carbs/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+71,S2036,종호,줄임말·오타,입덧 지옥ㅜㅜ 안느끼한거 머있나요,"fat/low, calories/low","calories/high, carbs/high",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""carbs"", ""direction"": ""high""}]}"
+72,S2036,종호,줄임말·오타,임산부임ㅠ 기름진거 못먹음 머사지,"fat/low, calories/low","protein/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+73,S2036,종호,예산 포함,입덧 때문에 기름 냄새가 괴로운데 3천원으로 뭘 살 수 있어?,"fat/low, calories/low","carbs/high, sugar/high",틀림,0,False,False,2,False,0,True,True,False,"```json{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""sugar"", ""direction"": ""high""}]}```"
+74,S2036,종호,예산 포함,입덧 중인데 쓸 돈은 5천원이에요. 속 안 뒤집힐 걸로 부탁해요.,"fat/low, calories/low","protein/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+77,S2036,종호,예산 포함,입덧 간식 사려는데 2500원에 맞는 것 중 냄새 약한 건 뭐야?,"fat/low, calories/low",,틀림,0,False,False,0,False,0,False,False,True,"입덧 간식으로는 소화가 잘 되고 냄새가 약한 것이 좋습니다. 2500원 예산 내에서 다음과 같은 옵션을 추천합니다:
+
+- **바나나**: 저렴하고 소화가 잘 되며, 냄새가 강하지 않습니다.
+- **오트밀**: 고소하고 냄새가 약하며, 영양가가 높습니다.
+- **요거트**: 냄새가 강하지 않고, 소화에 도움이 됩니다.
+- **견과류(아몬드, 호두 등)**: 소량으로도 포만감을 주며, 냄새가 강하지 않습니다.
+
+이 중에서 **바나나**와 **오트밀**을 추천합니다.
+
+**JSON 형식 영양소 정보:**
+```json
+{""nutrients"": [{""nutrient"": ""protein"", ""direction"":"
+78,S2036,종호,길고 두서없는 문장,"임신 초기라 입덧이 심한데 고기 굽는 냄새나 튀김 냄새를 맡으면 바로 속이 울렁거려서요, 냄새가 거의 안 나는 음식을 찾고 있어요.","fat/low, calories/low","protein/high, fat/low",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+80,S2036,종호,짧은 문장,입덧 중 먹을 거,"fat/low, calories/low","calories/high, carbs/high",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""carbs"", ""direction"": ""high""}]}"
+83,S2054,종호,구어체,오늘 저녁 모임 분명 많이 먹을 거야. 그 전에 뭘 먹을까?,"calories/low, fat/low","calories/high, carbs/high",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""carbs"", ""direction"": ""high""}]}"
+84,S2054,종호,구어체,곧 삼겹살 먹으러 가는데 그 전에 입만 달랠 거 있어?,"calories/low, fat/low","carbs/high, sugar/high",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""sugar"", ""direction"": ""high""}]}"
+90,S2054,종호,줄임말·오타,저녁 고기파티라ㅋㅋ 점심 가볍게 머먹지,"calories/low, fat/low","calories/high, fat/high",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+94,S2054,종호,예산 포함,"저녁 뷔페 전에 2,500원 정도의 작은 간식이 있을까요?","calories/low, fat/low","carbs/high, sugar/high",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""sugar"", ""direction"": ""high""}]}"
+96,S2054,종호,예산 포함,4천원 내로 저녁 약속 전에 허기만 달랠 메뉴를 찾아.,"calories/low, fat/low","calories/high, carbs/high",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""carbs"", ""direction"": ""high""}]}"
+98,S2054,종호,길고 두서없는 문장,"오늘 저녁에 부서 회식이 있는데 고깃집이라 분명 많이 먹게 될 것 같아서요, 점심은 아주 조금만 먹고 저녁을 기다릴까 생각 중이에요.","calories/low, fat/low","calories/high, fat/high",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+99,S2054,종호,길고 두서없는 문장,"저녁에 친구 결혼 축하 모임이 뷔페에서 열리는데 빈속으로 가면 또 폭식할 것 같고, 그렇다고 많이 먹고 가긴 아까워서 살짝만 뭔가 먹으려고요.","calories/low, fat/low","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+100,S2054,종호,짧은 문장,회식 전 간단 요기,"calories/low, fat/low","carbs/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+102,S2063,종호,구어체,깜짝 파티 하려는데 케이크 대신 살 만한 거 있을까?,"sugar/high, calories/high","carbs/high, sugar/high",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""sugar"", ""direction"": ""high""}]}"
+109,S2063,종호,성분 직접 언급,오늘은 당류 따지지 않고 파티용 간식을 고를래요.,"sugar/high, calories/high","calories/high, fat/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+110,S2063,종호,줄임말·오타,친구 생일 깜빡ㅠㅠ 케이크 대신 머있어,"sugar/high, calories/high","protein/high, fat/low",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+114,S2063,종호,예산 포함,깜짝 파티 간식 예산이 만 원이야. 뭘 담을까?,"sugar/high, calories/high","calories/high, carbs/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""carbs"", ""direction"": ""high""}]}"
+121,S3001,종호,구어체,오늘 저탄 데이라 밥은 못 먹는데 근육은 지켜야 해. 뭐 사 먹지?,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+122,S3001,종호,구어체,카브 사이클링 중인데 오늘은 쌀 없는 날이야. 뭐 있어?,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+123,S3001,종호,구어체,어제는 밥 실컷 먹었고 오늘은 고기랑 계란만 먹는 차례야. 편의점에 뭐 있을까?,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+124,S3001,종호,구어체,식단표 보니까 오늘은 밥이랑 빵 빼는 날이네. 뭘 골라야 돼?,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+125,S3001,종호,목적 직접형,저탄 데이에 맞춰 밥 없이 고기와 달걀 위주로 한 끼를 챙기려고 해요.,"carbs/low, protein/high","protein/high, fat/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+126,S3001,종호,목적 직접형,오늘 식단대로 쌀과 면을 빼고 살코기 위주로 먹으려고 합니다.,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+127,S3001,종호,목적 직접형,"운동 쉬는 날에는 곡물을 빼는 식단이라, 살코기 반찬 같은 메뉴가 필요해요.","carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+128,S3001,종호,성분 직접 언급,오늘은 탄수화물을 거의 안 먹는 날이라 단백질 위주로 골라 주세요.,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+130,S3001,종호,줄임말·오타,오늘 저탄데이ㅋㅋ 밥빼고 고기 머있음,"carbs/low, protein/high","protein/high, fat/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+131,S3001,종호,줄임말·오타,카브사이클 저탄날 ㅠ 닭가슴살류 추천 ㄱ,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+132,S3001,종호,줄임말·오타,쌀 안먹는날임 단백질 머먹징,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+133,S3001,종호,예산 포함,저탄 데이 점심값이 5천원이야. 밥 없는 걸로 뭘 담을까?,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+134,S3001,종호,예산 포함,쌀 빼는 날인데 지갑에 4천원 있어. 고기 쪽으로 될까?,"carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+135,S3001,종호,예산 포함,"오늘 식단 맞춰서 7천원어치 장 보려고요, 밥이랑 면은 빼고요.","carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+136,S3001,종호,예산 포함,"3,500원 들고 왔어. 저탄날에 먹을 계란류 있어?","carbs/low, protein/high","carbs/low, fat/high",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""low""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+137,S3001,종호,예산 포함,저탄 식단 저녁으로 6천원만 쓰고 싶은데 어떤 게 맞아?,"carbs/low, protein/high","carbs/low, fat/high",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""low""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+138,S3001,종호,길고 두서없는 문장,"월수금은 밥을 먹고 화목토는 쌀을 안 먹는 식으로 식단을 돌리고 있는데 오늘이 쌀 없는 날이라서요, 근육 안 빠지게 편의점에서 뭘 챙겨야 할지 고민이에요.","carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+139,S3001,종호,길고 두서없는 문장,"트레이너가 짜 준 표대로 오늘은 밥이랑 빵을 전부 빼야 하는데 회사 근처엔 편의점밖에 없고, 그렇다고 굶으면 운동 효과가 떨어질 것 같아서 고기나 달걀 같은 걸 찾고 있어요.","carbs/low, protein/high","protein/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+140,S3001,종호,짧은 문장,저탄 데이 한 끼,"carbs/low, protein/high","carbs/low, fat/high",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""low""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+171,S3003,종호,줄임말·오타,조기축구 ㄷㄷ 밥 머먹징,"calories/high, carbs/high","carbs/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+172,S3003,종호,줄임말·오타,헬스 가기전ㅋㅋ 배 채울거 추천,"calories/high, carbs/high","carbs/high, protein/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""protein"", ""direction"": ""high""}]}"
+174,S3003,종호,예산 포함,조기축구 전에 4천원으로 배 채울 수 있을까?,"calories/high, carbs/high","carbs/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+183,S3004,종호,구어체,스탠딩 공연 앞줄 잡으려면 밥 먹을 시간이 없어. 미리 뭐 먹지?,"calories/high, carbs/high","carbs/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+192,S3004,종호,줄임말·오타,공연 대기줄임 밥 머먹징,"calories/high, carbs/high","carbs/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+195,S3004,종호,예산 포함,페스티벌 밥값 8천원 남았어. 밥이랑 라면으로 골라 줘.,"calories/high, carbs/high","carbs/high, fat/low",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+197,S3004,종호,예산 포함,"공연 전 간식으로 빵을 사려는데 4,500원이면 몇 개나 될까요?","calories/high, carbs/high","carbs/high, fat/low",틀림,1,False,True,2,False,0,True,True,True,"이 질문에 대한 직접적인 답변은 제공되지 않지만, 간식 구매 시 고려할 수 있는 영양 정보를 JSON 형식으로 제공하겠습니다.
+
+```json
+{""nutrients"": [{""nutrient"": ""carbs"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}
+```
+
+**참고:**
+- **탄수화물(carbs)**: 빵의 주요 성분으로, 에너지를 빠르게 공급합니다.
+- **지방(fat)**: 상대적으로 낮은 지방 함량을 가진 빵을 선택하는 것이 좋습니다.
+
+예산 4,500원으로 구매할 수 있는 빵의 개수는 브랜드, 크기, 포장 단위 등에 따라 달라질 수"
+202,S3005,종호,구어체,편두통이 심한데 초콜릿은 피하래. 간식 뭐가 있어?,"sugar/low, calories/low","protein/high, fat/low",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+204,S3005,종호,구어체,두통 때문에 달달한 음료 못 마셔. 대신 뭐 먹지?,"sugar/low, calories/low","protein/high, fat/low",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+210,S3005,종호,줄임말·오타,편두통 또 옴ㅠㅠ 단거 말고 머먹지,"sugar/low, calories/low","protein/high, fat/low",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+216,S3005,종호,예산 포함,4천원 들고 왔어. 두통 부를 단 건 빼고 뭐 있을까?,"sugar/low, calories/low","protein/high, fat/low",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+219,S3005,종호,길고 두서없는 문장,"다음 주에 중요한 발표가 있는데 달달한 음료만 마시면 두통이 와서 걱정이에요, 평소 과자랑 주스를 달고 살았는데 이제라도 그런 걸 빼고 뭘 먹으면 좋을지 모르겠어요.","sugar/low, calories/low","protein/high, fat/low",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+222,S3006,종호,구어체,사우나 두 시간 했더니 소금기랑 당이 확 떨어진 느낌이야. 뭐 먹지?,"sodium/high, sugar/high","sodium/low, sugar/low",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""sodium"", ""direction"": ""low""}, {""nutrient"": ""sugar"", ""direction"": ""low""}]}"
+223,S3006,종호,구어체,목욕탕 나왔는데 땀으로 다 빠진 것 같아. 달고 짠 걸로 뭐 먹을까?,"sodium/high, sugar/high","calories/high, sugar/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""sugar"", ""direction"": ""high""}]}"
+230,S3006,종호,줄임말·오타,찜질방 나옴ㅋㅋ 땀 쩔어 단짠 머있음,"sodium/high, sugar/high","protein/high, fat/low",틀림,0,False,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""protein"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""low""}]}"
+231,S3006,종호,줄임말·오타,사우나 끝 땀범벅ㅠ 짭짤달달한거 추천,"sodium/high, sugar/high","sodium/low, sugar/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""sodium"", ""direction"": ""low""}, {""nutrient"": ""sugar"", ""direction"": ""high""}]}"
+233,S3006,종호,예산 포함,땀을 너무 뺐는데 3천원으로 달고 짠 거 뭐 살 수 있어?,"sodium/high, sugar/high","calories/high, sodium/high",틀림,1,True,False,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""calories"", ""direction"": ""high""}, {""nutrient"": ""sodium"", ""direction"": ""high""}]}"
+235,S3006,종호,예산 포함,사우나 나와서 4천원 남았어. 소금기 있고 단 간식 될까?,"sodium/high, sugar/high","sodium/low, sugar/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""sodium"", ""direction"": ""low""}, {""nutrient"": ""sugar"", ""direction"": ""high""}]}"
+236,S3006,종호,예산 포함,목욕 끝나고 6천원어치 단짠 간식을 사려고요.,"sodium/high, sugar/high","sugar/high, fat/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""sugar"", ""direction"": ""high""}, {""nutrient"": ""fat"", ""direction"": ""high""}]}"
+238,S3006,종호,길고 두서없는 문장,"오늘 찜질방에서 불가마랑 소금방을 몇 번이나 오갔더니 옷이 다 젖을 만큼 땀을 흘렸어요, 머리도 좀 어지러워서 소금기 있으면서 달달한 걸 먹어야 할 것 같아요.","sodium/high, sugar/high","sugar/high, salt/high",틀림,1,False,True,2,False,1,True,True,False,"{""nutrients"": [{""nutrient"": ""sugar"", ""direction"": ""high""}, {""nutrient"": ""salt"", ""direction"": ""high""}]}"
+239,S3006,종호,길고 두서없는 문장,"주말마다 사우나에서 땀 빼는 게 취미인데 오늘은 너무 오래 있었는지 다리에 힘이 쭉 빠져서요, 짭짤하면서 달콤한 간식으로 보충하려고 나오는 길에 편의점에 들렀어요.","sodium/high, sugar/high","sugar/high, calories/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""sugar"", ""direction"": ""high""}, {""nutrient"": ""calories"", ""direction"": ""high""}]}"
+240,S3006,종호,짧은 문장,사우나 뒤 짭짤달콤한 거,"sodium/high, sugar/high","sodium/low, sugar/high",틀림,1,False,True,2,False,0,True,True,False,"{""nutrients"": [{""nutrient"": ""sodium"", ""direction"": ""low""}, {""nutrient"": ""sugar"", ""direction"": ""high""}]}"
