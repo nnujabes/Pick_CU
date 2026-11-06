@@ -34,7 +34,7 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 
 | 파일 | 역할 |
 | --- | --- |
-| `main.py` | API 경로. 형식은 `members/hyeokjun/curator_web/api_contract.json` |
+| `main.py` | API 경로. 응답 형식의 기준은 이 README의 API 명세서 |
 | `service.py` | 문장 해석 선택(A.X 또는 규칙), 팀 엔진과 상품 DB 호출, 응답 형식 변환, 리뷰 점수 반영 |
 | `nlu.py` | 규칙 파서. A.X를 쓸 수 없을 때의 해석과 개수·가성비 해석 |
 | `review_store.py` | 리뷰 저장. `data/reviews.db`는 자동으로 만들어지고 커밋되지 않음 |
@@ -164,6 +164,8 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 
 ### POST /recommend
 
+응답 형식의 기준은 이 README입니다. `members/hyeokjun/curator_web/api_contract.json`은 더 이상 갱신하지 않습니다.
+
 쿼리 파라미터 `mock`(선택)에 `single`, `combo`, `ask`, `empty`, `relaxed` 중 하나를 주면 `mock_responses.json`의 응답을 그대로 돌려줍니다. 이때도 본문은 아래 형식을 지켜야 합니다.
 
 | 요청 필드 | 타입 | 필수 | 설명 |
@@ -191,14 +193,27 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 | `results` | array | 추천 결과. 최대 5개 |
 | `source` | string | 실제 추천은 `db`, mock은 `mock` |
 | `parser` | string | 문장 해석기. A.X 결과면 `ax`, 규칙 파서 결과면 `rule` |
+| `reason` | string \| null | `no_nutrient`의 이유(아래 표). 항상 들어가며, 다른 `status`에서는 `null`. `mock` 응답에는 없을 수 있음 |
 
 | `status` | 의미 | 화면 처리 |
 | --- | --- | --- |
 | `ok` | 추천 성공 | `results` 표시 |
 | `ask` | 규칙 파서의 해석 결과에 영양 조건이 없음. 예산만 있어도 되묻고, 운동 종류나 다이어트 여부는 묻지 않음. A.X를 쓰는 동안에는 나오지 않음 | `parsed.clarification_question`과 `quick_replies`를 보여 주고, 답을 `text`로, 직전 문장을 `pending_text`로 다시 요청 |
 | `empty` | 조건에 맞는 상품 없음 | 결과 없음 안내 |
-| `no_nutrient` | A.X가 문장에서 영양소 정보를 찾지 못함(`parse_query`가 `None`) | 입력창 아래에 다시 입력하라는 안내를 표시. `results`는 빈 배열 |
-| `budget_too_low` | 예산이 1000원 미만. `no_nutrient`를 먼저 확인하고, 되묻기보다 먼저 나옴 | 입력창 아래에 1000원 이상 금액으로 다시 입력하라는 안내를 표시. `results`는 빈 배열, 읽은 금액은 `parsed.budget` |
+| `no_nutrient` | A.X가 문장에서 영양소 정보를 찾지 못함(`parse_query`가 `None`). 이유는 `reason` | 입력창 아래에 다시 입력하라는 안내를 표시. `results`는 빈 배열 |
+| `budget_too_low` | 예산이 1000원 미만. `no_nutrient`를 먼저 확인하고, 되묻기보다 먼저 나옴 | 입력창 아래에 최소 금액 안내를 표시. `results`는 빈 배열, 읽은 금액은 `parsed.budget`. `service.py`의 `MIN_BUDGET`을 바꾸면 화면 값도 같이 바꿔야 함 |
+
+| `reason` | 뜻 | 화면 문구 |
+| --- | --- | --- |
+| `empty` | 빈 입력 | 문장을 입력해 주세요. |
+| `too_long` | 300자 초과 | 문장이 너무 길어요. 300자 이내로 줄여 주세요. |
+| `no_condition` | 인삿말·잡담·일반 요청어만 있음 | 인사나 추천 요청만으로는 찾을 수 없어요. 상황이나 원하는 영양을 적어 주세요. |
+| `unrelated` | 모델이 관계없는 문장으로 판단 | 먹거리와 관련 없는 문장이에요. 상황이나 원하는 영양을 적어 주세요. |
+| `invalid_output` | 모델 출력 형식 오류 | 문장을 이해하지 못했어요. 조금 다르게 적어 주세요. |
+| `error` | 실행 중 예외 | 문장을 해석하다 문제가 생겼어요. 다시 시도해 주세요. |
+| `null` | 이유 모름 | 영양소 정보를 알 수 없어요. 다시 입력해 주세요. |
+
+이유는 하영의 `query_parser.parse_query_with_reason`이 돌려주는 값을 그대로 담습니다. 이 함수가 없으면 `parse_query`로 대신하고 `reason`은 `null`입니다.
 
 `results`의 각 항목은 다음과 같습니다.
 
@@ -293,7 +308,8 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
     }
   ],
   "source": "db",
-  "parser": "rule"
+  "parser": "rule",
+  "reason": null
 }
 ```
 
@@ -303,9 +319,9 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 - **가성비**: `price_priority`가 `true`이면 Top 5 안에서만 `nutrition_score ÷ total_price` 순서로 다시 놓고 `rank`를 새로 매깁니다.
 - **개수**: 추천은 카테고리마다 1개씩 담습니다. 문장의 개수가 카테고리 수와 달라도 결과 개수는 바뀌지 않고 `notice`로 안내합니다.
 - **리뷰 점수**: 조합의 `total_score`에 `10 × (상품별 R의 평균)`을 더합니다. `R = (n × 평균 + 5 × 전체평균) ÷ (n + 5) ÷ 5`이고, 리뷰가 없는 상품의 R은 `전체평균 ÷ 5`입니다. 저장된 리뷰가 하나도 없으면 점수를 더하지 않습니다.
-- **검사 순서**: 카테고리 값은 문장 해석 뒤에 검사합니다. 그래서 `ask`나 `no_nutrient`로 끝나는 요청은 없는 카테고리가 있어도 200을 돌려줍니다.
+- **검사 순서**: 카테고리 값은 문장 해석 뒤에 검사합니다. 그래서 `ask`, `no_nutrient`, `budget_too_low`로 끝나는 요청은 없는 카테고리가 있어도 200을 돌려줍니다.
 - **A.X 해석**: 영양소 2개는 A.X가, 예산은 `extract_budget`이, 개수와 가성비는 규칙 파서가 정합니다. `goal`은 `null`입니다. 모델을 쓸 수 없으면 규칙 파서 결과를 쓰고, 해석 결과가 `None`이면(300자 초과, 출력 형식 오류 포함) `no_nutrient`를 돌려줍니다.
-- **A.X의 한계**: 해석에 성공하면 항상 영양소 2개를 내므로 되묻지 않습니다. "추천해줘", "뭐 먹지"나 "안녕"처럼 영양소 정보가 없는 문장에도 추천이 나옵니다. 지금 `parse_query`는 영양소 정보가 없는 문장에도 대부분 영양소 2개를 내므로, `no_nutrient`는 하영의 수정 뒤에 주로 나옵니다.
+- **A.X의 한계**: 해석에 성공하면 항상 영양소 2개를 내므로 되묻지 않습니다. 인삿말과 관계없는 문장은 대부분 `no_nutrient`가 되지만(PR #28), "비건인데 먹을 거 있어?", "돼지고기 빼고 추천해줘"처럼 빼 달라는 조건은 반영하지 못한 채 추천이 나옵니다.
 - **운동 판별 (규칙 파서)**: 문장에 "운동"이 있으면 운동 후(단백질 높게, 지방 낮게, 당류 낮게)로 해석합니다. "운동하기 전" 같은 운동 전 표현은 탄수화물 높게로 해석하고, "운동 안", "운동화" 같은 표현은 운동 후로 보지 않습니다. 다른 영양 조건이 없으면 되묻습니다.
 - **규칙 파서의 한계**: 키워드로만 판별해서 "운동 전부 끝났어"는 운동 전으로, "오늘 운동 쉬었어"는 운동 후로, "운동화 벗고 운동 끝났어"는 운동이 아닌 것으로 해석합니다. "1만원 미만"은 "1만원 이하"와 같이 예산 10000으로 처리하며, 예산 완화가 적용되면 그 이상도 나올 수 있습니다.
 

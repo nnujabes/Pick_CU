@@ -148,6 +148,19 @@ class RecommendTest(IsolatedReviewDb):
             for row in body["results"]:
                 self.assertTrue(all("image_url" in item for item in row["items"]))
 
+    def test_reason_is_null_for_other_statuses(self):
+        cases = {
+            "ok": ("단백질 많은 음료", ["음료"]),
+            "ask": ("뭐 먹지", ["식품"]),
+            "empty": ("단백질 많이 1000원", ["과자류", "음료", "식품"]),
+            "budget_too_low": ("500원으로 뭐 먹지", ["식품"]),
+        }
+        for status, (text, categories) in cases.items():
+            body = post(text, categories).json()
+            self.assertEqual(body["status"], status)
+            self.assertIn("reason", body, status)
+            self.assertIsNone(body["reason"], status)
+
     def test_rule_parser_budget_below_minimum(self):
         body = post("500원으로 뭐 먹지", ["식품"]).json()
         self.assertEqual((body["status"], body["parser"], body["parsed"]["budget"]), ("budget_too_low", "rule", 500))
@@ -176,6 +189,35 @@ class ParserSelectionTest(IsolatedReviewDb):
         patch = mock.patch.object(service, "MODEL_READY", True)
         patch.start()
         self.addCleanup(patch.stop)
+        # 하영의 parse_query_with_reason이 들어와도 이 테스트들이 실제 모델을 부르지 않게 지운다.
+        without_reason = mock.patch.dict(vars(query_parser))
+        without_reason.start()
+        self.addCleanup(without_reason.stop)
+        vars(query_parser).pop("parse_query_with_reason", None)
+
+    def test_reason_from_parser_is_returned(self):
+        for reason in ("no_condition", "unrelated"):
+            with mock.patch.object(query_parser, "parse_query_with_reason", return_value=(None, reason), create=True):
+                body = post("안녕하세요", ["음료"]).json()
+            self.assertEqual((body["status"], body["parser"], body["reason"]), ("no_nutrient", "ax", reason))
+
+    def test_found_result_from_detailed_parser_has_null_reason(self):
+        result = {"budget": 5000, "nutrients": {"단백질": "high", "지방": "low"}}
+        with mock.patch.object(query_parser, "parse_query_with_reason", return_value=(result, None), create=True):
+            body = post("5천원 이하로 운동 후에 먹을 거", ["간편식사", "음료"]).json()
+        self.assertEqual((body["status"], body["parser"], body["reason"]), ("ok", "ax", None))
+
+    def test_without_detailed_parser_reason_is_null(self):
+        self.assertFalse(hasattr(query_parser, "parse_query_with_reason"))
+        with mock.patch.object(query_parser, "parse_query", return_value=None):
+            body = post("안녕하세요", ["음료"]).json()
+        self.assertEqual((body["status"], body["reason"]), ("no_nutrient", None))
+
+    def test_budget_too_low_has_null_reason(self):
+        result = {"budget": 500, "nutrients": {"단백질": "high", "지방": "low"}}
+        with mock.patch.object(query_parser, "parse_query", return_value=result):
+            body = post("500원으로 운동 후에 먹을 거", ["음료"]).json()
+        self.assertEqual((body["status"], body["reason"]), ("budget_too_low", None))
 
     def test_model_result_is_used(self):
         result = {"budget": 3000, "nutrients": {"열량": "low", "단백질": "high"}}
