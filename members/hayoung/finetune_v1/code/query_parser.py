@@ -30,8 +30,8 @@ DEFAULT_ADAPTER = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(_
 MAX_NEW_TOKENS = 128
 MAX_INPUT_CHARS = 300  # 이보다 긴 입력은 모델을 부르지 않고 None
 
-# ft_data 학습용 프롬프트와 글자까지 같아야 한다. load_model이 sha256으로 확인한다.
-SYSTEM_PROMPT = """당신은 편의점 영양 추천 도우미입니다. 사용자 문장을 보고 필요한 영양소 2개와 방향(높음/낮음)을 JSON으로만 답하세요.
+# 학습(ft_data) 때 쓴 프롬프트. check_query_parser.py가 ft_data와 글자까지 같은지 확인한다.
+TRAIN_SYSTEM_PROMPT = """당신은 편의점 영양 추천 도우미입니다. 사용자 문장을 보고 필요한 영양소 2개와 방향(높음/낮음)을 JSON으로만 답하세요.
 
 출력 형식: {"nutrients": [{"nutrient": "protein", "direction": "high"}, {"nutrient": "fat", "direction": "low"}]}
 성분: calories, protein, sodium, carbs, sugar, fat
@@ -49,7 +49,15 @@ SYSTEM_PROMPT = """당신은 편의점 영양 추천 도우미입니다. 사용�
 8. 혈당 관리 → 저당류, 저열량
 9. 크림 파스타가 당길 때 → 고지방, 고열량
 10. 느끼한 음식이 물렸을 때 → 저지방, 저열량"""
-SYSTEM_PROMPT_SHA256 = "06818f0f2ba2c5ac7f05454846c37e9054766184d62cd521b6afe0eab479b556"
+TRAIN_SYSTEM_PROMPT_SHA256 = "06818f0f2ba2c5ac7f05454846c37e9054766184d62cd521b6afe0eab479b556"
+
+# 2026-11-06: 팀원 실험(관계없는 문장 프롬프트 실험)대로 학습 프롬프트 끝에 아래 규칙을 덧붙였다.
+# 관계없는 문장이면 모델이 {"nutrients": []}로 답하고, parse_query는 None을 돌려준다.
+# 어댑터는 이 규칙 없이 학습했으므로 실제로 쓰는 프롬프트는 학습 때와 다르다.
+UNRELATED_RULE = """관계없는 문장 규칙:
+사용자 문장이 먹을 것, 식사, 건강, 몸 상태, 상황과 관계없으면(인사, 잡담, 날씨, 감사 인사, 다른 주제 질문 등) 영양소를 고르지 말고 {"nutrients": []} 로만 답하세요."""
+SYSTEM_PROMPT = TRAIN_SYSTEM_PROMPT + "\n\n" + UNRELATED_RULE
+SYSTEM_PROMPT_SHA256 = "836df788714875a0414050e0e2b54c0331036d1a9de97fc3bef76523212e80d7"
 
 NUTRIENT_KO = {"calories": "열량", "protein": "단백질", "sodium": "나트륨",
                "carbs": "탄수화물", "sugar": "당류", "fat": "지방"}
@@ -218,7 +226,72 @@ def extract_budget(text):
     return excluded[0]
 
 
+# ---------------------------------------------------------------- 조건 없는 입력 (모델 사용 안 함)
+# 2026-11-06: 모델은 어떤 문장이든 영양소 2개를 고르도록 학습되어, "안녕하세요"에도 영양소를 지어낸다.
+# 그래서 인삿말·잡담·일반 요청어만 있는 입력은 모델을 부르지 않고 None을 돌려준다.
+# 방법: 문장을 정규화한 뒤 아래 목록의 말을 모두 지우고, 남는 글자가 없을 때만 '조건 없음'으로 본다.
+# 길이로는 거르지 않는다. 목록에 없는 말이 한 글자라도 남으면 모델로 보낸다(정상 문장을 막지 않는 쪽을 택함).
+
+# 인삿말·감사·호응·잡담: 이것만으로는 영양 조건이 없다
+_CHITCHAT_WORDS = (
+    "안녕하세요", "안녕하세여", "안녕하십니까", "안녕", "하이", "헬로우", "헬로", "hello", "hi", "hey",
+    "반가워요", "반가워", "반갑습니다", "반가워용", "처음뵙겠습니다",
+    "고마워요", "고마워", "고맙습니다", "감사합니다", "감사해요", "감사", "땡큐", "thankyou", "thanks",
+    "수고하세요", "수고하셨습니다", "수고많으세요", "수고",
+    "뭐해요", "뭐해", "뭐하니", "누구세요", "누구야", "넌누구야", "너누구야",
+    "테스트", "test", "여보세요", "ㅎㅇ", "굿모닝", "좋은아침", "좋은하루", "오늘도좋은하루",
+    "잘자", "잘가", "바이", "bye", "오케이", "ok", "넵", "네", "응",
+    "하하", "히히", "헤헤", "호호",
+)
+# 일반 요청어: 무엇을 원하는지 없이 추천만 부탁하는 말
+_REQUEST_WORDS = (
+    "추천해주세요", "추천해줘요", "추천해줘", "추천부탁해요", "추천부탁해", "추천좀", "추천",
+    "알려주세요", "알려줘요", "알려줘", "찾아주세요", "찾아줘", "골라주세요", "골라줘",
+    "뭐있어요", "뭐있나요", "뭐있어", "뭐먹을까요", "뭐먹을까", "뭐먹지", "뭐마실까", "뭐마시지",
+    "먹을거", "먹을것", "마실거", "마실것",
+    "부탁드려요", "부탁드립니다", "부탁해요", "부탁해", "해주세요", "해줘",
+)
+# 덧붙는 말·어미: 위 말과 함께 쓰일 때만 지운다 (조사 '이·가' 같은 한 글자는 낱말을 깎을 수 있어 넣지 않는다)
+_FILLER_WORDS = ("저기요", "저기", "혹시", "그냥", "오늘", "님", "좀", "요", "뭐", "거", "것", "도", "음", "어", "아")
+# 긴 말부터 지운다. 끝의 [ㅋㅎㅠㅜㅡ]+ 는 웃음·울음 표시(ㅋㅋ, ㅎㅎ, ㅠㅠ)다. 'ㅎㅇ'은 목록에 있어 먼저 지워진다.
+_CHITCHAT_RE = re.compile("|".join(sorted(map(re.escape, _CHITCHAT_WORDS + _REQUEST_WORDS + _FILLER_WORDS),
+                                          key=len, reverse=True)) + "|[ㅋㅎㅠㅜㅡ]+")
+# 남길 글자: 한글 음절, 영문, 숫자, 자음·모음. 공백·문장부호·이모지는 지운다.
+_KEEP_CHARS_RE = re.compile(r"[^가-힣a-z0-9ㄱ-ㅣ]")
+
+
+def _normalize_chitchat(text):
+    return _KEEP_CHARS_RE.sub("", text.lower())
+
+
+def is_no_condition(text):
+    """인삿말·잡담·일반 요청어만 있어 영양 조건이 없는 입력이면 True. 다른 말이 조금이라도 남으면 False."""
+    if not isinstance(text, str):
+        return False
+    s = _normalize_chitchat(text)
+    while True:  # 지우고 나서 새로 붙은 말("하이뭐먹지")도 지운다
+        t = _CHITCHAT_RE.sub("", s)
+        if t == s:
+            break
+        s = t
+    return s == ""
+
+
+def classify_failure(text):
+    """parse_query가 모델을 부르기 전에 None을 돌려주는 이유. "empty", "too_long", "no_condition", 해당 없으면 None."""
+    if not isinstance(text, str) or not text.strip():
+        return "empty"
+    if len(text) > MAX_INPUT_CHARS:
+        return "too_long"
+    if is_no_condition(text):
+        return "no_condition"
+    return None
+
+
 # ---------------------------------------------------------------- 모델 응답 변환
+
+UNRELATED_REASON = "관계없는 문장(모델이 빈 목록으로 답함)"
+
 
 def parse_model_response(raw):
     """모델 응답 문자열 → {"단백질": "high", ...}. 형식이 틀리면 (None, 이유)."""
@@ -235,6 +308,8 @@ def parse_model_response(raw):
     if obj is None:
         return None, "nutrients를 가진 JSON 객체 없음"
     items = obj["nutrients"]
+    if items == []:
+        return None, UNRELATED_REASON
     if not isinstance(items, list) or len(items) != 2:
         return None, "nutrients가 2개짜리 목록이 아님"
     result = {}
@@ -275,6 +350,9 @@ def load_model(adapter_path=None):
                 return _cache
             raise ValueError(f"이미 다른 어댑터를 불러옴: {_cache['adapter_path']} (unload_model() 먼저 호출)")
 
+        train_sha = hashlib.sha256(TRAIN_SYSTEM_PROMPT.encode("utf-8")).hexdigest()
+        if train_sha != TRAIN_SYSTEM_PROMPT_SHA256:
+            raise RuntimeError(f"학습 프롬프트 sha256 불일치: {train_sha}")
         actual_sha = hashlib.sha256(SYSTEM_PROMPT.encode("utf-8")).hexdigest()
         if actual_sha != SYSTEM_PROMPT_SHA256:
             raise RuntimeError(f"시스템 프롬프트 sha256 불일치: {actual_sha}")
@@ -341,12 +419,18 @@ def parse_query(text):
     if len(text) > MAX_INPUT_CHARS:
         logger.warning("입력이 너무 길어 모델을 부르지 않음: %d자 (최대 %d자)", len(text), MAX_INPUT_CHARS)
         return None
+    if is_no_condition(text):
+        logger.warning("영양 조건이 없는 입력(인삿말·잡담)이라 모델을 부르지 않음: %.50s", text)
+        return None
     try:
         raw = _generate(text)
         nutrients, reason = parse_model_response(raw)
         if nutrients is not None:
             return {"budget": extract_budget(text), "nutrients": nutrients}
-        logger.warning("모델 응답 검증 실패: %s | 응답: %.200s", reason, raw)
+        if reason == UNRELATED_REASON:
+            logger.warning("%s: %.50s", reason, text)
+        else:
+            logger.warning("모델 응답 검증 실패: %s | 응답: %.200s", reason, raw)
     except Exception:
         logger.exception("parse_query 실행 중 오류")
         _empty_gpu_cache()  # GPU 메모리 부족 뒤에도 다음 호출이 돌 수 있게 한다
