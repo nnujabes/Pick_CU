@@ -4,10 +4,12 @@ export default {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
-      // 버튼 색 2개. cta(web1의 라임) = 주 기능(AI 추천받기)으로 명도·채도가 가장 높다.
-      // 나머지 버튼은 기존 초록 계열을 쓴다: 장바구니는 테두리 강조, 선택된 카테고리는 명도·채도를 낮춰 채운다.
+      // 시안(절제된 다크 사이버펑크)의 민트. cta = 주 기능(AI 추천받기)과 선택 표시.
+      // soft = 선택된 카테고리 카드 바탕, panel = 카드·입력창 바탕, page = 페이지 바탕.
       colors: {
-        cta: { DEFAULT: "#d4f27a", hover: "#e2f89e", ink: "#1b2109" },
+        cta: { DEFAULT: "#4fd8a8", hover: "#6fe3bb", ink: "#05261a", soft: "#11302a" },
+        panel: { DEFAULT: "#131a24", line: "#2a3342" },
+        page: "#0d121a",
       },
       fontFamily: {
         sans: ['"Apple SD Gothic Neo"', '"Malgun Gothic"', "system-ui", "sans-serif"],

@@ -1,28 +1,20 @@
-function Stripes() {
-  return (
-    <div className="hidden min-w-0 flex-1 flex-col gap-2 sm:flex" aria-hidden>
-      <span className="sign-stripe h-5 bg-lime-200 md:h-7" />
-      <span className="sign-stripe h-5 bg-lime-400 md:h-8" />
-      <span className="sign-stripe h-5 bg-violet-600 md:h-7" />
-    </div>
-  );
-}
-
-/** 벽돌 벽에 단 네온 간판. 깜빡이지 않는다. */
+/** 격자 바탕의 간판. 제목 양옆에 보라 선을 둔다. 제목을 누르면 처음 화면으로 돌아간다. */
 export function Signboard({ onHome }: { onHome: () => void }) {
   return (
-    <div className="sign-wall border-b-4 border-[#10162a]">
-      <div className="mx-auto flex max-w-5xl items-center justify-center gap-4 px-4 py-6">
-        <Stripes />
-        <button onClick={onHome} className="group shrink-0 rounded-2xl" aria-label="영양 편의점 메인으로">
-          <span className="sign-board block rounded-2xl px-6 py-4 transition-transform duration-200 group-hover:scale-[1.02] sm:px-10">
-            <span className="sign-neon block whitespace-nowrap text-5xl font-black sm:text-6xl">영양 편의점</span>
-            <span className="mt-2 block whitespace-nowrap text-center text-xs font-semibold text-white sm:text-base">
-              AI 맞춤 식단 &amp; 예산 매칭 서비스
+    <div className="sign-grid border-b border-panel-line/70">
+      <div className="mx-auto flex max-w-5xl flex-col items-center px-4 py-8 sm:py-10">
+        <div className="flex items-center gap-6 sm:gap-12">
+          <span className="sign-line hidden translate-y-2 sm:block" aria-hidden />
+          <button onClick={onHome} className="rounded-xl" aria-label="영양 편의점 메인으로">
+            <span className="sign-title block whitespace-nowrap text-5xl font-black tracking-[0.14em] sm:text-7xl">
+              영양 편의점
             </span>
-          </span>
-        </button>
-        <Stripes />
+          </button>
+          <span className="sign-line hidden translate-y-2 sm:block" aria-hidden />
+        </div>
+        <p className="mt-3 whitespace-nowrap text-sm font-semibold tracking-wide text-slate-100 sm:text-xl">
+          AI 맞춤 식단 &amp; 예산 매칭 서비스
+        </p>
       </div>
     </div>
   );

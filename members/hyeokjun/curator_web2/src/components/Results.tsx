@@ -19,8 +19,8 @@ interface Props {
 
 function Message({ icon, children }: { icon: JSX.Element; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 text-center text-sm text-slate-300">
-      <div className="mb-2 flex justify-center text-emerald-400">{icon}</div>
+    <div className="rounded-2xl border border-panel-line bg-panel px-6 py-10 text-center text-base text-slate-200 sm:text-lg">
+      <div className="mb-3 flex justify-center text-cta">{icon}</div>
       {children}
     </div>
   );
@@ -149,8 +149,8 @@ export function Results({ response, loading, onQuickReply, onCancelQuestion, onA
   // 오류와 "영양소 정보 없음"은 입력창 아래 안내(PromptForm)에 나온다.
   if (!response) {
     return (
-      <Message icon={<Sparkles className="h-7 w-7" />}>
-        카테고리와 조건을 정하고 [AI 추천받기]를 누르면 추천이 여기에 나와요.
+      <Message icon={<Sparkles className="h-9 w-9" strokeWidth={1.5} />}>
+        카테고리와 조건을 정하고 추천받기를 눌러주세요.
       </Message>
     );
   }

@@ -16,7 +16,7 @@ import { readList, writeList } from "@/utils/storage";
 
 const CART_KEY = "pickcu2.cart";
 const INITIAL_CATEGORIES: Category[] = ["간편식사", "음료"];
-const INITIAL_PROMPT = "운동후에 먹을 1만원 미만의 음식을 추천해줘";
+const INITIAL_PROMPT = "운동 후 먹을 1만 원 미만의 음식을 추천해줘";
 
 /** 조합 이름은 서로 겹칠 수 있어 평가 목록에는 상품 이름을 쓴다. */
 const targetLabel = (items: Product[], price: number) =>
@@ -176,7 +176,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-[#0b0e14] font-sans text-slate-100 selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-page font-sans text-slate-100 selection:bg-cta selection:text-cta-ink">
       <div role="status" aria-live="polite">
         {notification && (
           <div className="fixed left-1/2 top-5 z-[60] flex w-max max-w-[calc(100vw-32px)] -translate-x-1/2 items-center gap-2 rounded-full border border-emerald-300 bg-emerald-500 px-6 py-2.5 font-bold text-slate-950 shadow-[0_0_25px_rgba(16,185,129,0.5)]">
@@ -191,13 +191,14 @@ export default function App() {
         cartCount={cartItems.length}
         server={server}
         parser={response?.parser ?? null}
+        onHome={goHome}
         onRatings={() => setActiveTab("ratings")}
         onCart={() => setIsCartOpen(true)}
       />
 
       <Signboard onHome={goHome} />
 
-      <main className="mx-auto max-w-5xl px-4 py-8">
+      <main className="mx-auto max-w-[1232px] px-4 py-10">
         {activeTab === "home" ? (
           <>
             <CategoryPicker selected={selectedCategories} onToggle={toggleCategory} />
