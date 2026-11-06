@@ -11,10 +11,10 @@ import { RatingsPage, type ReviewTarget } from "@/components/RatingsPage";
 import { Results } from "@/components/Results";
 import { Signboard } from "@/components/Signboard";
 import { comboKey, comboTitle, formatWon, shortName } from "@/utils/format";
+import { noticeFor } from "@/utils/notices";
 import { readList, writeList } from "@/utils/storage";
 
 const CART_KEY = "pickcu2.cart";
-const NO_NUTRIENT_TEXT = "영양소 정보를 알 수 없어요. 다시 입력해 주세요.";
 
 /** 조합 이름은 서로 겹칠 수 있어 평가 목록에는 상품 이름을 쓴다. */
 const targetLabel = (items: Product[], price: number) =>
@@ -78,12 +78,13 @@ export default function App() {
     try {
       const next = await postRecommend({ text: trimmed, categories: selectedCategories, pending_text: pending });
       setServer("up");
-      if (next.status === "no_nutrient") {
+      const notice = noticeFor(next);
+      if (notice) {
         // 이전 추천을 지우고, 쓴 문장은 고쳐 쓸 수 있게 입력창에 남긴다.
         setResponse(null);
         setPendingText(null);
         setPrompt(fullText);
-        setInputNotice({ tone: "warn", text: NO_NUTRIENT_TEXT });
+        setInputNotice(notice);
         inputRef.current?.focus();
         return;
       }

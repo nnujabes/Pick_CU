@@ -24,9 +24,20 @@ export interface ResultRow {
   items: Product[];
 }
 
+/** no_nutrient의 이유. 서버가 보내지 않으면 null이고, 화면은 기본 문구를 쓴다. */
+export type NoNutrientReason =
+  | "empty" // 빈 입력
+  | "too_long" // 300자 초과
+  | "no_condition" // 인삿말·잡담·일반 요청어만 있음 (모델 호출 전 규칙)
+  | "unrelated" // 모델이 관계없는 문장으로 판단 ({"nutrients": []})
+  | "invalid_output" // 모델 출력 형식 오류
+  | "error"; // 실행 중 오류
+
 export interface RecommendResponse {
-  // no_nutrient: 문장에서 영양소 정보를 찾지 못함(A.X parse_query가 None). 입력창 아래에 안내한다.
-  status: "ok" | "ask" | "empty" | "no_nutrient";
+  // no_nutrient: 문장에서 영양소 정보를 찾지 못함(parse_query가 None). budget_too_low: 예산이 최소 금액 미만.
+  // 둘 다 결과 없이 입력창 아래에 안내한다.
+  status: "ok" | "ask" | "empty" | "no_nutrient" | "budget_too_low";
+  reason?: NoNutrientReason | null;
   parsed: Parsed;
   goal: string | null;
   quick_replies: string[];
