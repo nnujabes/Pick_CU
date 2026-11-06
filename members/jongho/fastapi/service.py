@@ -184,16 +184,24 @@ def load_parser_model():
         print(f"A.X를 불러오지 못해 규칙 파서를 씁니다: {error}", flush=True)
 
 
+def _parse_with_reason(full_text):
+    """(결과, 이유). 하영의 parse_query_with_reason이 없으면 parse_query로 대신하고 이유는 None이다."""
+    detailed = getattr(query_parser, "parse_query_with_reason", None)
+    if detailed is not None:
+        return detailed(full_text)
+    return query_parser.parse_query(full_text), None
+
+
 def parse_text(full_text, categories):
-    """(해석 결과, parser, 영양소를 찾았는지). A.X가 None을 내면 영양소를 찾지 못한 것으로 본다.
+    """(해석 결과, parser, 영양소를 찾았는지, 이유). A.X가 None을 내면 영양소를 찾지 못한 것으로 본다.
 
     모델을 쓸 수 없을 때(MODEL_READY가 False)만 규칙 파서 결과를 쓴다.
     """
     rule = parse_request(full_text, categories)
     if not MODEL_READY:
-        return rule, "rule", True
+        return rule, "rule", True, None
     with _model_lock:  # GPU 하나에서 생성이 겹치지 않게 한다
-        query = query_parser.parse_query(full_text)
+        query, reason = _parse_with_reason(full_text)
     if query is None:
         slots = {
             **rule.slots,
@@ -201,7 +209,7 @@ def parse_text(full_text, categories):
             "need_clarification": False,
             "clarification_question": None,
         }
-        return ParseResult(slots=slots, goal=None, quick_replies=[]), "ax", False
+        return ParseResult(slots=slots, goal=None, quick_replies=[]), "ax", False, reason
     nutrients = dict.fromkeys(NUTRIENT_KEYS)
     nutrients.update({KOREAN_TO_COLUMN[name]: direction for name, direction in query["nutrients"].items()})
     slots = {
@@ -211,10 +219,11 @@ def parse_text(full_text, categories):
         "need_clarification": False,
         "clarification_question": None,
     }
-    return ParseResult(slots=slots, goal=None, quick_replies=[]), "ax", True
+    return ParseResult(slots=slots, goal=None, quick_replies=[]), "ax", True, None
 
 
-def build_response(status, parsed, goal=None, quick_replies=None, results=None, relaxed=None, notice=None, parser="rule"):
+def build_response(status, parsed, goal=None, quick_replies=None, results=None, relaxed=None, notice=None, parser="rule",
+                   reason=None):
     results = results or []
     return {
         "status": status,
@@ -227,15 +236,16 @@ def build_response(status, parsed, goal=None, quick_replies=None, results=None, 
         "results": results,
         "source": "db",
         "parser": parser,
+        "reason": reason,  # no_nutrient일 때만 값이 있고, 나머지는 null
     }
 
 
 def recommend_flow(text, categories, pending_text=None):
     full_text = f"{pending_text} {text}" if pending_text else text
-    parsed, parser, found = parse_text(full_text, categories)
+    parsed, parser, found, reason = parse_text(full_text, categories)
     slots = parsed.slots
     if not found:
-        return build_response("no_nutrient", slots, parser=parser)
+        return build_response("no_nutrient", slots, parser=parser, reason=reason)
     if slots["budget"] is not None and slots["budget"] < MIN_BUDGET:
         return build_response("budget_too_low", slots, parser=parser)
     if slots["need_clarification"]:

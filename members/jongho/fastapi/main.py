@@ -1,4 +1,4 @@
-"""Pick CU API. 형식은 members/hyeokjun/curator_web/api_contract.json을 따른다.
+"""Pick CU API. 응답 형식의 기준은 이 폴더의 README.md다.
 
 실행: python -m uvicorn main:app --app-dir members/jongho/fastapi --port 8000 (저장소 루트에서)
 POST /recommend?mock=<경우>를 붙이면 mock_responses.json의 응답을 그대로 돌려준다.
