@@ -1,6 +1,6 @@
 # Pick CU API (FastAPI)
 
-웹 화면(`members/hyeokjun/curator_web/frontend`)이 호출하는 API 서버입니다. 팀 필터 엔진(`backend/pickcu/`)과 상품 DB(`backend/data/cu_products.db`)는 읽기만 합니다.
+웹 화면(`members/hyeokjun/curator_web/frontend`, `members/hyeokjun/curator_web2`)이 호출하는 API 서버입니다. 팀 필터 엔진(`backend/pickcu/`)과 상품 DB(`backend/data/cu_products.db`)는 읽기만 합니다.
 
 ## 실행
 
@@ -9,7 +9,7 @@ pip install -r members/jongho/fastapi/requirements.txt
 python -m uvicorn main:app --app-dir members/jongho/fastapi --port 8000
 ```
 
-API 문서는 http://127.0.0.1:8000/docs 에서 볼 수 있습니다. 화면과 함께 켜려면 `members/hyeokjun/curator_web/frontend`에서 `npm start`를 실행합니다.
+API 문서는 http://127.0.0.1:8000/docs 에서 볼 수 있습니다. 화면과 함께 켜려면 `members/hyeokjun/curator_web/frontend`(http://localhost:5173) 또는 `members/hyeokjun/curator_web2`(http://localhost:5174)에서 `npm start`를 실행합니다. 두 화면을 함께 쓸 때는 API 포트(8000)가 겹치므로 두 번째 화면은 `npm run dev`로 띄웁니다.
 
 ## 테스트
 
@@ -34,7 +34,7 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 
 - 기본 주소: `http://127.0.0.1:8000`
 - 요청과 응답 본문은 JSON입니다. 인증은 없습니다.
-- 브라우저 호출(CORS)은 `http://localhost:5173`, `http://127.0.0.1:5173`만 허용합니다.
+- 브라우저에서 직접 호출(CORS)하는 것은 `http://localhost:5173`, `http://127.0.0.1:5173`만 허용합니다. 두 웹 화면은 Vite 프록시(`/api`)를 거쳐 호출하므로 이 제한을 받지 않습니다.
 - 영양 값 단위는 `calories` kcal, `sodium` mg, 나머지(`protein`, `carbs`, `sugar`, `fat`) g입니다.
 
 | 메서드 | 경로 | 설명 |
@@ -182,7 +182,7 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 | `status` | 의미 | 화면 처리 |
 | --- | --- | --- |
 | `ok` | 추천 성공 | `results` 표시 |
-| `ask` | 영양 조건을 찾지 못함 | `parsed.clarification_question`과 `quick_replies`를 보여 주고, 답을 `text`로, 직전 문장을 `pending_text`로 다시 요청 |
+| `ask` | 문장 해석 결과에 영양 조건이 없음. 예산만 있어도 되묻고, 운동 종류나 다이어트 여부는 묻지 않음 | `parsed.clarification_question`과 `quick_replies`를 보여 주고, 답을 `text`로, 직전 문장을 `pending_text`로 다시 요청 |
 | `empty` | 조건에 맞는 상품 없음 | 결과 없음 안내 |
 
 `results`의 각 항목은 다음과 같습니다.
@@ -289,6 +289,8 @@ python -m unittest discover -s members/jongho/fastapi -p "test_*.py"
 - **개수**: 추천은 카테고리마다 1개씩 담습니다. 문장의 개수가 카테고리 수와 달라도 결과 개수는 바뀌지 않고 `notice`로 안내합니다.
 - **리뷰 점수**: 조합의 `total_score`에 `10 × (상품별 R의 평균)`을 더합니다. `R = (n × 평균 + 5 × 전체평균) ÷ (n + 5) ÷ 5`이고, 리뷰가 없는 상품의 R은 `전체평균 ÷ 5`입니다. 저장된 리뷰가 하나도 없으면 점수를 더하지 않습니다.
 - **검사 순서**: 카테고리 값은 문장 해석 뒤에 검사합니다. 그래서 `ask`로 끝나는 요청은 없는 카테고리가 있어도 200을 돌려줍니다.
+- **운동 판별**: 문장에 "운동"이 있으면 운동 후(단백질 높게, 지방 낮게, 당류 낮게)로 해석합니다. "운동하기 전" 같은 운동 전 표현은 탄수화물 높게로 해석하고, "운동 안", "운동화" 같은 표현은 운동 후로 보지 않습니다. 다른 영양 조건이 없으면 되묻습니다.
+- **규칙 파서의 한계**: 키워드로만 판별해서 "운동 전부 끝났어"는 운동 전으로, "오늘 운동 쉬었어"는 운동 후로, "운동화 벗고 운동 끝났어"는 운동이 아닌 것으로 해석합니다. "1만원 미만"은 "1만원 이하"와 같이 예산 10000으로 처리하며, 예산 완화가 적용되면 그 이상도 나올 수 있습니다.
 
 ### POST /reviews
 

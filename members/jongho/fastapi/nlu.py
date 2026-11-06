@@ -20,6 +20,12 @@ KOREAN_THOUSANDS = {
     "이천": 2000, "삼천": 3000, "사천": 4000, "오천": 5000,
     "육천": 6000, "칠천": 7000, "팔천": 8000, "구천": 9000,
 }
+PRE_WORKOUT_WORDS = (
+    "운동 전", "운동전", "운동 가기 전", "운동 가기전", "운동가기 전", "운동가기전",
+    "운동 하기 전", "운동하기 전", "운동하기전", "운동 시작 전", "운동 시작전", "운동시작 전", "운동시작전",
+    "운동 나가기 전", "운동 나가기전", "운동나가기 전", "운동나가기전",
+)
+NOT_WORKOUT_WORDS = ("운동 안", "운동안", "운동 못", "운동못", "운동화", "운동복", "운동회", "운동장")
 
 
 @dataclass
@@ -65,7 +71,7 @@ def find_goal(has):
         return "근력"
     if has("다이어트", "살 빼", "감량", "다욧", "체중 관리", "유산소"):
         return "다이어트"
-    if has("운동 후", "운동 뒤"):
+    if has("운동") and not has(*PRE_WORKOUT_WORDS, *NOT_WORKOUT_WORDS):
         return "운동 후"
     return None
 
@@ -81,7 +87,7 @@ def find_conditions(has):
         add("sodium", "high")
     if has("붓기", "부었", "부어", "덜 짠", "안 짠", "싱겁", "저염", "회식", "숙취", "라면 많이"):
         add("sodium", "low")
-    if has("카보", "시합", "운동 전", "운동 가기 전", "밥이 당", "면이 당", "빵이 당", "리피드"):
+    if has("카보", "시합", *PRE_WORKOUT_WORDS, "밥이 당", "면이 당", "빵이 당", "리피드"):
         add("carbs", "high")
     if has("밥 빼", "탄수 줄", "저탄", "키토", "밀가루", "탄수 적"):
         add("carbs", "low")
@@ -119,12 +125,8 @@ def parse_request(text, categories):
 
     question, quick_replies = None, []
     if not conditions:
-        if has("운동"):
-            question = "근력 운동이었나요, 유산소였나요? 목표에 맞춰 골라 드릴게요."
-            quick_replies = ["하체 근력 운동이었어", "유산소 하고 살 빼는 중"]
-        else:
-            question = "어떤 쪽으로 찾아볼까요? 하나만 골라 주세요."
-            quick_replies = ["든든하게", "가볍게", "단백질 많이", "덜 달게"]
+        question = "어떤 쪽으로 찾아볼까요? 하나만 골라 주세요."
+        quick_replies = ["든든하게", "가볍게", "단백질 많이", "덜 달게"]
 
     slots = {
         "nutrients": nutrients,

@@ -98,13 +98,35 @@ class RecommendTest(IsolatedReviewDb):
         self.assertTrue(all(row["total_price"] <= 8000 for row in body["results"]))
 
     def test_ask_then_answer(self):
-        ask = post("운동 끝났는데 뭐 먹지", ["식품"]).json()
+        ask = post("뭐 먹지", ["식품"]).json()
         self.assertEqual(ask["status"], "ask")
         self.assertTrue(ask["quick_replies"])
         answer = client.post("/recommend", json={
-            "text": ask["quick_replies"][0], "categories": ["식품"], "pending_text": "운동 끝났는데 뭐 먹지",
+            "text": ask["quick_replies"][0], "categories": ["식품"], "pending_text": "뭐 먹지",
         }).json()
         self.assertEqual(answer["status"], "ok")
+
+    def test_after_workout_is_not_asked(self):
+        body = post("운동 끝났는데 뭐 먹지", ["식품"]).json()
+        self.assertEqual((body["status"], body["goal"]), ("ok", "운동 후"))
+
+    def test_before_workout_wants_carbs(self):
+        for text in ("운동전에 먹을 거", "운동하기 전에 먹을 거"):
+            body = post(text, ["식품"]).json()
+            self.assertEqual((body["status"], body["goal"]), ("ok", None), text)
+            self.assertEqual(body["parsed"]["nutrients"]["carbs"], "high", text)
+
+    def test_no_workout_words_are_asked(self):
+        for text in ("운동 안 했어 뭐 먹지", "운동화 신고 나왔는데 뭐 먹지"):
+            self.assertEqual(post(text, ["식품"]).json()["status"], "ask", text)
+
+    def test_budget_alone_is_asked_and_kept_after_answer(self):
+        ask = post("1만원으로 뭐 먹지", ["식품"]).json()
+        self.assertEqual((ask["status"], ask["parsed"]["budget"]), ("ask", 10000))
+        answer = client.post("/recommend", json={
+            "text": "든든하게", "categories": ["식품"], "pending_text": "1만원으로 뭐 먹지",
+        }).json()
+        self.assertEqual((answer["status"], answer["parsed"]["budget"]), ("ok", 10000))
 
     def test_empty_and_relaxed(self):
         self.assertEqual(post("단백질 많이 1000원", ["과자류", "음료", "식품"]).json()["status"], "empty")
