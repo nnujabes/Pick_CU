@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import { AlertCircle, Info, Search, Sparkles, TriangleAlert } from "lucide-react";
+import { AlertCircle, Info, Search, Sparkles, TriangleAlert, X } from "lucide-react";
 import { StepNumber } from "./CategoryPicker";
 
 /** 입력창 바로 아래에 띄우는 안내. 경우에 따라 안내(info)·주의(warn)·오류(error)로 나눈다. */
@@ -59,15 +59,31 @@ export function PromptForm({ value, answering, loading, notice, inputRef, onChan
             aria-invalid={notice?.tone === "warn" || notice?.tone === "error" ? true : undefined}
             onChange={(event) => onChange(event.target.value)}
             placeholder={answering ? "위 질문의 답을 적어 주세요" : "예: 운동후에 먹을 1만원 미만의 단백질 음식을 추천해줘"}
-            className="w-full bg-transparent py-3 pl-12 pr-4 text-sm text-white placeholder-slate-500 outline-none focus-visible:outline-none sm:text-base"
+            className="w-full bg-transparent py-3 pl-12 pr-12 text-sm text-white placeholder-slate-500 outline-none focus-visible:outline-none sm:text-base"
           />
+          {value && (
+            <button
+              type="button"
+              aria-label="입력한 문장 모두 지우기"
+              title="모두 지우기"
+              // 누르는 동안 입력창의 포커스를 빼앗지 않는다.
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => {
+                onChange("");
+                inputRef.current?.focus();
+              }}
+              className="absolute right-3 flex h-7 w-7 items-center justify-center rounded-full bg-slate-700/80 text-slate-300 transition-colors hover:bg-slate-600 hover:text-white"
+            >
+              <X className="h-4 w-4 stroke-[2.5]" />
+            </button>
+          )}
         </div>
         <button
           type="submit"
           disabled={loading || !value.trim()}
-          className="flex items-center justify-center gap-2 rounded-xl bg-emerald-400 px-6 py-3.5 font-extrabold text-slate-950 shadow-[0_0_20px_rgba(52,211,153,0.4)] transition-transform duration-150 hover:bg-emerald-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex items-center justify-center gap-2 rounded-xl bg-cta px-7 py-3.5 font-extrabold text-cta-ink shadow-[0_0_24px_rgba(212,242,122,0.45)] transition-transform duration-150 hover:bg-cta-hover active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <Sparkles className="h-4 w-4 fill-slate-950" />
+          <Sparkles className="h-4 w-4 fill-cta-ink" />
           <span>{loading ? "찾는 중…" : "AI 추천받기"}</span>
         </button>
       </form>

@@ -15,6 +15,8 @@ import { noticeFor } from "@/utils/notices";
 import { readList, writeList } from "@/utils/storage";
 
 const CART_KEY = "pickcu2.cart";
+const INITIAL_CATEGORIES: Category[] = ["간편식사", "음료"];
+const INITIAL_PROMPT = "운동후에 먹을 1만원 미만의 음식을 추천해줘";
 
 /** 조합 이름은 서로 겹칠 수 있어 평가 목록에는 상품 이름을 쓴다. */
 const targetLabel = (items: Product[], price: number) =>
@@ -22,8 +24,8 @@ const targetLabel = (items: Product[], price: number) =>
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<"home" | "ratings">("home");
-  const [selectedCategories, setSelectedCategories] = useState<Category[]>(["간편식사", "음료"]);
-  const [prompt, setPrompt] = useState("운동후에 먹을 1만원 미만의 음식을 추천해줘");
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>(INITIAL_CATEGORIES);
+  const [prompt, setPrompt] = useState(INITIAL_PROMPT);
   const [pendingText, setPendingText] = useState<string | null>(null);
   const [response, setResponse] = useState<RecommendResponse | null>(null);
   const [lastQuery, setLastQuery] = useState<string | null>(null);
@@ -106,6 +108,20 @@ export default function App() {
     }
   };
 
+  /** 간판이나 [메인 추천으로 돌아가기]를 누르면 처음 화면으로 되돌린다. 장바구니는 남긴다. */
+  const goHome = () => {
+    if (loading) return;
+    setActiveTab("home");
+    setSelectedCategories(INITIAL_CATEGORIES);
+    setPrompt(INITIAL_PROMPT);
+    setPendingText(null);
+    setResponse(null);
+    setLastQuery(null);
+    setInputNotice(null);
+    setTooltip(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const cancelQuestion = () => {
     setPrompt(pendingText ?? "");
     setPendingText(null);
@@ -179,7 +195,7 @@ export default function App() {
         onCart={() => setIsCartOpen(true)}
       />
 
-      <Signboard onHome={() => setActiveTab("home")} />
+      <Signboard onHome={goHome} />
 
       <main className="mx-auto max-w-5xl px-4 py-8">
         {activeTab === "home" ? (
@@ -205,7 +221,7 @@ export default function App() {
             />
           </>
         ) : (
-          <RatingsPage targets={reviewTargets} onHome={() => setActiveTab("home")} onNotice={showNotice} />
+          <RatingsPage targets={reviewTargets} onHome={goHome} onNotice={showNotice} />
         )}
       </main>
 

@@ -35,7 +35,9 @@ export function CategoryPicker({ selected, onToggle }: { selected: Category[]; o
               onClick={() => onToggle(category)}
               className={`flex min-w-0 items-center justify-center gap-1.5 rounded-xl border px-0 py-3 text-[10px] font-bold tracking-[-0.06em] transition-all duration-200 sm:px-1 sm:text-sm sm:tracking-normal md:px-3 ${
                 isSelected
-                  ? "border-emerald-300 bg-gradient-to-r from-emerald-600 to-teal-500 text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.5)]"
+                  ? // 이전 초록 계열을 채우되 명도·채도를 낮춰, 가장 밝은 AI 추천받기(cta)보다 눈에 덜 띄게 한다.
+                    // 테두리는 강조하지 않는다(투명 테두리로 크기만 맞춘다).
+                    "border-transparent bg-gradient-to-r from-[#14855a] to-[#11807a] text-[#effcf5]"
                   : "border-slate-800 bg-slate-900/90 text-slate-400 hover:border-slate-600 hover:text-slate-200"
               }`}
             >
