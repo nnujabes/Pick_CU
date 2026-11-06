@@ -1,4 +1,5 @@
 """product_search.search_candidates를 실제 cu_products.db로 시험한다."""
+import csv
 import hashlib
 import sqlite3
 import sys
@@ -9,7 +10,9 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from pickcu.product_search import CATEGORIES, DB_PATH, search_candidates  # noqa: E402
 
-EXPECTED_TOTAL = {'간편식사': 199, '즉석조리': 40, '과자류': 627, '아이스크림': 109, '식품': 768, '음료': 411}
+# 추천 제외 상품(즉석조리 2개, 식품 22개)을 뺀 건수
+EXPECTED_TOTAL = {'간편식사': 199, '즉석조리': 38, '과자류': 627, '아이스크림': 109, '식품': 746, '음료': 411}
+EXCLUDE_PATH = DB_PATH.parent / 'exclude_items.csv'
 KEYS = ['item_cd', 'category', 'product_name', 'price', 'event_type', 'calories', 'protein', 'sodium', 'carbs', 'sugar', 'fat', 'thumbnail_url']
 digest = lambda: hashlib.md5(DB_PATH.read_bytes()).hexdigest()
 before = digest()
@@ -35,8 +38,16 @@ def raises(error, *args, **kwargs):
 # 대조용 전체 데이터는 함수와 별개로 읽는다
 con = sqlite3.connect(DB_PATH)
 con.row_factory = sqlite3.Row
-rows = [dict(r) for r in con.execute('SELECT * FROM cu_products')]
+all_rows = [dict(r) for r in con.execute('SELECT * FROM cu_products')]
 con.close()
+rows = [r for r in all_rows if r['exclude_reason'] is None]
+excluded = {r['item_cd']: r['exclude_reason'] for r in all_rows if r['exclude_reason'] is not None}
+with EXCLUDE_PATH.open(encoding='utf-8-sig', newline='') as f:
+    listed = {r['item_cd']: r['reason'] for r in csv.DictReader(f)}
+
+check('추천 제외 상품 24개가 DB에 남아 있고 제외 목록 파일과 일치', len(excluded) == 24 and excluded == listed)
+found = {i['item_cd'] for c in CATEGORIES for i in search_candidates([c])[c]}
+check('제외 상품은 어떤 카테고리 검색에도 나오지 않음', not found & set(excluded) and len(found) == len(rows))
 
 all_result = search_candidates(list(CATEGORIES)[:3])
 check('예산 없음: 가격 제한 없이 카테고리 전체', {k: len(v) for k, v in all_result.items()} == {k: EXPECTED_TOTAL[k] for k in list(CATEGORIES)[:3]})

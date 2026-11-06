@@ -43,7 +43,7 @@ def independent_top5(categories, nutrients, budget, nutrition_only=False):
     """엔진 함수를 쓰지 않고 정의대로 직접 계산한다."""
     con = sqlite3.connect(DB_PATH)
     con.row_factory = sqlite3.Row
-    rows = [dict(r) for r in con.execute('SELECT * FROM cu_products')]
+    rows = [dict(r) for r in con.execute('SELECT * FROM cu_products WHERE exclude_reason IS NULL')]
     con.close()
     pools = []
     score = {}
@@ -111,7 +111,8 @@ check('카테고리 3개 낮은 예산(3,000원)에서도 결과 있음', len(lo
 # 4. 결과 부족, 없음
 check('결과 없음은 빈 리스트(재질문용)', recommend(['식품'], HP_LS, budget=1) == [])
 check('카테고리 하나라도 후보가 없으면 빈 리스트', recommend(['간편식사', '음료'], HP_LS, budget=1000) == [])
-check('예산 안 상품이 1개면 1개만 반환', len(recommend(['즉석조리'], HP_LS, budget=1000)) == 1)
+check('예산 안 상품이 1개면 1개만 반환', len(recommend(['아이스크림'], HP_LS, budget=900)) == 1)
+check('추천 제외 상품만 예산 안에 있으면 빈 리스트(1,000원 이하 즉석조리는 시럽뿐)', recommend(['즉석조리'], HP_LS, budget=1000) == [])
 
 # 5. 잘못된 입력
 check('영양소 조건 없음 거부', raises(ValueError, ['음료'], {}))
@@ -140,9 +141,9 @@ check('소수 오차는 동점으로 처리', fe.rank_key(80.00000000001, 1, 1, 
 with tempfile.TemporaryDirectory() as tmp:
     path = Path(tmp) / 'small.db'
     con = sqlite3.connect(path)
-    con.execute('CREATE TABLE cu_products (item_cd TEXT, category TEXT, product_name TEXT, price INT, event_type TEXT, calories REAL, protein REAL, sodium REAL, carbs REAL, sugar REAL, fat REAL, thumbnail_url TEXT)')
+    con.execute('CREATE TABLE cu_products (item_cd TEXT, category TEXT, product_name TEXT, price INT, event_type TEXT, calories REAL, protein REAL, sodium REAL, carbs REAL, sugar REAL, fat REAL, thumbnail_url TEXT, exclude_reason TEXT)')
     rows = [('m1', '간편식사', 3000, 30), ('m2', '간편식사', 3000, 10), ('d1', '음료', 1000, 20), ('d2', '음료', 1000, 5)]
-    con.executemany("INSERT INTO cu_products VALUES (?,?,?,?,'1+1',0,?,0,0,0,0,'u')", [(c, cat, c, p, v) for c, cat, p, v in rows])
+    con.executemany("INSERT INTO cu_products VALUES (?,?,?,?,'1+1',0,?,0,0,0,0,'u',NULL)", [(c, cat, c, p, v) for c, cat, p, v in rows])
     con.commit()
     con.close()
     small = recommend(['간편식사', '음료'], {'단백질': 'high'}, budget=10000, db_path=path)

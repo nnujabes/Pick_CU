@@ -1,6 +1,7 @@
 """cu_products.db에서 추천 후보 상품을 검색한다.
 
 영양소 high/low는 쿼리에 넣지 않는다. 순위 계산은 다음 단계의 필터 엔진이 맡는다.
+소스·양념·조미료처럼 추천에서 뺀 상품(exclude_reason 값이 있는 상품)은 검색하지 않는다.
 
 사용 예:
     from pickcu.product_search import search_candidates
@@ -20,6 +21,7 @@ SELECT item_cd, category, product_name, price, event_type,
        calories, protein, sodium, carbs, sugar, fat, thumbnail_url
 FROM cu_products
 WHERE category = ?
+  AND exclude_reason IS NULL
 """
 PRICE_SQL = "  AND price <= ?\n"
 ORDER_SQL = "ORDER BY price, item_cd"
