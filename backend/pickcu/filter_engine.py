@@ -6,6 +6,7 @@
     - 가격 점수: 합계 ÷ 예산 × 100. 예산에 가까울수록 높다.
     - 금액이 없거나 카테고리가 1개면 가격 점수 없이 영양 점수만 쓴다.
     - 합계는 예산을 넘을 수 없고, Top 5 안에서 같은 상품은 한 번만 쓴다.
+      맛만 다른 상품(같은 카테고리·브랜드·가격이고 이름이 비슷한 상품)도 같은 상품으로 본다.
     - 행사(1+1, 2+1)는 계산하지 않고 화면 표시용으로 event_type만 넘긴다.
 
 사용 예:
@@ -17,6 +18,7 @@
 """
 import itertools
 from bisect import bisect_left, bisect_right
+from difflib import SequenceMatcher
 from operator import itemgetter
 
 from .product_search import DB_PATH, search_candidates
@@ -36,9 +38,13 @@ TOP_K = 5
 
 # 카테고리 3개는 조합이 최대 약 5,100만 개라서 카테고리별로 후보를 줄인 뒤 조합한다.
 # 저렴한 상품을 함께 남겨야 낮은 예산에서도 예산 안의 조합이 나온다.
+# 50+30은 20+10보다 전체 계산 결과에 가깝고, 가장 큰 조합에서도 약 1초 안에 끝난다.
 REDUCE_FROM_CATEGORIES = 3
-TOP_BY_NUTRITION = 20
-TOP_BY_LOW_PRICE = 10
+TOP_BY_NUTRITION = 50
+TOP_BY_LOW_PRICE = 30
+
+# 상품명에서 브랜드(")" 앞)를 뺀 부분의 유사도가 이 값 이상이면 맛만 다른 상품으로 본다.
+VARIANT_SIMILARITY = 0.7
 
 
 def validate_nutrients(nutrients):
@@ -103,16 +109,36 @@ def build_combinations(candidates, scores, budget, use_price):
     return combinations
 
 
+def split_brand(product_name):
+    """"샌)햄치즈샌드" → ("샌", "햄치즈샌드"). 브랜드 표기가 없으면 브랜드는 빈 문자열이다."""
+    brand, separator, rest = product_name.partition(")")
+    return (brand, rest) if separator else ("", product_name)
+
+
+def is_variant(a, b):
+    """같은 카테고리·브랜드·가격이고 브랜드를 뺀 이름이 비슷하면 맛만 다른 상품으로 본다."""
+    if a["category"] != b["category"] or a["price"] != b["price"]:
+        return False
+    (brand_a, name_a), (brand_b, name_b) = split_brand(a["product_name"]), split_brand(b["product_name"])
+    return brand_a == brand_b and SequenceMatcher(None, name_a, name_b).ratio() >= VARIANT_SIMILARITY
+
+
 def select_top(combinations, k=TOP_K):
-    """점수 순서로 보면서 이미 쓴 상품이 들어간 조합은 건너뛴다."""
+    """점수 순서로 보면서 이미 쓴 상품이나 그 상품과 맛만 다른 상품이 들어간 조합은 건너뛴다."""
     selected = []
-    used = set()
+    used_items = []
+    blocked = set()  # 이미 쓴 상품, 또는 그와 맛만 다른 것으로 확인된 상품의 바코드
     for combination in sorted(combinations, key=itemgetter(0)):
-        item_cds = combination[0][3]
-        if used.intersection(item_cds):
+        picks = combination[1]
+        if blocked.intersection(combination[0][3]):
+            continue
+        variants = [item["item_cd"] for item in picks if any(is_variant(item, used) for used in used_items)]
+        if variants:
+            blocked.update(variants)
             continue
         selected.append(combination)
-        used.update(item_cds)
+        used_items.extend(picks)
+        blocked.update(item["item_cd"] for item in picks)
         if len(selected) == k:
             break
     return selected
