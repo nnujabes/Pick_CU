@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LayoutGrid, Loader2, Search, Star, X } from "lucide-react";
+import { LayoutGrid, Loader2, Search, ShoppingCart, Star, X } from "lucide-react";
 import { fetchProducts } from "@/api/client";
 import type { Category, ListedProduct, Product, ProductPromo, ProductSort } from "@/api/types";
 import { CATEGORIES, formatNutrient, formatWon } from "@/utils/format";
@@ -28,10 +28,11 @@ type Hover = (event: { currentTarget: HTMLElement }, product: Product) => void;
 interface Props {
   onHover: Hover;
   onHoverEnd: () => void;
+  onAddToCart: (product: Product) => void;
 }
 
-/** 전체 상품 목록. 서버의 GET /products를 그대로 보여 준다. */
-export function ProductsPage({ onHover, onHoverEnd }: Props) {
+/** 전체 상품 목록. 서버의 GET /products를 그대로 보여 주고, 상품 하나씩 장바구니에 담을 수 있다. */
+export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
   const [category, setCategory] = useState<Category | "">("");
   const [input, setInput] = useState("");
   const [query, setQuery] = useState("");
@@ -185,7 +186,10 @@ export function ProductsPage({ onHover, onHoverEnd }: Props) {
       ) : (
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {items.map((product) => (
-            <li key={product.item_cd}>
+            <li
+              key={product.item_cd}
+              className="flex h-full flex-col overflow-hidden rounded-2xl border border-panel-line bg-panel transition-colors hover:border-cta/70"
+            >
               <button
                 type="button"
                 aria-label={`${product.product_name} 영양정보`}
@@ -201,7 +205,7 @@ export function ProductsPage({ onHover, onHoverEnd }: Props) {
                 onKeyDown={(event) => {
                   if (event.key === "Escape") onHoverEnd();
                 }}
-                className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border border-panel-line bg-panel text-left transition-colors hover:border-cta/70"
+                className="group flex w-full flex-1 flex-col text-left"
               >
                 <span className="relative block aspect-square w-full bg-white p-3">
                   <ProductImage url={product.image_url} alt="" />
@@ -227,6 +231,20 @@ export function ProductsPage({ onHover, onHoverEnd }: Props) {
                   )}
                 </span>
               </button>
+              <div className="px-3 pb-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onHoverEnd();
+                    onAddToCart(product);
+                  }}
+                  aria-label={`${product.product_name} 장바구니에 담기`}
+                  className="flex w-full items-center justify-center gap-1.5 rounded-xl border-2 border-emerald-400 bg-emerald-500/10 px-3 py-2 text-sm font-bold text-emerald-300 transition-all hover:bg-emerald-500 hover:text-slate-950 active:scale-95"
+                >
+                  <ShoppingCart className="h-4 w-4 stroke-[2.5]" />
+                  장바구니 담기
+                </button>
+              </div>
             </li>
           ))}
         </ul>

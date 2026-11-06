@@ -98,12 +98,13 @@ export function CategoryPicker({ selected, onToggle }: { selected: Category[]; o
               <div
                 id={tipId}
                 role="tooltip"
-                className={`pointer-events-none invisible absolute top-full z-30 mt-2 w-max max-w-[240px] rounded-xl border-2 border-cta/80 bg-[#0b1017]/95 p-3 opacity-0 shadow-[0_0_20px_rgba(79,216,168,0.25)] transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 ${align}`}
+                className={`pointer-events-none invisible absolute top-full z-30 mt-2 w-max rounded-xl border-2 border-cta/80 bg-[#0b1017]/95 p-3 opacity-0 shadow-[0_0_20px_rgba(79,216,168,0.25)] transition-opacity duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 ${align}`}
               >
                 <p className="mb-2 border-b border-panel-line pb-1.5 text-xs font-bold text-white">
                   {category} <span className="font-normal text-slate-400">세부 분류</span>
                 </p>
-                <ul className="flex flex-wrap gap-1.5">
+                {/* 세부 분류는 항상 한 줄로 둔다. */}
+                <ul className="flex flex-nowrap gap-1.5">
                   {details.map((detail) => (
                     <li key={detail} className="whitespace-nowrap rounded-md bg-cta-soft px-2 py-0.5 text-xs font-semibold text-cta">
                       {detail}
