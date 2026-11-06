@@ -1,6 +1,7 @@
 import { Fragment } from "react";
-import { AlertCircle, Flame, HelpCircle, Info, SearchX, ShoppingCart, Sparkles } from "lucide-react";
+import { Flame, HelpCircle, Info, Loader2, SearchX, ShoppingCart, Sparkles } from "lucide-react";
 import type { Parsed, Product, RecommendResponse, ResultRow } from "@/api/types";
+import { useLoadingMessage } from "@/hooks/useLoadingMessage";
 import { activeNutrients, comboTitle, conditionText, formatNutrient, formatWon, NUTRIENTS } from "@/utils/format";
 import { ProductImage } from "./ProductImage";
 
@@ -8,7 +9,6 @@ type Hover = (event: { currentTarget: HTMLElement }, product: Product) => void;
 
 interface Props {
   response: RecommendResponse | null;
-  error: string | null;
   loading: boolean;
   onQuickReply: (text: string) => void;
   onCancelQuestion: () => void;
@@ -131,18 +131,21 @@ function ComboCard({ row, parsed, goal, onAddToCart, onHover, onHoverEnd }: {
   );
 }
 
-export function Results({ response, error, loading, onQuickReply, onCancelQuestion, onAddToCart, onHover, onHoverEnd }: Props) {
-  if (error) {
+export function Results({ response, loading, onQuickReply, onCancelQuestion, onAddToCart, onHover, onHoverEnd }: Props) {
+  const loadingMessage = useLoadingMessage(loading);
+  if (loading) {
+    // 이전 추천이 있어도 새 요청을 기다리는 동안에는 안내를 보여 준다.
     return (
-      <Message icon={<AlertCircle className="h-7 w-7 text-rose-400" />}>
-        <p role="alert" className="font-semibold text-rose-300">{error}</p>
+      <Message icon={<Loader2 className="h-7 w-7 animate-spin" />}>
+        <p>{loadingMessage}</p>
       </Message>
     );
   }
+  // 오류와 "영양소 정보 없음"은 입력창 아래 안내(PromptForm)에 나온다.
   if (!response) {
     return (
       <Message icon={<Sparkles className="h-7 w-7" />}>
-        {loading ? "조건에 맞는 상품을 찾고 있어요." : "카테고리와 조건을 정하고 [AI 추천받기]를 누르면 추천이 여기에 나와요."}
+        카테고리와 조건을 정하고 [AI 추천받기]를 누르면 추천이 여기에 나와요.
       </Message>
     );
   }
