@@ -48,6 +48,22 @@ export interface RecommendResponse {
   parser: "rule" | "ax";
 }
 
+/** GET /products의 상품 한 개. 별점 평균과 리뷰 수가 붙는다. */
+export interface ListedProduct extends Product {
+  avg_rating: number | null;
+  n_reviews: number;
+}
+
+export type ProductSort = "default" | "price" | "protein" | "sugar" | "calories" | "sodium";
+export type ProductPromo = "" | "1+1" | "2+1";
+
+export interface ProductPage {
+  total: number;
+  page: number;
+  size: number;
+  items: ListedProduct[];
+}
+
 export interface SavedReview {
   id: number;
   combo_key: string;

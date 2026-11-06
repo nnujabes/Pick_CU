@@ -19,8 +19,8 @@ interface Props {
 
 function Message({ icon, children }: { icon: JSX.Element; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6 text-center text-sm text-slate-300">
-      <div className="mb-2 flex justify-center text-emerald-400">{icon}</div>
+    <div className="rounded-2xl border border-panel-line bg-panel px-6 py-10 text-center text-base text-slate-200 sm:text-lg">
+      <div className="mb-3 flex justify-center text-cta">{icon}</div>
       {children}
     </div>
   );
@@ -55,8 +55,9 @@ function ComboCard({ row, parsed, goal, onAddToCart, onHover, onHoverEnd }: {
           : "border-slate-800 bg-slate-900/70 hover:border-slate-700 hover:bg-slate-900"
       }`}
     >
-      <div className="shrink-0 space-y-1.5 md:w-[260px]">
-        <div className="flex items-center gap-2">
+      {/* 왼쪽: 순위·조합 이름·영양. 내용 폭만 쓰고(조합 이름은 한 줄), 남는 폭은 가운데 사진 칸이 쓴다. */}
+      <div className="min-w-0 space-y-1.5 md:max-w-[420px] md:shrink-0">
+        <div className="flex min-w-0 items-center gap-2">
           <span
             className={`shrink-0 rounded-md px-2 py-0.5 text-xs font-black ${
               isFirst ? "bg-emerald-400 text-slate-950 shadow-[0_0_10px_rgba(52,211,153,0.8)]" : "bg-slate-800 text-slate-300"
@@ -64,7 +65,9 @@ function ComboCard({ row, parsed, goal, onAddToCart, onHover, onHoverEnd }: {
           >
             TOP {row.rank}
           </span>
-          <h3 className="text-base font-extrabold text-white">{comboTitle(row)}</h3>
+          <h3 className="min-w-0 truncate whitespace-nowrap text-base font-extrabold text-white" title={comboTitle(row)}>
+            {comboTitle(row)}
+          </h3>
         </div>
         {tagline && <p className="text-xs font-medium text-slate-400">{tagline}</p>}
         <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -82,7 +85,8 @@ function ComboCard({ row, parsed, goal, onAddToCart, onHover, onHoverEnd }: {
         </div>
       </div>
 
-      <div className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto pb-1 pr-2 pt-2">
+      {/* 가운데: 상품 사진. 조합 정보와 장바구니 사이의 남는 폭 가운데에 둔다. */}
+      <div className="flex min-w-0 flex-1 items-center gap-3 overflow-x-auto px-2 pb-1 pt-2 md:justify-center">
         {row.items.map((product, index) => (
           <Fragment key={product.item_cd + index}>
             {index > 0 && <span className="text-sm font-black text-slate-600">+</span>}
@@ -117,14 +121,15 @@ function ComboCard({ row, parsed, goal, onAddToCart, onHover, onHoverEnd }: {
         ))}
       </div>
 
-      <div className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-800 pt-2 md:w-[196px] md:justify-end md:border-t-0 md:pt-0">
+      <div className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-800 pt-2 md:justify-end md:border-t-0 md:pt-0">
+        {/* 보조 기능이라 테두리를 강조하고 바탕은 옅게 둔다. 마우스를 올리면 채운다. 주 기능(AI 추천받기)은 cta로 칠한다. */}
         <button
           onClick={() => onAddToCart(row)}
-          className="flex w-full flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-emerald-500 px-4 py-2.5 font-bold text-slate-950 shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all hover:bg-emerald-400 active:scale-95 md:w-auto md:flex-initial"
+          className="flex w-full flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-xl border-2 border-emerald-400 bg-emerald-500/10 px-4 py-2 font-bold text-emerald-300 transition-all hover:bg-emerald-500 hover:text-slate-950 active:scale-95 md:w-auto md:flex-initial"
         >
           <ShoppingCart className="h-4 w-4 stroke-[2.5]" />
           <span>장바구니</span>
-          <span className="rounded bg-slate-950/20 px-1.5 py-0.5 text-xs font-black">{formatWon(row.total_price)}</span>
+          <span className="rounded bg-slate-950/30 px-1.5 py-0.5 text-xs font-black">{formatWon(row.total_price)}</span>
         </button>
       </div>
     </article>
@@ -144,8 +149,8 @@ export function Results({ response, loading, onQuickReply, onCancelQuestion, onA
   // 오류와 "영양소 정보 없음"은 입력창 아래 안내(PromptForm)에 나온다.
   if (!response) {
     return (
-      <Message icon={<Sparkles className="h-7 w-7" />}>
-        카테고리와 조건을 정하고 [AI 추천받기]를 누르면 추천이 여기에 나와요.
+      <Message icon={<Sparkles className="h-9 w-9" strokeWidth={1.5} />}>
+        카테고리와 조건을 정하고 추천받기를 눌러주세요.
       </Message>
     );
   }
@@ -159,7 +164,7 @@ export function Results({ response, loading, onQuickReply, onCancelQuestion, onA
               key={reply}
               disabled={loading}
               onClick={() => onQuickReply(reply)}
-              className="rounded-xl border border-emerald-500/60 bg-emerald-950/50 px-4 py-2 text-sm font-bold text-emerald-300 hover:bg-emerald-900/60 disabled:opacity-50"
+              className="rounded-xl border border-cta/60 bg-cta/10 px-4 py-2 text-sm font-bold text-cta transition-colors hover:bg-cta hover:text-cta-ink disabled:opacity-50"
             >
               {reply}
             </button>

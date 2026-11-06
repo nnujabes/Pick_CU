@@ -2,6 +2,16 @@ import type { Category, NutrientKey, Parsed, Product, ResultRow } from "@/api/ty
 
 export const CATEGORIES: Category[] = ["간편식사", "즉석조리", "과자류", "아이스크림", "식품", "음료"];
 
+/** 카테고리마다 들어 있는 CU 세부 분류. 카테고리에 마우스를 올리면 보여 준다. */
+export const CATEGORY_DETAILS: Record<Category, string[]> = {
+  간편식사: ["도시락", "샌드위치/햄버거", "주먹밥/김밥"],
+  즉석조리: ["튀김류", "베이커리", "즉석커피"],
+  과자류: ["스낵/비스켓", "빵/디저트", "껌/초콜릿/캔디"],
+  아이스크림: ["아이스크림"],
+  식품: ["가공식사", "안주류", "식재료"],
+  음료: ["음료", "아이스드링크", "유제품"],
+};
+
 export const NUTRIENTS: Record<NutrientKey, { ko: string; unit: string }> = {
   protein: { ko: "단백질", unit: "g" },
   calories: { ko: "열량", unit: "kcal" },

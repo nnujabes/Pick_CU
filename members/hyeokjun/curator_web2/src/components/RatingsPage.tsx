@@ -162,7 +162,7 @@ export function RatingsPage({ targets, onHome, onNotice }: Props) {
               <button
                 type="submit"
                 disabled={saving}
-                className="flex shrink-0 items-center gap-1.5 rounded-xl bg-emerald-400 px-4 py-2 text-xs font-bold text-slate-950 hover:bg-emerald-300 disabled:opacity-50"
+                className="flex shrink-0 items-center gap-1.5 rounded-xl bg-cta px-4 py-2 text-xs font-bold text-cta-ink hover:bg-cta-hover disabled:opacity-50"
               >
                 <Check className="h-3.5 w-3.5 stroke-[3]" />
                 {saving ? "저장 중…" : "평가 등록하기"}

@@ -4,8 +4,9 @@ import { checkServer, postRecommend } from "@/api/client";
 import type { Category, Product, RecommendResponse, ResultRow } from "@/api/types";
 import { CartDrawer, type CartEntry } from "@/components/CartDrawer";
 import { CategoryPicker } from "@/components/CategoryPicker";
-import { Header, type ServerState } from "@/components/Header";
+import { Header, type ServerState, type Tab } from "@/components/Header";
 import { NutritionTooltip, type TooltipState } from "@/components/NutritionTooltip";
+import { ProductsPage } from "@/components/ProductsPage";
 import { PromptForm, type InputNotice } from "@/components/PromptForm";
 import { RatingsPage, type ReviewTarget } from "@/components/RatingsPage";
 import { Results } from "@/components/Results";
@@ -15,15 +16,17 @@ import { noticeFor } from "@/utils/notices";
 import { readList, writeList } from "@/utils/storage";
 
 const CART_KEY = "pickcu2.cart";
+const INITIAL_CATEGORIES: Category[] = ["간편식사", "음료"];
+const INITIAL_PROMPT = "운동 후 먹을 1만 원 미만의 음식을 추천해줘";
 
 /** 조합 이름은 서로 겹칠 수 있어 평가 목록에는 상품 이름을 쓴다. */
 const targetLabel = (items: Product[], price: number) =>
   `${items.map((item) => shortName(item.product_name)).join(" + ")} (${formatWon(price)})`;
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<"home" | "ratings">("home");
-  const [selectedCategories, setSelectedCategories] = useState<Category[]>(["간편식사", "음료"]);
-  const [prompt, setPrompt] = useState("운동후에 먹을 1만원 미만의 음식을 추천해줘");
+  const [activeTab, setActiveTab] = useState<Tab>("home");
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>(INITIAL_CATEGORIES);
+  const [prompt, setPrompt] = useState(INITIAL_PROMPT);
   const [pendingText, setPendingText] = useState<string | null>(null);
   const [response, setResponse] = useState<RecommendResponse | null>(null);
   const [lastQuery, setLastQuery] = useState<string | null>(null);
@@ -106,6 +109,20 @@ export default function App() {
     }
   };
 
+  /** 간판이나 [메인 추천으로 돌아가기]를 누르면 처음 화면으로 되돌린다. 장바구니는 남긴다. */
+  const goHome = () => {
+    if (loading) return;
+    setActiveTab("home");
+    setSelectedCategories(INITIAL_CATEGORIES);
+    setPrompt(INITIAL_PROMPT);
+    setPendingText(null);
+    setResponse(null);
+    setLastQuery(null);
+    setInputNotice(null);
+    setTooltip(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const cancelQuestion = () => {
     setPrompt(pendingText ?? "");
     setPendingText(null);
@@ -160,7 +177,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-[#0b0e14] font-sans text-slate-100 selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-page font-sans text-slate-100 selection:bg-cta selection:text-cta-ink">
       <div role="status" aria-live="polite">
         {notification && (
           <div className="fixed left-1/2 top-5 z-[60] flex w-max max-w-[calc(100vw-32px)] -translate-x-1/2 items-center gap-2 rounded-full border border-emerald-300 bg-emerald-500 px-6 py-2.5 font-bold text-slate-950 shadow-[0_0_25px_rgba(16,185,129,0.5)]">
@@ -175,13 +192,18 @@ export default function App() {
         cartCount={cartItems.length}
         server={server}
         parser={response?.parser ?? null}
+        onHome={goHome}
         onRatings={() => setActiveTab("ratings")}
         onCart={() => setIsCartOpen(true)}
+        onProducts={() => {
+          setTooltip(null);
+          setActiveTab("products");
+        }}
       />
 
-      <Signboard onHome={() => setActiveTab("home")} />
+      <Signboard onHome={goHome} />
 
-      <main className="mx-auto max-w-5xl px-4 py-8">
+      <main className="mx-auto max-w-[1232px] px-4 py-10">
         {activeTab === "home" ? (
           <>
             <CategoryPicker selected={selectedCategories} onToggle={toggleCategory} />
@@ -204,8 +226,10 @@ export default function App() {
               onHoverEnd={() => setTooltip(null)}
             />
           </>
+        ) : activeTab === "products" ? (
+          <ProductsPage onHover={handleHover} onHoverEnd={() => setTooltip(null)} />
         ) : (
-          <RatingsPage targets={reviewTargets} onHome={() => setActiveTab("home")} onNotice={showNotice} />
+          <RatingsPage targets={reviewTargets} onHome={goHome} onNotice={showNotice} />
         )}
       </main>
 
