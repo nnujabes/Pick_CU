@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import type { RecommendResponse } from "@/api/types";
+import { useLoadingMessage } from "@/hooks/useLoadingMessage";
 import { activeConditions, formatWon, NUTRIENTS } from "@/utils/nutrition";
 
 export type ChatMessage =
@@ -97,10 +98,11 @@ function BotMessage({ response, isLast, onQuickReply }: {
 
 export function ChatLog({ messages, loading, onQuickReply }: Props) {
   const logRef = useRef<HTMLDivElement>(null);
+  const loadingMessage = useLoadingMessage(loading);
 
   useEffect(() => {
     logRef.current?.scrollTo({ top: logRef.current.scrollHeight });
-  }, [messages, loading]);
+  }, [messages, loading, loadingMessage]);
 
   return (
     <div ref={logRef} className="chat-log flex flex-col gap-3 pr-1" role="log" aria-live="polite" aria-label="대화 기록">
@@ -139,7 +141,7 @@ export function ChatLog({ messages, loading, onQuickReply }: Props) {
           </div>
         );
       })}
-      {loading && <p className="self-start font-mono text-[13px] text-muted">조건을 맞춰 보는 중이에요…</p>}
+      {loading && <p className="self-start font-mono text-[13px] text-muted">{loadingMessage}</p>}
     </div>
   );
 }

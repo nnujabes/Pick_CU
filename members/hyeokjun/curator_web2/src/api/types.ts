@@ -25,7 +25,8 @@ export interface ResultRow {
 }
 
 export interface RecommendResponse {
-  status: "ok" | "ask" | "empty";
+  // no_nutrient: 문장에서 영양소 정보를 찾지 못함(A.X parse_query가 None). 입력창 아래에 안내한다.
+  status: "ok" | "ask" | "empty" | "no_nutrient";
   parsed: Parsed;
   goal: string | null;
   quick_replies: string[];
