@@ -184,14 +184,23 @@ def load_parser_model():
 
 
 def parse_text(full_text, categories):
-    """A.X로 영양소와 예산을 뽑는다. 모델이 없거나 실패하면 규칙 파서 결과를 쓴다."""
+    """(해석 결과, parser, 영양소를 찾았는지). A.X가 None을 내면 영양소를 찾지 못한 것으로 본다.
+
+    모델을 쓸 수 없을 때(MODEL_READY가 False)만 규칙 파서 결과를 쓴다.
+    """
     rule = parse_request(full_text, categories)
     if not MODEL_READY:
-        return rule, "rule"
+        return rule, "rule", True
     with _model_lock:  # GPU 하나에서 생성이 겹치지 않게 한다
         query = query_parser.parse_query(full_text)
     if query is None:
-        return rule, "rule"
+        slots = {
+            **rule.slots,
+            "nutrients": dict.fromkeys(NUTRIENT_KEYS),
+            "need_clarification": False,
+            "clarification_question": None,
+        }
+        return ParseResult(slots=slots, goal=None, quick_replies=[]), "ax", False
     nutrients = dict.fromkeys(NUTRIENT_KEYS)
     nutrients.update({KOREAN_TO_COLUMN[name]: direction for name, direction in query["nutrients"].items()})
     slots = {
@@ -201,7 +210,7 @@ def parse_text(full_text, categories):
         "need_clarification": False,
         "clarification_question": None,
     }
-    return ParseResult(slots=slots, goal=None, quick_replies=[]), "ax"
+    return ParseResult(slots=slots, goal=None, quick_replies=[]), "ax", True
 
 
 def build_response(status, parsed, goal=None, quick_replies=None, results=None, relaxed=None, notice=None, parser="rule"):
@@ -222,8 +231,10 @@ def build_response(status, parsed, goal=None, quick_replies=None, results=None, 
 
 def recommend_flow(text, categories, pending_text=None):
     full_text = f"{pending_text} {text}" if pending_text else text
-    parsed, parser = parse_text(full_text, categories)
+    parsed, parser, found = parse_text(full_text, categories)
     slots = parsed.slots
+    if not found:
+        return build_response("no_nutrient", slots, parser=parser)
     if slots["need_clarification"]:
         return build_response("ask", slots, quick_replies=parsed.quick_replies, parser=parser)
 
