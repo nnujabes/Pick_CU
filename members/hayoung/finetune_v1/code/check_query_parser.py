@@ -62,6 +62,17 @@ BUDGET_CASES = [
     ("칼로리 5천 이하", None), ("이천으로 출장 가는 길", None), ("10k 마라톤 끝나고", None),
 ]
 
+# 2026-11-06 추가: 조건 없는 입력(인삿말·잡담·일반 요청어만 있음)은 모델을 부르지 않는다
+NO_CONDITION_CASES = [
+    "안녕", "안녕하세요", "안녕하세요!", "안녕하세요~~", "하이", "헬로", "ㅎㅇ", "반가워요", "고마워", "감사합니다",
+    "수고하세요", "뭐해", "누구야", "테스트", "test", "여보세요", "안녕하세요 추천해줘", "추천해줘", "알려줘", "뭐 있어?",
+    "뭐 먹지", "먹을 거 추천해줘", "마실 거 알려줘", "오늘도 좋은 하루", "ㅋㅋㅋ", "ㅎㅎ", "ㅠㅠ", "..", "?", "하이 뭐 먹지",
+    "Hello!", "안녕하세요 😊", "감사해요 ㅎㅎ", "추천 좀 해주세요", "혹시 뭐 먹을까요?",
+]
+# 인삿말이 섞여도 조건이 있으면 모델로 보낸다 (train v3·dev v3 전체 문장도 따로 확인한다)
+CONDITION_CASES = ["안녕하세요 단백질 높은 거", "하이 5천원 이하 간식", "쉐이크 대용품", "라면 먹은 뒤 입가심",
+                   "야식 추천해줘", "단 거 먹을 거", "가" * 300]
+
 RESPONSE_CASES = [
     ("정상", '{"nutrients": [{"nutrient": "protein", "direction": "high"}, {"nutrient": "fat", "direction": "low"}]}', {"단백질": "high", "지방": "low"}),
     ("앞뒤 잡글", '답은 다음과 같습니다. {"nutrients":[{"nutrient":"sodium","direction":"low"},{"nutrient":"sugar","direction":"high"}]} 이상입니다 {', {"나트륨": "low", "당류": "high"}),
@@ -76,6 +87,7 @@ RESPONSE_CASES = [
     ("끊긴 JSON", '{"nutrients":[{"nutrient":"protein","direction":"high"},', None),
     ("JSON 아님", "죄송합니다. 답할 수 없습니다.", None),
     ("빈 응답", "", None),
+    ("빈 목록(관계없는 문장)", '{"nutrients": []}', None),
 ]
 
 
@@ -112,10 +124,14 @@ def check_offline():
     for name in ("train_sft.jsonl", "val_sft.jsonl"):
         with open(os.path.join(FT, "ft_data", name), encoding="utf-8") as f:
             prompts |= {json.loads(line)["messages"][0]["content"] for line in f}
-    prompt_ok = prompts == {qp.SYSTEM_PROMPT}
-    sha = hashlib.sha256(qp.SYSTEM_PROMPT.encode("utf-8")).hexdigest()
-    print(f"[프롬프트] ft_data 프롬프트 종류 {len(prompts)}개, 일치 {prompt_ok}, sha256 {sha}")
-    if not prompt_ok or sha != qp.SYSTEM_PROMPT_SHA256:
+    # 2026-11-06부터 실제 프롬프트 = 학습 프롬프트 + 관계없는 문장 규칙. 학습 프롬프트 부분이 ft_data와 같은지 본다.
+    prompt_ok = prompts == {qp.TRAIN_SYSTEM_PROMPT}
+    sha = hashlib.sha256(qp.TRAIN_SYSTEM_PROMPT.encode("utf-8")).hexdigest()
+    used_sha = hashlib.sha256(qp.SYSTEM_PROMPT.encode("utf-8")).hexdigest()
+    composed_ok = qp.SYSTEM_PROMPT == qp.TRAIN_SYSTEM_PROMPT + "\n\n" + qp.UNRELATED_RULE
+    print(f"[프롬프트] ft_data 프롬프트 종류 {len(prompts)}개, 학습 프롬프트 일치 {prompt_ok}, sha256 {sha}")
+    print(f"[프롬프트] 실제 프롬프트 = 학습 프롬프트 + 관계없는 문장 규칙: {composed_ok}, sha256 {used_sha}")
+    if not prompt_ok or sha != qp.TRAIN_SYSTEM_PROMPT_SHA256 or not composed_ok or used_sha != qp.SYSTEM_PROMPT_SHA256:
         sys.exit("STOP: 시스템 프롬프트 불일치")
 
     budget = [{"문장": s, "기대": e, "결과": qp.extract_budget(s), "통과": qp.extract_budget(s) == e} for s, e in BUDGET_CASES]
@@ -141,7 +157,10 @@ def check_offline():
         for name, text, replies, want_calls, want_none in (("1차 성공", "5천원으로 먹을 거", [good], 1, False),
                                                            ("1차 실패면 재시도 없이 None", "5천원으로 먹을 거", [bad, good], 1, True),
                                                            (f"정확히 {limit}자는 처리", "가" * limit, [good], 1, False),
-                                                           (f"{limit + 1}자는 모델 호출 없음", "가" * (limit + 1), [good], 0, True)):
+                                                           (f"{limit + 1}자는 모델 호출 없음", "가" * (limit + 1), [good], 0, True),
+                                                           ("인삿말은 모델 호출 없음", "안녕하세요", [good], 0, True),
+                                                           ("잡담+요청어는 모델 호출 없음", "하이 뭐 먹지?", [good], 0, True),
+                                                           ("인삿말+조건은 처리", "안녕하세요 단백질 높은 거", [good], 1, False)):
             queue, calls = list(replies), []
             qp._generate = lambda t: (calls.append(t), queue.pop(0))[1]
             out = qp.parse_query(text)
@@ -163,8 +182,24 @@ def check_offline():
     for x in flows:
         print(f"  {'OK ' if x['통과'] else 'FAIL'} {x['경우']}: 호출 {x['호출']}번, 결과 {x['결과']}")
 
-    # 실제 문장: 예산 포함 유형 전체 통계 + 20문장 표본
+    # 조건 없는 입력 사전 검사
     train, dev = read_sentences(TRAIN_CSV), read_sentences(DEV_CSV)
+    gate = [{"문장": s, "기대": True, "결과": qp.is_no_condition(s)} for s in NO_CONDITION_CASES]
+    gate += [{"문장": s, "기대": False, "결과": qp.is_no_condition(s)} for s in CONDITION_CASES]
+    for x in gate:
+        x["통과"] = x["결과"] == x["기대"]
+    gate_fp = [r["입력 문장"] for r in train + dev if qp.is_no_condition(r["입력 문장"])]
+    gate.append({"문장": f"train+dev 전체 {len(train + dev)}문장 중 걸러진 수", "기대": 0, "결과": len(gate_fp), "통과": not gate_fp})
+    classify = [(t, qp.classify_failure(t)) for t in ("", "   ", None, "가" * (qp.MAX_INPUT_CHARS + 1), "안녕하세요", "단백질 높은 거")]
+    classify_ok = [c for _, c in classify] == ["empty", "empty", "empty", "too_long", "no_condition", None]
+    gate.append({"문장": "classify_failure", "기대": "empty·empty·empty·too_long·no_condition·None", "결과": [c for _, c in classify], "통과": classify_ok})
+    print(f"\n[조건 없는 입력] {sum(x['통과'] for x in gate)}/{len(gate)} (걸러져야 함 {len(NO_CONDITION_CASES)}, 통과해야 함 {len(CONDITION_CASES)})")
+    for x in gate:
+        print(f"  {'OK ' if x['통과'] else 'FAIL'} {str(x['문장'])[:40]!r:44} 기대={x['기대']} 결과={x['결과']}")
+    for s in gate_fp:
+        print("  train/dev에서 걸러짐:", s)
+
+    # 실제 문장: 예산 포함 유형 전체 통계 + 20문장 표본
     lengths = [len(r["입력 문장"]) for r in train + dev]
     print(f"\n[문장 길이] train+dev {len(lengths)}문장, 최대 {max(lengths)}자, {qp.MAX_INPUT_CHARS}자 초과 {sum(n > qp.MAX_INPUT_CHARS for n in lengths)}개")
     rng = random.Random(SEED)
@@ -191,10 +226,11 @@ def check_offline():
     for r in ambiguous[:25]:
         print(f"  {r['예산']}: {r['입력 문장']}")
     save_json("offline.json", {"prompt_match": prompt_ok, "system_prompt_sha256": sha, "budget_cases": budget, "response_cases": resp, "flows": flows,
+                               "no_condition_cases": gate,
                                "budget_type_total": len(budget_rows), "budget_type_missed": missed, "other_type_total": len(other),
                                "other_type_false_positive": false_pos, "budget_sample_20": sample,
                                "ambiguous": [{"문장": r["입력 문장"], "예산": r["예산"]} for r in ambiguous]})
-    ok = all(x["통과"] for x in budget + resp + flows)
+    ok = all(x["통과"] for x in budget + resp + flows + gate)
     print("\n오프라인 전체 통과" if ok else "\n오프라인 실패 있음")
     return ok
 
