@@ -185,12 +185,26 @@ class ParserSelectionTest(IsolatedReviewDb):
         self.assertEqual((body["parsed"]["count"], body["parsed"]["price_priority"]), (2, True))
         self.assertFalse(body["parsed"]["need_clarification"])
 
-    def test_failed_parse_falls_back_to_rule(self):
+    def test_none_returns_no_nutrient(self):
         with mock.patch.object(query_parser, "parse_query", return_value=None):
-            asked = post("뭐 먹지", ["식품"]).json()
-            answered = post("단백질 많은 음료", ["음료"]).json()
-        self.assertEqual((asked["status"], asked["parser"]), ("ask", "rule"))
-        self.assertEqual((answered["status"], answered["parser"]), ("ok", "rule"))
+            body = post("안녕", ["음료"]).json()
+        self.assertEqual((body["status"], body["parser"], body["results"]), ("no_nutrient", "ax", []))
+        self.assertEqual((body["mode"], body["quick_replies"], body["goal"]), (None, [], None))
+        self.assertFalse(body["parsed"]["need_clarification"])
+        self.assertEqual(set(body["parsed"]["nutrients"].values()), {None})
+
+    def test_none_does_not_use_rule_nutrients(self):
+        with mock.patch.object(query_parser, "parse_query", return_value=None):
+            body = post("단백질 많은 음료 5천원", ["음료"]).json()
+        self.assertEqual((body["status"], body["parser"]), ("no_nutrient", "ax"))
+        self.assertEqual(set(body["parsed"]["nutrients"].values()), {None})
+        self.assertEqual(body["parsed"]["budget"], 5000)
+
+    def test_found_nutrients_return_ok(self):
+        result = {"budget": 5000, "nutrients": {"단백질": "high", "지방": "low"}}
+        with mock.patch.object(query_parser, "parse_query", return_value=result):
+            body = post("5천원 이하로 운동 후에 먹을 거", ["간편식사", "음료"]).json()
+        self.assertEqual((body["status"], body["parser"]), ("ok", "ax"))
 
 
 class ParserLoadTest(unittest.TestCase):
