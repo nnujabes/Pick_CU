@@ -1,4 +1,5 @@
 """filter_engine.recommend를 실제 cu_products.db와 임시 DB로 시험한다."""
+import difflib
 import hashlib
 import itertools
 import sqlite3
@@ -43,7 +44,7 @@ def independent_top5(categories, nutrients, budget, nutrition_only=False):
     """엔진 함수를 쓰지 않고 정의대로 직접 계산한다."""
     con = sqlite3.connect(DB_PATH)
     con.row_factory = sqlite3.Row
-    rows = [dict(r) for r in con.execute('SELECT * FROM cu_products')]
+    rows = [dict(r) for r in con.execute('SELECT * FROM cu_products WHERE exclude_reason IS NULL')]
     con.close()
     pools = []
     score = {}
@@ -68,12 +69,24 @@ def independent_top5(categories, nutrients, budget, nutrition_only=False):
         final = nutrition if nutrition_only else 0.7 * nutrition + 0.3 * total / budget * 100
         combos.append((-round(final, 6), -round(nutrition, 6), total, tuple(p['item_cd'] for p in picks)))
     combos.sort()
-    chosen, used = [], set()
+    by_cd = {r['item_cd']: r for r in rows}
+
+    def same_family(a, b):
+        """정의: 같은 바코드이거나, 같은 카테고리·가격·브랜드이고 브랜드 뒤 이름의 유사도가 0.7 이상."""
+        if a['item_cd'] == b['item_cd']:
+            return True
+        name_a, name_b = a['product_name'].split(')', 1), b['product_name'].split(')', 1)
+        name_a, name_b = (name_a if len(name_a) == 2 else ['', name_a[0]]), (name_b if len(name_b) == 2 else ['', name_b[0]])
+        return (a['category'], a['price'], name_a[0]) == (b['category'], b['price'], name_b[0]) and \
+            difflib.SequenceMatcher(None, name_a[1], name_b[1]).ratio() >= 0.7
+
+    chosen, used = [], []
     for combo in combos:
-        if used & set(combo[3]):
+        picks = [by_cd[c] for c in combo[3]]
+        if any(same_family(p, u) for p in picks for u in used):
             continue
         chosen.append(combo[3])
-        used |= set(combo[3])
+        used += picks
         if len(chosen) == 5:
             break
     return chosen
@@ -111,7 +124,8 @@ check('카테고리 3개 낮은 예산(3,000원)에서도 결과 있음', len(lo
 # 4. 결과 부족, 없음
 check('결과 없음은 빈 리스트(재질문용)', recommend(['식품'], HP_LS, budget=1) == [])
 check('카테고리 하나라도 후보가 없으면 빈 리스트', recommend(['간편식사', '음료'], HP_LS, budget=1000) == [])
-check('예산 안 상품이 1개면 1개만 반환', len(recommend(['즉석조리'], HP_LS, budget=1000)) == 1)
+check('예산 안 상품이 1개면 1개만 반환', len(recommend(['아이스크림'], HP_LS, budget=900)) == 1)
+check('추천 제외 상품만 예산 안에 있으면 빈 리스트(1,000원 이하 즉석조리는 시럽뿐)', recommend(['즉석조리'], HP_LS, budget=1000) == [])
 
 # 5. 잘못된 입력
 check('영양소 조건 없음 거부', raises(ValueError, ['음료'], {}))
@@ -123,8 +137,9 @@ check('카테고리 4개 거부', raises(ValueError, ['간편식사', '즉석조
 check('문자열 예산 거부', raises(ValueError, ['음료'], HP_LS, budget='10000'))
 
 # 6. 동점 처리
-def combo(total, nutrition, price, cds):
-    return (fe.rank_key(total, nutrition, price, cds), None, total, nutrition, None, price)
+def combo(total, nutrition, price, cds, names=None):
+    picks = [{'item_cd': c, 'category': '과자류', 'price': price, 'product_name': (names or cds)[n]} for n, c in enumerate(cds)]
+    return (fe.rank_key(total, nutrition, price, cds), picks, total, nutrition, None, price)
 
 ordered = fe.select_top([
     combo(80, 70, 9000, ('a',)),
@@ -134,15 +149,30 @@ ordered = fe.select_top([
     combo(85, 10, 1000, ('e',)),
 ])
 check('동점: 총점 → 영양 점수 → 낮은 합계 → 바코드', [c[0][3][0] for c in ordered] == ['e', 'c', 'd', 'b', 'a'])
-check('소수 오차는 동점으로 처리', fe.rank_key(80.00000000001, 1, 1, ('a',))[0] == fe.rank_key(80, 1, 1, ('a',))[0])
+variants = fe.select_top([
+    combo(90, 90, 1200, ('v1',), ['위스트)마라곤약향라맛']),
+    combo(89, 89, 1200, ('v2',), ['위스트)마라곤약마라맛']),
+    combo(88, 88, 1500, ('v3',), ['위스트)마라곤약마라맛']),
+    combo(87, 87, 1200, ('v4',), ['다른)마라곤약마라맛']),
+])
+check('맛만 다른 상품(같은 브랜드·가격, 비슷한 이름)은 한 번만, 가격이나 브랜드가 다르면 별개', [c[0][3][0] for c in variants] == ['v1', 'v3', 'v4'])
+item = lambda name, price=1000, category='음료': {'category': category, 'price': price, 'product_name': name}
+check('is_variant: 비슷한 이름이어도 카테고리가 다르면 별개, 브랜드 표기가 없어도 비교',
+      not fe.is_variant(item('코카)코카콜라제로P500ml'), item('코카)코카콜라제로P500ml', category='식품'))
+      and fe.is_variant(item('GET헤이즐넛향시럽'), item('GET헤이즐넛시럽')) and not fe.is_variant(item('샌)햄치즈샌드'), item('김)참치마요김밥')))
+sugar_low = recommend(['과자류'], {'당류': 'low', '열량': 'low'})
+names = [i['product_name'] for r in sugar_low for i in r['items']]
+check('실제 DB: 혈당 조건 과자류 Top 5에 위스트 마라곤약 두 맛이 함께 나오지 않음', not {'위스트)마라곤약향라맛', '위스트)마라곤약마라맛'} <= set(names))
+check('카테고리 3개 후보 수 50+30', (fe.TOP_BY_NUTRITION, fe.TOP_BY_LOW_PRICE) == (50, 30))
+check('소수 오차는 동점으로 처리',fe.rank_key(80.00000000001, 1, 1, ('a',))[0] == fe.rank_key(80, 1, 1, ('a',))[0])
 
 # 7. 임시 DB: 중복 금지로 5개를 못 채우는 경우, 같은 값의 점수
 with tempfile.TemporaryDirectory() as tmp:
     path = Path(tmp) / 'small.db'
     con = sqlite3.connect(path)
-    con.execute('CREATE TABLE cu_products (item_cd TEXT, category TEXT, product_name TEXT, price INT, event_type TEXT, calories REAL, protein REAL, sodium REAL, carbs REAL, sugar REAL, fat REAL, thumbnail_url TEXT)')
+    con.execute('CREATE TABLE cu_products (item_cd TEXT, category TEXT, product_name TEXT, price INT, event_type TEXT, calories REAL, protein REAL, sodium REAL, carbs REAL, sugar REAL, fat REAL, thumbnail_url TEXT, exclude_reason TEXT)')
     rows = [('m1', '간편식사', 3000, 30), ('m2', '간편식사', 3000, 10), ('d1', '음료', 1000, 20), ('d2', '음료', 1000, 5)]
-    con.executemany("INSERT INTO cu_products VALUES (?,?,?,?,'1+1',0,?,0,0,0,0,'u')", [(c, cat, c, p, v) for c, cat, p, v in rows])
+    con.executemany("INSERT INTO cu_products VALUES (?,?,?,?,'1+1',0,?,0,0,0,0,'u',NULL)", [(c, cat, c, p, v) for c, cat, p, v in rows])
     con.commit()
     con.close()
     small = recommend(['간편식사', '음료'], {'단백질': 'high'}, budget=10000, db_path=path)
