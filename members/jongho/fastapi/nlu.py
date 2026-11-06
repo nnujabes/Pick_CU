@@ -1,7 +1,6 @@
-"""문장을 추천 조건으로 바꾸는 규칙 파서. A.X 4.0 Light를 연결하기 전까지 쓰는 대체품이다.
+"""문장을 추천 조건으로 바꾸는 규칙 파서. A.X를 쓸 수 없거나 해석에 실패했을 때 쓴다.
 
-출력은 slot_eval의 A.X 출력 스키마(prompts/system_v0.txt)와 같은 형식이다.
-A.X로 바꿀 때는 parse_request만 교체하면 나머지 코드는 그대로 쓸 수 있다.
+개수와 가성비는 A.X가 다루지 않으므로 A.X를 쓸 때도 이 결과를 쓴다. 선택은 service.parse_text가 한다.
 """
 import re
 from dataclasses import dataclass, field

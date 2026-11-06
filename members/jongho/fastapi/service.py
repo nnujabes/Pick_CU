@@ -1,11 +1,14 @@
 """팀 필터 엔진과 cu_products.db를 화면 형식으로 연결한다. 팀 코드와 DB는 읽기만 한다."""
+import os
 import sqlite3
 import sys
+import threading
 from contextlib import closing
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO_ROOT / "backend"))
+sys.path.insert(0, str(REPO_ROOT / "members" / "hayoung" / "finetune_v1" / "code"))
 
 from pickcu.filter_engine import (  # noqa: E402
     NUTRIENT_COLUMNS,
@@ -20,10 +23,14 @@ from pickcu.filter_engine import (  # noqa: E402
 )
 from pickcu.product_search import CATEGORIES, DB_PATH, search_candidates  # noqa: E402
 
+import query_parser  # noqa: E402
 import review_store  # noqa: E402
-from nlu import parse_request  # noqa: E402
+from nlu import NUTRIENT_KEYS, ParseResult, parse_request  # noqa: E402
 
 COLUMN_TO_KOREAN = {column: korean for korean, column in NUTRIENT_COLUMNS.items()}
+KOREAN_TO_COLUMN = {korean: column for column, korean in COLUMN_TO_KOREAN.items()}
+MODEL_READY = False
+_model_lock = threading.Lock()
 NUTRITION_COLUMNS = tuple(COLUMN_TO_KOREAN)
 RELAX_BUDGET_RATE = 1.1
 # 설계의 "총점 + 0.1 × R"은 0~1 척도 기준이다. 엔진 총점은 0~100이라 같은 비중이 되도록 10을 곱한다.
@@ -163,7 +170,41 @@ def rerank_by_value(results):
     return [{**row, "rank": rank} for rank, row in enumerate(ordered, 1)]
 
 
-def build_response(status, parsed, goal=None, quick_replies=None, results=None, relaxed=None, notice=None):
+def load_parser_model():
+    """PICKCU_PARSER가 ax(기본값)면 A.X를 불러온다. 실패하면 규칙 파서로 동작한다."""
+    global MODEL_READY
+    if os.environ.get("PICKCU_PARSER", "ax") != "ax":
+        return
+    try:
+        query_parser.load_model()
+        MODEL_READY = True
+        print("A.X 모델 로딩 완료", flush=True)
+    except Exception as error:  # GPU·패키지·어댑터가 없을 때
+        print(f"A.X를 불러오지 못해 규칙 파서를 씁니다: {error}", flush=True)
+
+
+def parse_text(full_text, categories):
+    """A.X로 영양소와 예산을 뽑는다. 모델이 없거나 실패하면 규칙 파서 결과를 쓴다."""
+    rule = parse_request(full_text, categories)
+    if not MODEL_READY:
+        return rule, "rule"
+    with _model_lock:  # GPU 하나에서 생성이 겹치지 않게 한다
+        query = query_parser.parse_query(full_text)
+    if query is None:
+        return rule, "rule"
+    nutrients = dict.fromkeys(NUTRIENT_KEYS)
+    nutrients.update({KOREAN_TO_COLUMN[name]: direction for name, direction in query["nutrients"].items()})
+    slots = {
+        **rule.slots,
+        "nutrients": nutrients,
+        "budget": query["budget"],
+        "need_clarification": False,
+        "clarification_question": None,
+    }
+    return ParseResult(slots=slots, goal=None, quick_replies=[]), "ax"
+
+
+def build_response(status, parsed, goal=None, quick_replies=None, results=None, relaxed=None, notice=None, parser="rule"):
     results = results or []
     return {
         "status": status,
@@ -175,16 +216,16 @@ def build_response(status, parsed, goal=None, quick_replies=None, results=None, 
         "notice": notice,
         "results": results,
         "source": "db",
-        "parser": "rule",
+        "parser": parser,
     }
 
 
 def recommend_flow(text, categories, pending_text=None):
     full_text = f"{pending_text} {text}" if pending_text else text
-    parsed = parse_request(full_text, categories)
+    parsed, parser = parse_text(full_text, categories)
     slots = parsed.slots
     if slots["need_clarification"]:
-        return build_response("ask", slots, quick_replies=parsed.quick_replies)
+        return build_response("ask", slots, quick_replies=parsed.quick_replies, parser=parser)
 
     nutrients = {COLUMN_TO_KOREAN[key]: value for key, value in slots["nutrients"].items() if value}
     budget = slots["budget"]
@@ -201,7 +242,7 @@ def recommend_flow(text, categories, pending_text=None):
                 "used_budget": used_budget,
             }
     if not results:
-        return build_response("empty", slots, goal=parsed.goal)
+        return build_response("empty", slots, goal=parsed.goal, parser=parser)
 
     if slots["price_priority"]:
         results = rerank_by_value(results)
@@ -210,5 +251,5 @@ def recommend_flow(text, categories, pending_text=None):
         notice = f"지금 추천은 고른 카테고리마다 1개씩 담아 {len(categories)}개 기준으로 찾아요."
     return build_response(
         "ok", slots, goal=parsed.goal,
-        results=[to_display(row) for row in results], relaxed=relaxed, notice=notice,
+        results=[to_display(row) for row in results], relaxed=relaxed, notice=notice, parser=parser,
     )
