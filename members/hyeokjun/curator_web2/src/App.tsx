@@ -4,8 +4,9 @@ import { checkServer, postRecommend } from "@/api/client";
 import type { Category, Product, RecommendResponse, ResultRow } from "@/api/types";
 import { CartDrawer, type CartEntry } from "@/components/CartDrawer";
 import { CategoryPicker } from "@/components/CategoryPicker";
-import { Header, type ServerState } from "@/components/Header";
+import { Header, type ServerState, type Tab } from "@/components/Header";
 import { NutritionTooltip, type TooltipState } from "@/components/NutritionTooltip";
+import { ProductsPage } from "@/components/ProductsPage";
 import { PromptForm, type InputNotice } from "@/components/PromptForm";
 import { RatingsPage, type ReviewTarget } from "@/components/RatingsPage";
 import { Results } from "@/components/Results";
@@ -23,7 +24,7 @@ const targetLabel = (items: Product[], price: number) =>
   `${items.map((item) => shortName(item.product_name)).join(" + ")} (${formatWon(price)})`;
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<"home" | "ratings">("home");
+  const [activeTab, setActiveTab] = useState<Tab>("home");
   const [selectedCategories, setSelectedCategories] = useState<Category[]>(INITIAL_CATEGORIES);
   const [prompt, setPrompt] = useState(INITIAL_PROMPT);
   const [pendingText, setPendingText] = useState<string | null>(null);
@@ -194,6 +195,10 @@ export default function App() {
         onHome={goHome}
         onRatings={() => setActiveTab("ratings")}
         onCart={() => setIsCartOpen(true)}
+        onProducts={() => {
+          setTooltip(null);
+          setActiveTab("products");
+        }}
       />
 
       <Signboard onHome={goHome} />
@@ -221,6 +226,8 @@ export default function App() {
               onHoverEnd={() => setTooltip(null)}
             />
           </>
+        ) : activeTab === "products" ? (
+          <ProductsPage onHover={handleHover} onHoverEnd={() => setTooltip(null)} />
         ) : (
           <RatingsPage targets={reviewTargets} onHome={goHome} onNotice={showNotice} />
         )}
