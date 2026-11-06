@@ -182,6 +182,39 @@ def check_offline():
     for x in flows:
         print(f"  {'OK ' if x['통과'] else 'FAIL'} {x['경우']}: 호출 {x['호출']}번, 결과 {x['결과']}")
 
+    # 2026-11-06 추가: parse_query_with_reason의 이유 코드 (혁준 요청). 생성 함수만 가짜로 바꾼다.
+    reasons = []
+    logging.disable(logging.CRITICAL)
+    try:
+        for text, reply, want_calls, want in (
+                ("", None, 0, (None, "empty")),
+                ("가" * (qp.MAX_INPUT_CHARS + 1), None, 0, (None, "too_long")),
+                ("안녕하세요", None, 0, (None, "no_condition")),
+                ("오늘 날씨 어때", '{"nutrients": []}', 1, (None, "unrelated")),
+                ("운동 후에 먹을 거", "모르겠어요", 1, (None, "invalid_output")),
+                ("운동 후에 먹을 거", RuntimeError("가짜 오류"), 1, (None, "error")),
+                ("5천원 이하로 운동 후에 먹을 거", good, 1, ({"budget": 5000, "nutrients": {"단백질": "high", "지방": "low"}}, None))):
+            calls = []
+
+            def fake(t, rep=reply):
+                calls.append(t)
+                if isinstance(rep, Exception):
+                    raise rep
+                return rep
+
+            qp._generate = fake
+            got = qp.parse_query_with_reason(text)
+            n_calls = len(calls)
+            same = qp.parse_query(text) == got[0]  # parse_query는 결과만 돌려준다
+            reasons.append({"입력": text[:20], "결과": got, "호출": n_calls,
+                            "통과": got == want and n_calls == want_calls and same})
+    finally:
+        qp._generate = original
+        logging.disable(logging.NOTSET)
+    print(f"\n[None 이유 코드] {sum(x['통과'] for x in reasons)}/{len(reasons)}")
+    for x in reasons:
+        print(f"  {'OK ' if x['통과'] else 'FAIL'} {x['입력']!r}: 호출 {x['호출']}번, 결과 {x['결과']}")
+
     # 조건 없는 입력 사전 검사
     train, dev = read_sentences(TRAIN_CSV), read_sentences(DEV_CSV)
     gate = [{"문장": s, "기대": True, "결과": qp.is_no_condition(s)} for s in NO_CONDITION_CASES]
@@ -226,11 +259,11 @@ def check_offline():
     for r in ambiguous[:25]:
         print(f"  {r['예산']}: {r['입력 문장']}")
     save_json("offline.json", {"prompt_match": prompt_ok, "system_prompt_sha256": sha, "budget_cases": budget, "response_cases": resp, "flows": flows,
-                               "no_condition_cases": gate,
+                               "no_condition_cases": gate, "reason_cases": reasons,
                                "budget_type_total": len(budget_rows), "budget_type_missed": missed, "other_type_total": len(other),
                                "other_type_false_positive": false_pos, "budget_sample_20": sample,
                                "ambiguous": [{"문장": r["입력 문장"], "예산": r["예산"]} for r in ambiguous]})
-    ok = all(x["통과"] for x in budget + resp + flows + gate)
+    ok = all(x["통과"] for x in budget + resp + flows + gate + reasons)
     print("\n오프라인 전체 통과" if ok else "\n오프라인 실패 있음")
     return ok
 

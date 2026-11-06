@@ -411,30 +411,42 @@ def _generate(text):
     return tokenizer.decode(out[0][enc["input_ids"].shape[1]:], skip_special_tokens=True)
 
 
-def parse_query(text):
-    """사용자 문장 → {"budget": int|None, "nutrients": {성분: 방향, 성분: 방향}}. 실패하면 None (이유는 로그)."""
-    if not isinstance(text, str) or not text.strip():
-        logger.warning("입력이 비어 있어 모델을 부르지 않음")
-        return None
-    if len(text) > MAX_INPUT_CHARS:
-        logger.warning("입력이 너무 길어 모델을 부르지 않음: %d자 (최대 %d자)", len(text), MAX_INPUT_CHARS)
-        return None
-    if is_no_condition(text):
-        logger.warning("영양 조건이 없는 입력(인삿말·잡담)이라 모델을 부르지 않음: %.50s", text)
-        return None
+def parse_query_with_reason(text):
+    """사용자 문장 → (결과, 이유). 성공하면 (dict, None), 실패하면 (None, 이유 코드).
+
+    이유 코드: "empty", "too_long", "no_condition", "unrelated", "invalid_output", "error"
+    """
+    reason = classify_failure(text)
+    if reason is not None:
+        if reason == "empty":
+            logger.warning("입력이 비어 있어 모델을 부르지 않음")
+        elif reason == "too_long":
+            logger.warning("입력이 너무 길어 모델을 부르지 않음: %d자 (최대 %d자)", len(text), MAX_INPUT_CHARS)
+        else:
+            logger.warning("영양 조건이 없는 입력(인삿말·잡담)이라 모델을 부르지 않음: %.50s", text)
+        return None, reason
     try:
         raw = _generate(text)
-        nutrients, reason = parse_model_response(raw)
+        nutrients, detail = parse_model_response(raw)
         if nutrients is not None:
-            return {"budget": extract_budget(text), "nutrients": nutrients}
-        if reason == UNRELATED_REASON:
-            logger.warning("%s: %.50s", reason, text)
-        else:
-            logger.warning("모델 응답 검증 실패: %s | 응답: %.200s", reason, raw)
+            return {"budget": extract_budget(text), "nutrients": nutrients}, None
+        if detail == UNRELATED_REASON:
+            logger.warning("%s: %.50s", detail, text)
+            return None, "unrelated"
+        logger.warning("모델 응답 검증 실패: %s | 응답: %.200s", detail, raw)
+        return None, "invalid_output"
     except Exception:
         logger.exception("parse_query 실행 중 오류")
         _empty_gpu_cache()  # GPU 메모리 부족 뒤에도 다음 호출이 돌 수 있게 한다
-    return None
+        return None, "error"
+
+
+def parse_query(text):
+    """사용자 문장 → {"budget": int|None, "nutrients": {성분: 방향, 성분: 방향}}. 실패하면 None (이유는 로그).
+
+    이유가 필요하면 parse_query_with_reason을 쓴다.
+    """
+    return parse_query_with_reason(text)[0]
 
 
 def main(argv=None):
