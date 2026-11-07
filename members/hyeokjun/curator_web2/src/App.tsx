@@ -148,7 +148,26 @@ export default function App() {
     showNotice(`'${title}'이(가) 장바구니에 담겼습니다!`);
   };
 
-  const handleHover = (event: { currentTarget: HTMLElement }, product: Product) => {
+  /** 전체 상품에서 고른 상품 하나를 담는다. 추천 문장이 없으므로 queryText·parsed는 비운다. */
+  const addProductToCart = (product: Product) => {
+    const title = shortName(product.product_name);
+    setCartItems((previous) => [
+      ...previous,
+      {
+        cartId: `${Date.now()}-${Math.random()}`,
+        title,
+        items: [product],
+        totalPrice: product.price,
+        protein: product.protein,
+        calories: product.calories,
+        queryText: null,
+        parsed: null,
+      },
+    ]);
+    showNotice(`'${title}'이(가) 장바구니에 담겼습니다!`);
+  };
+
+  const handleHover =(event: { currentTarget: HTMLElement }, product: Product) => {
     const rect = event.currentTarget.getBoundingClientRect();
     setTooltip({ product, rect });
   };
@@ -227,7 +246,7 @@ export default function App() {
             />
           </>
         ) : activeTab === "products" ? (
-          <ProductsPage onHover={handleHover} onHoverEnd={() => setTooltip(null)} />
+          <ProductsPage onHover={handleHover} onHoverEnd={() => setTooltip(null)} onAddToCart={addProductToCart} />
         ) : (
           <RatingsPage targets={reviewTargets} onHome={goHome} onNotice={showNotice} />
         )}
