@@ -11,6 +11,7 @@ import { PromptForm, type InputNotice } from "@/components/PromptForm";
 import { RatingsPage, type ReviewTarget } from "@/components/RatingsPage";
 import { Results } from "@/components/Results";
 import { Signboard } from "@/components/Signboard";
+import { useTheme } from "@/hooks/useTheme";
 import { comboKey, comboTitle, formatWon, shortName } from "@/utils/format";
 import { noticeFor } from "@/utils/notices";
 import { readList, writeList } from "@/utils/storage";
@@ -24,6 +25,7 @@ const targetLabel = (items: Product[], price: number) =>
   `${items.map((item) => shortName(item.product_name)).join(" + ")} (${formatWon(price)})`;
 
 export default function App() {
+  const { theme, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [selectedCategories, setSelectedCategories] = useState<Category[]>(INITIAL_CATEGORIES);
   const [prompt, setPrompt] = useState(INITIAL_PROMPT);
@@ -199,7 +201,7 @@ export default function App() {
     <div className="min-h-screen bg-page font-sans text-slate-100 selection:bg-cta selection:text-cta-ink">
       <div role="status" aria-live="polite">
         {notification && (
-          <div className="fixed left-1/2 top-5 z-[60] flex w-max max-w-[calc(100vw-32px)] -translate-x-1/2 items-center gap-2 rounded-full border border-emerald-300 bg-emerald-500 px-6 py-2.5 font-bold text-slate-950 shadow-[0_0_25px_rgba(16,185,129,0.5)]">
+          <div className="fixed left-1/2 top-5 z-[60] flex w-max max-w-[calc(100vw-32px)] -translate-x-1/2 items-center gap-2 rounded-full border border-emerald-300 bg-emerald-500 px-6 py-2.5 font-bold text-on-accent shadow-[0_0_25px_rgb(var(--glow-1)/0.5)]">
             <Check className="h-5 w-5 shrink-0 stroke-[2.5]" />
             <span>{notification}</span>
           </div>
@@ -218,6 +220,8 @@ export default function App() {
           setTooltip(null);
           setActiveTab("products");
         }}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       <Signboard onHome={goHome} />

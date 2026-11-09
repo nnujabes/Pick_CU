@@ -52,17 +52,17 @@ export function CartDrawer({ items, onClose, onRemove, onClear }: Props) {
         role="dialog"
         aria-modal="true"
         aria-label="장바구니"
-        className="flex h-full w-full max-w-md flex-col border-l border-slate-800 bg-[#0d121c] p-6 shadow-2xl"
+        className="flex h-full w-full max-w-md flex-col border-l border-slate-800 bg-drawer p-6 shadow-2xl"
       >
         <div className="flex items-center justify-between border-b border-slate-800 pb-4">
           <div className="flex items-center gap-2">
-            <ShoppingCart className="h-5 w-5 text-emerald-400" />
-            <h3 className="text-lg font-black text-white">담은 편의점 식단</h3>
-            <span className="rounded-full border border-emerald-800 bg-emerald-950 px-2 py-0.5 text-xs font-bold text-emerald-400">
+            <ShoppingCart className="h-5 w-5 text-accent" />
+            <h3 className="text-lg font-black text-strong">담은 편의점 식단</h3>
+            <span className="rounded-full border border-emerald-800 bg-emerald-950 px-2 py-0.5 text-xs font-bold text-accent">
               {items.length}개
             </span>
           </div>
-          <button ref={closeRef} onClick={onClose} aria-label="닫기" className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-white">
+          <button ref={closeRef} onClick={onClose} aria-label="닫기" className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-800 hover:text-strong">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -78,11 +78,11 @@ export function CartDrawer({ items, onClose, onRemove, onClear }: Props) {
             items.map((entry) => (
               <div key={entry.cartId} className="flex items-center justify-between gap-3 rounded-xl border border-slate-800 bg-slate-900 p-3.5">
                 <div className="min-w-0">
-                  <h4 className="text-sm font-bold text-white">{entry.title}</h4>
+                  <h4 className="text-sm font-bold text-strong">{entry.title}</h4>
                   <p className="mt-0.5 truncate text-[11px] text-slate-400">
                     {entry.items.map((item) => item.product_name).join(" + ")}
                   </p>
-                  <p className="mt-0.5 text-xs font-semibold text-emerald-400">
+                  <p className="mt-0.5 text-xs font-semibold text-accent">
                     단백질 {formatNutrient("protein", entry.protein)} | {formatNutrient("calories", entry.calories)}
                   </p>
                   <span className="text-xs font-bold text-slate-300">{formatWon(entry.totalPrice)}</span>
@@ -99,7 +99,7 @@ export function CartDrawer({ items, onClose, onRemove, onClear }: Props) {
           <div className="space-y-3 border-t border-slate-800 pt-4">
             <div className="flex items-center justify-between text-sm">
               <span className="text-slate-400">합계</span>
-              <span className="text-xl font-black text-emerald-400">{formatWon(total)}</span>
+              <span className="text-xl font-black text-accent">{formatWon(total)}</span>
             </div>
             <button
               onClick={onClear}
