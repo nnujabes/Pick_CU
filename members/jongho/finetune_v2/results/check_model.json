@@ -1,0 +1,24 @@
+{
+  "model": "LGAI-EXAONE/EXAONE-3.5-7.8B-Instruct",
+  "revision": "553ea250b9a5317231459279d5847d6cf955b9aa",
+  "prompt_render": "[|system|]시스템[|endofturn|]\n[|user|]운동 후에 먹을 거\n[|assistant|]",
+  "full_render": "[|system|]시스템[|endofturn|]\n[|user|]운동 후에 먹을 거\n[|assistant|]{\"nutrients\": []}[|endofturn|]\n",
+  "prefix_ok": true,
+  "eos_token": "[|endofturn|]",
+  "pad_token": "[PAD]",
+  "ends_with_eos": true,
+  "model_class": "ExaoneForCausalLM",
+  "linear_layers": {
+    "q_proj": 32,
+    "k_proj": 32,
+    "v_proj": 32,
+    "out_proj": 32,
+    "c_fc_0": 32,
+    "c_fc_1": 32,
+    "c_proj": 32,
+    "lm_head": 1
+  },
+  "mem_4bit_gib": 4.92,
+  "generation_eos": 361,
+  "sample_output": "운동 후에는 몸이 회복되고 근육을 재건하는 데 도움이 되는 영양소를 섭취하는 것이 중요합니다. 다음은 운동 후"
+}
