@@ -24,7 +24,7 @@ GGUF 파일은 약 5.2GB라 git에 없습니다. 팀원은 모델을 받지 않�
 | Ollama에 `pickcu-ax:q5_k_m` 등록됨 | 양자화 A.X |
 | Ollama나 모델이 없음 | 규칙 파서 (`server/nlu.py`). 오류 없이 화면과 추천이 동작 |
 
-모델 등록 방법은 `model/ax-4.0-light/README.md`에 있습니다.
+모델을 받아 설치하는 방법은 `model/README_MODEL_SHARE.md`에 있습니다.
 
 ## 구성
 
