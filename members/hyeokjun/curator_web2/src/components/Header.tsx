@@ -1,4 +1,4 @@
-import { LayoutGrid, Moon, ShoppingCart, Store, Sun, TrendingUp, type LucideIcon } from "lucide-react";
+import { House, LayoutGrid, Moon, ShoppingCart, Store, Sun, TrendingUp, type LucideIcon } from "lucide-react";
 import type { Theme } from "@/hooks/useTheme";
 
 export type Tab = "home" | "ratings" | "products";
@@ -22,12 +22,12 @@ interface BottomItem {
   onClick: () => void;
 }
 
-/** 휴대폰 폭의 하단 3분할 메뉴. 헤더의 backdrop-blur 안에서는 fixed가 헤더 기준이 되므로 헤더 밖에 둔다. */
+/** 휴대폰 폭의 하단 4분할 메뉴. 헤더의 backdrop-blur 안에서는 fixed가 헤더 기준이 되므로 헤더 밖에 둔다. */
 function BottomNav({ items }: { items: BottomItem[] }) {
   return (
     <nav
       aria-label="주요 메뉴"
-      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-3 border-t border-panel-line/70 bg-page/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-panel-line/70 bg-page/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:hidden"
     >
       {items.map(({ label, Icon, active, badge, onClick }) => (
         <button
@@ -39,7 +39,7 @@ function BottomNav({ items }: { items: BottomItem[] }) {
             active ? "text-strong" : "text-slate-300"
           }`}
         >
-          {active && <span className="absolute inset-x-8 top-0 h-[3px] rounded-full bg-cta" />}
+          {active && <span className="absolute inset-x-5 top-0 h-[3px] rounded-full bg-cta" />}
           <span className="relative">
             <Icon className="h-5 w-5" />
             {badge > 0 && (
@@ -113,6 +113,7 @@ export function Header({ activeTab, cartCount, onHome, onRatings, onCart, onProd
 
       <BottomNav
         items={[
+          { label: "메인", Icon: House, active: activeTab === "home", badge: 0, onClick: onHome },
           { label: "추천 메뉴", Icon: TrendingUp, active: activeTab === "ratings", badge: 0, onClick: onRatings },
           { label: "장바구니", Icon: ShoppingCart, active: false, badge: cartCount, onClick: onCart },
           { label: "전체 상품", Icon: LayoutGrid, active: activeTab === "products", badge: 0, onClick: onProducts },
