@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
-import { checkServer, postRecommend } from "@/api/client";
+import { postRecommend } from "@/api/client";
 import type { Category, Product, RecommendResponse, ResultRow } from "@/api/types";
 import { CartDrawer, type CartEntry } from "@/components/CartDrawer";
 import { CategoryPicker } from "@/components/CategoryPicker";
-import { Header, type ServerState, type Tab } from "@/components/Header";
+import { Header, type Tab } from "@/components/Header";
 import { NutritionTooltip, type TooltipState } from "@/components/NutritionTooltip";
 import { ProductsPage } from "@/components/ProductsPage";
 import { PromptForm, type InputNotice } from "@/components/PromptForm";
@@ -34,17 +34,12 @@ export default function App() {
   const [lastQuery, setLastQuery] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [inputNotice, setInputNotice] = useState<InputNotice | null>(null);
-  const [server, setServer] = useState<ServerState>("checking");
   const [cartItems, setCartItems] = useState<CartEntry[]>(() => readList<CartEntry>(CART_KEY));
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [notification, setNotification] = useState("");
   const [tooltip, setTooltip] = useState<TooltipState | null>(null);
   const noticeTimer = useRef<number>();
   const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    checkServer().then(() => setServer("up"), () => setServer("down"));
-  }, []);
 
   useEffect(() => writeList(CART_KEY, cartItems), [cartItems]);
 
@@ -82,7 +77,6 @@ export default function App() {
     setTooltip(null);
     try {
       const next = await postRecommend({ text: trimmed, categories: selectedCategories, pending_text: pending });
-      setServer("up");
       const notice = noticeFor(next);
       if (notice) {
         // 이전 추천을 지우고, 쓴 문장은 고쳐 쓸 수 있게 입력창에 남긴다.
@@ -211,8 +205,6 @@ export default function App() {
       <Header
         activeTab={activeTab}
         cartCount={cartItems.length}
-        server={server}
-        parser={response?.parser ?? null}
         onHome={goHome}
         onRatings={() => setActiveTab("ratings")}
         onCart={() => setIsCartOpen(true)}

@@ -26,7 +26,6 @@ export default {
         strong: token("strong"),
         "on-accent": token("on-accent"),
         accent: { DEFAULT: token("accent"), soft: token("accent-soft") },
-        status: token("status"),
         star: token("star"),
         tip: token("tip"),
         drawer: token("drawer"),
