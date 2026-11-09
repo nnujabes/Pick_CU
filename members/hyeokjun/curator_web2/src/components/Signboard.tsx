@@ -1,7 +1,7 @@
-/** 격자 바탕의 간판. 제목 양옆에 선을 둔다(다크 보라, 화이트 노랑). 제목을 누르면 처음 화면으로 돌아간다. */
+/** 간판. 제목 양옆에 선을 둔다(다크 보라, 화이트 노랑). 제목을 누르면 처음 화면으로 돌아간다. 휴대폰 폭에서는 헤더의 작은 제목으로 대신한다. */
 export function Signboard({ onHome }: { onHome: () => void }) {
   return (
-    <div className="sign-grid border-b border-panel-line/70">
+    <div className="sign-board hidden border-b border-panel-line/70 sm:block">
       <div className="mx-auto flex max-w-5xl flex-col items-center px-4 py-8 sm:py-10">
         <div className="flex items-center gap-6 sm:gap-12">
           <span className="sign-line hidden translate-y-2 min-[840px]:block" aria-hidden />
