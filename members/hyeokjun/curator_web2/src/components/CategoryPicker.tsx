@@ -42,7 +42,7 @@ export const CATEGORY_ICONS: Record<Category, LucideIcon | ((props: IconProps) =
 
 export function StepNumber({ value }: { value: number }) {
   return (
-    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full step-number text-sm font-extrabold">
+    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-cta text-sm font-extrabold text-cta-ink">
       {value}
     </span>
   );

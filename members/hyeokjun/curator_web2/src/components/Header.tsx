@@ -1,14 +1,11 @@
 import { LayoutGrid, Moon, ShoppingCart, Store, Sun, TrendingUp } from "lucide-react";
 import type { Theme } from "@/hooks/useTheme";
 
-export type ServerState = "checking" | "up" | "down";
 export type Tab = "home" | "ratings" | "products";
 
 interface Props {
   activeTab: Tab;
   cartCount: number;
-  server: ServerState;
-  parser: "rule" | "ax" | null;
   onHome: () => void;
   onRatings: () => void;
   onCart: () => void;
@@ -17,16 +14,7 @@ interface Props {
   onToggleTheme: () => void;
 }
 
-/** 지어낸 엔진 이름 대신 서버가 실제로 알려 준 상태만 표시한다. */
-function statusText(server: ServerState, parser: Props["parser"]) {
-  if (server === "checking") return "서버 확인 중";
-  if (server === "down") return "서버 연결 안 됨";
-  if (parser === "ax") return "서버 연결됨 · A.X 문장 해석";
-  if (parser === "rule") return "서버 연결됨 · 규칙 기반 문장 해석";
-  return "서버 연결됨";
-}
-
-export function Header({ activeTab, cartCount, server, parser, onHome, onRatings, onCart, onProducts, theme, onToggleTheme }: Props) {
+export function Header({ activeTab, cartCount, onHome, onRatings, onCart, onProducts, theme, onToggleTheme }: Props) {
   const themeLabel = theme === "dark" ? "화이트 모드로 바꾸기" : "다크 모드로 바꾸기";
   return (
     <header className="sticky top-0 z-40 border-b border-panel-line/70 bg-page/95 backdrop-blur">
@@ -68,30 +56,15 @@ export function Header({ activeTab, cartCount, server, parser, onHome, onRatings
           </button>
         </div>
 
-        <div className="flex shrink-0 items-center gap-4">
-          <div className="hidden items-center gap-2 text-sm text-slate-300 lg:flex" data-testid="server-status">
-            <span className="relative flex h-2 w-2">
-              {server === "up" && (
-                <span className="absolute inline-flex h-full w-full rounded-full bg-status opacity-75 motion-safe:animate-ping" />
-              )}
-              <span
-                className={`relative inline-flex h-2 w-2 rounded-full ${
-                  server === "up" ? "bg-status" : server === "down" ? "bg-rose-400" : "bg-slate-500"
-                }`}
-              />
-            </span>
-            <span>{statusText(server, parser)}</span>
-          </div>
-          <button
-            type="button"
-            onClick={onToggleTheme}
-            aria-label={themeLabel}
-            title={themeLabel}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-panel-line text-slate-300 transition-colors hover:text-strong"
-          >
-            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={onToggleTheme}
+          aria-label={themeLabel}
+          title={themeLabel}
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-panel-line text-slate-300 transition-colors hover:text-strong"
+        >
+          {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </button>
       </div>
     </header>
   );

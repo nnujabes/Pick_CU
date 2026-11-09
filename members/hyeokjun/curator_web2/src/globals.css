@@ -18,7 +18,6 @@
   --on-accent: 2 6 23;
   --accent: 52 211 153;
   --accent-soft: 110 231 183;
-  --status: 79 216 168;
   --star: 251 191 36;
   --tip: 11 16 23;
   --drawer: 13 18 28;
@@ -76,7 +75,6 @@
   --on-accent: 26 22 8;
   --accent: 138 90 0;
   --accent-soft: 138 90 0;
-  --status: 156 163 175;
   --star: 240 180 41;
   --tip: 255 255 255;
   --drawer: 255 255 255;
@@ -172,20 +170,10 @@ body {
   box-shadow: 0 0 10px rgba(244, 196, 48, 0.55);
 }
 
-/* 단계 번호와 선택 개수: 다크는 민트, 화이트는 시안대로 회색 */
-.step-number {
-  background: rgb(var(--cta));
-  color: rgb(var(--cta-ink));
-}
-
+/* 선택 개수: 다크는 민트 테두리, 화이트는 시안대로 회색 */
 .count-pill {
   border: 1px solid rgb(var(--cta) / 0.6);
   color: rgb(var(--cta));
-}
-
-[data-theme="light"] .step-number {
-  background: #e5e7eb;
-  color: #1f2937;
 }
 
 [data-theme="light"] .count-pill {

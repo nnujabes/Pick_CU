@@ -24,8 +24,6 @@ function postJson<T>(path: string, body: unknown) {
   });
 }
 
-export const checkServer = () => request<unknown>("/categories");
-
 export const postRecommend = (body: { text: string; categories: Category[]; pending_text: string | null }) =>
   postJson<RecommendResponse>("/recommend", body);
 
