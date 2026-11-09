@@ -34,7 +34,7 @@ BUDGET_CASES = [
     ("2만원대로", 20000), ("5천원대", 5000), ("12,000원", 12000), ("3000 원", 3000),
     ("만오천원", 15000), ("이만원", 20000), ("삼천오백원", 3500), ("천오백원", 1500),
     ("오백원", 500), ("1만5000원", 15000), ("2.5만원", 25000), ("예산5천원", 5000),
-    ("한 만원 정도", 10000), ("이만 오천 원", 25000), ("십만원", 100000), ("1,234,000원", 1234000),
+    ("한 만원 정도", 10000), ("이만 오천 원", 25000), ("십만원", 100000), ("1,234,000원", None),
     # 금액이 여럿 (2026-11-06 수정안: 범위는 뒤 금액, "말고"로 뺀 금액은 쓰지 않음)
     ("3천원에서 5천원 사이", 5000), ("만원 말고 오천원", 5000), ("2개에 5천원", 5000), ("30% 할인해서 3천원", 3000),
     # 조사 '만'과 붙은 금액
@@ -45,7 +45,7 @@ BUDGET_CASES = [
     ("단백질 많은 걸 원해요", None), ("이것만 원해", None), ("그냥 만 원해요", None), ("3 원해", None),
     ("회사원인데 점심 추천", None), ("대학원 발표 전에", None), ("병원 가는 길에", None), ("강원도 여행", None),
     ("원래 안 좋아해", None), ("사원증 찍고", None), ("구원투수처럼", None), ("가족의 일원", None),
-    ("몇천원 정도", None), ("몇 천원", None), ("수만원", None), ("0원", None), ("", None), ("   ", None),
+    ("몇천원 정도", None), ("몇 천원", None), ("수만원", None), ("0원", 0), ("", None), ("   ", None),
     # 2026-11-06 추가 (종호 수정안, PR #22): budget은 상한으로만 쓴다
     # '원' 없이 예산 표현이 뒤따르는 금액, 예산 k, ₩
     ("5천 정도", 5000), ("오천으로", 5000), ("1만5천 이하", 15000), ("예산 5k", 5000), ("5,000₩", 5000),
@@ -60,6 +60,13 @@ BUDGET_CASES = [
     ("만원짜리 도시락 말고 싼 거", 10000),
     # 금액이 아님: 영양소 수치, 지명, 거리
     ("칼로리 5천 이하", None), ("이천으로 출장 가는 길", None), ("10k 마라톤 끝나고", None),
+    # 2026-11-09 추가 (종호 수정안 budget_filter, PR #27)
+    # 1원 미만은 0: 금액이 너무 작은지는 서버(budget_too_low)가 판단한다
+    ("1원으로 먹을 거", 1), ("0원으로 먹을 거", 0), ("0.5원", 0),
+    # 이미 쓴 금액은 예산이 아니다. 바라는 말("썼으면")은 예산이다
+    ("어제 3만원 썼는데 오늘은 야식 추천", None), ("어제 3만원 썼는데 오늘은 5천원으로", 5000), ("5천원 썼으면 해", 5000),
+    # 10만원을 넘으면 예산 없음
+    ("1000만원으로 야식", None), ("99999999999원", None), ("100001원", None),
 ]
 
 # 2026-11-06 추가: 조건 없는 입력(인삿말·잡담·일반 요청어만 있음)은 모델을 부르지 않는다
@@ -134,7 +141,7 @@ def check_offline():
     if not prompt_ok or sha != qp.TRAIN_SYSTEM_PROMPT_SHA256 or not composed_ok or used_sha != qp.SYSTEM_PROMPT_SHA256:
         sys.exit("STOP: 시스템 프롬프트 불일치")
 
-    budget = [{"문장": s, "기대": e, "결과": qp.extract_budget(s), "통과": qp.extract_budget(s) == e} for s, e in BUDGET_CASES]
+    budget = [{"문장": s, "기대": e, "결과": qp.budget_filter(s), "통과": qp.budget_filter(s) == e} for s, e in BUDGET_CASES]
     print(f"\n[예산 단위 테스트] {sum(x['통과'] for x in budget)}/{len(budget)}")
     for x in budget:
         print(f"  {'OK ' if x['통과'] else 'FAIL'} {x['문장']!r:32} 기대={x['기대']} 결과={x['결과']}")
@@ -236,11 +243,11 @@ def check_offline():
     lengths = [len(r["입력 문장"]) for r in train + dev]
     print(f"\n[문장 길이] train+dev {len(lengths)}문장, 최대 {max(lengths)}자, {qp.MAX_INPUT_CHARS}자 초과 {sum(n > qp.MAX_INPUT_CHARS for n in lengths)}개")
     rng = random.Random(SEED)
-    budget_rows = [dict(r, 출처=p, 예산=qp.extract_budget(r["입력 문장"])) for p, rows in (("train", train), ("dev", dev)) for r in rows
+    budget_rows = [dict(r, 출처=p, 예산=qp.budget_filter(r["입력 문장"])) for p, rows in (("train", train), ("dev", dev)) for r in rows
                    if r["말투 유형"] == "예산 포함"]
     sample = rng.sample([r for r in budget_rows if r["출처"] == "train"], 10) + rng.sample([r for r in budget_rows if r["출처"] == "dev"], 10)
     missed = [r["입력 문장"] for r in budget_rows if r["예산"] is None]
-    other = [dict(r, 예산=qp.extract_budget(r["입력 문장"])) for r in train + dev if r["말투 유형"] != "예산 포함"]
+    other = [dict(r, 예산=qp.budget_filter(r["입력 문장"])) for r in train + dev if r["말투 유형"] != "예산 포함"]
     false_pos = [(r["입력 문장"], r["예산"]) for r in other if r["예산"] is not None]
     print(f"\n[예산 포함 유형 전체] {len(budget_rows)}문장, 금액 찾음 {len(budget_rows) - len(missed)}, 못 찾음 {len(missed)}")
     for s in missed:

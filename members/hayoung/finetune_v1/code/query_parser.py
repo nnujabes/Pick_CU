@@ -3,7 +3,7 @@
     parse_query("5천원 이하로 운동 후에 먹을 거")
     → {"budget": 5000, "nutrients": {"단백질": "high", "지방": "low"}}
 
-- 영양소 2개와 방향은 파인튜닝한 A.X-4.0-Light 어댑터가, 예산은 일반 코드(extract_budget)가 뽑는다.
+- 영양소 2개와 방향은 파인튜닝한 A.X-4.0-Light 어댑터가, 예산은 일반 코드(budget_filter)가 뽑는다.
 - 모델에는 시스템 프롬프트와 사용자 문장만 넣는다.
 - 어댑터 경로: load_model(경로) > 환경변수 QUERY_PARSER_ADAPTER > DEFAULT_ADAPTER 순서로 정한다.
 
@@ -66,7 +66,10 @@ DIRECTIONS = ("high", "low")
 
 # ---------------------------------------------------------------- 예산 추출 (모델 사용 안 함)
 # 2026-11-06: 종호(members/jongho/budget_lab/extract_budget.py, PR #22) 수정안을 반영했다.
-# budget은 상한으로만 쓰이므로, 상한이 아닌 금액(넘게·말고·빼고 등)은 쓰지 않고 None을 돌려준다.
+# 2026-11-09: 종호(members/jongho/budget_lab/budget_filter.py, PR #27) 수정안을 반영했다. 이름도 budget_filter로 바꿨다.
+# budget은 상한으로만 쓰이므로, 상한이 아닌 금액(넘게·말고·빼고·이미 쓴 돈 등)은 쓰지 않고 None을 돌려준다.
+
+MAX_BUDGET = 100000  # 이보다 큰 금액은 편의점 예산으로 보지 않고 예산 없음(None)으로 처리한다
 
 _HAN_DIGIT = {"일": 1, "이": 2, "삼": 3, "사": 4, "오": 5, "육": 6, "칠": 7, "팔": 8, "구": 9}
 _D = "".join(_HAN_DIGIT)
@@ -87,7 +90,10 @@ _UPPER_RE = re.compile(_PARTICLE + r"(?:안\s*넘|못\s*넘|넘지|넘기지|넘
 _LOWER_RE = re.compile(_PARTICLE + r"(?:넘게|넘어도|넘는|넘어|이상|초과|부터)")
 _EXCLUDE_RE = re.compile(r"^\s*(?:짜리|어치)?\s*(?:은|는|이|가)?\s*(?:[가-힣]+\s+)?(?:말고|대신|아니고|아니라)")
 _SUBTRACT_RE = re.compile(_PARTICLE + r"(?:빼고|빼면|뺀|제외)")
-_N = r"(한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|\d+)"
+# 이미 쓴 금액. "5천원 썼으면 해"처럼 바라는 말은 예산이므로 제외하지 않는다.
+_SPENT_RE = re.compile(r"^\s*(?:짜리|어치)?\s*(?:은|는|이|가|을|를|이나|나)?\s*"
+                       r"(?:썼|샀|냈|날렸|벌었|결제했|지출했|나갔|들었)(?!으면)")
+_N =r"(한|두|세|네|다섯|여섯|일곱|여덟|아홉|열|\d+)"
 _SHEETS_RE = re.compile(r"^\s*(?:짜리)?\s*(?:(?:지폐|동전)\s*" + _N + r"\s*(?:장|개)|" + _N + r"\s*장)")
 _RANGE_BETWEEN_RE = re.compile(r"^\s*(?:에서|부터|내지|~|-|–)\s*$")
 _SHEET_COUNT = {"한": 1, "두": 2, "세": 3, "네": 4, "다섯": 5, "여섯": 6, "일곱": 7, "여덟": 8, "아홉": 9, "열": 10}
@@ -133,7 +139,7 @@ def _amount_value(m):
     if m.group("man_unit"):
         man = m.group("man").strip()
         value += (_small_value(man) if man else 1) * 10000
-    return int(value) if value > 0 and value == int(value) else None
+    return int(value)  # 0.5원은 5원으로 다시 읽지 않고 0으로 돌려준다. 금액이 너무 작은지는 호출하는 쪽이 정한다.
 
 
 def _won_amounts(text):
@@ -153,7 +159,6 @@ def _won_amounts(text):
             or not any(c.isdigit() or c in "십백천만" for c in amount)
             # 띄어 쓴 "3 원해", "만 원해요"는 금액이 아니라 동사 '원하다'다
             or (amount[-2:-1].isspace() and _VERB_AFTER_RE.match(text, m.end()))
-            or value is None
         )
         if rejected:
             pos = m.start() + 1
@@ -195,8 +200,8 @@ def _all_amounts(text):
     return kept
 
 
-def extract_budget(text):
-    """문장에서 예산 상한을 양의 정수로 돌려준다. 상한을 알 수 없으면 None."""
+def budget_filter(text):
+    """문장에서 예산 상한을 0 이상의 정수로 돌려준다. 상한을 알 수 없거나 MAX_BUDGET을 넘으면 None."""
     if not isinstance(text, str):
         return None
     amounts = _all_amounts(text)
@@ -208,7 +213,7 @@ def extract_budget(text):
         if _EXCLUDE_RE.match(after):
             excluded.append(value)
             continue
-        if _SUBTRACT_RE.match(after):
+        if _SUBTRACT_RE.match(after) or _SPENT_RE.match(after):
             continue
         # 상한 표현을 먼저 본다: "4천원 넘게 쓰면 다 남겨요"는 상한이다
         if not _UPPER_RE.match(after) and _LOWER_RE.match(after):
@@ -220,10 +225,12 @@ def extract_budget(text):
             value *= int(count) if count.isdigit() else _SHEET_COUNT[count]
         usable.append(value)
     if usable:
-        return usable[0]
-    if has_lower or not excluded:
+        budget = usable[0]
+    elif has_lower or not excluded:
         return None
-    return excluded[0]
+    else:
+        budget = excluded[0]
+    return budget if budget <= MAX_BUDGET else None
 
 
 # ---------------------------------------------------------------- 조건 없는 입력 (모델 사용 안 함)
@@ -429,7 +436,7 @@ def parse_query_with_reason(text):
         raw = _generate(text)
         nutrients, detail = parse_model_response(raw)
         if nutrients is not None:
-            return {"budget": extract_budget(text), "nutrients": nutrients}, None
+            return {"budget": budget_filter(text), "nutrients": nutrients}, None
         if detail == UNRELATED_REASON:
             logger.warning("%s: %.50s", detail, text)
             return None, "unrelated"
