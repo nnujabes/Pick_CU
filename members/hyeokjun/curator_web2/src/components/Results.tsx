@@ -149,7 +149,7 @@ export function Results({ response, loading, onQuickReply, onCancelQuestion, onA
   // 오류와 "영양소 정보 없음"은 입력창 아래 안내(PromptForm)에 나온다.
   if (!response) {
     return (
-      <Message icon={<Sparkles className="h-9 w-9" strokeWidth={1.5} />}>
+      <Message icon={<Sparkles className="h-9 w-9 text-cta-mark" strokeWidth={1.5} />}>
         카테고리와 조건을 정하고 추천받기를 눌러주세요.
       </Message>
     );
