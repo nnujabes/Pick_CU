@@ -94,8 +94,8 @@ export function RatingsPage({ targets, onHome, onNotice }: Props) {
     <section className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 sm:p-8">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-4">
         <div>
-          <h2 className="flex items-center gap-2 text-2xl font-black text-white">
-            <Star className="h-6 w-6 fill-amber-400 text-amber-400" />
+          <h2 className="flex items-center gap-2 text-2xl font-black text-strong">
+            <Star className="h-6 w-6 fill-star text-amber-400" />
             추천 메뉴 사용자 별점 랭킹
           </h2>
           <p className="mt-1 text-sm text-slate-400">사용자들이 남긴 별점의 평균이 높은 순서입니다.</p>
@@ -106,7 +106,7 @@ export function RatingsPage({ targets, onHome, onNotice }: Props) {
       </div>
 
       <form onSubmit={submit} className="mb-8 space-y-3 rounded-2xl border border-slate-800 bg-slate-950/70 p-5">
-        <h3 className="flex items-center gap-1.5 text-sm font-bold text-emerald-400">
+        <h3 className="flex items-center gap-1.5 text-sm font-bold text-accent">
           <Sparkles className="h-4 w-4" />
           선택한 조합에 별점 평가 남기기
         </h3>
@@ -121,7 +121,7 @@ export function RatingsPage({ targets, onHome, onNotice }: Props) {
                   id="review-target"
                   value={target.key}
                   onChange={(event) => setTargetKey(event.target.value)}
-                  className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white"
+                  className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-strong"
                 >
                   {targets.map((item) => (
                     <option key={item.key} value={item.key}>{item.label}</option>
@@ -140,7 +140,7 @@ export function RatingsPage({ targets, onHome, onNotice }: Props) {
                       onClick={() => setStars(value)}
                       className="p-1 transition-transform hover:scale-110"
                     >
-                      <Star className={`h-5 w-5 ${value <= stars ? "fill-amber-400 text-amber-400" : "text-slate-600"}`} />
+                      <Star className={`h-5 w-5 ${value <= stars ? "fill-star text-amber-400" : "text-slate-600"}`} />
                     </button>
                   ))}
                   <span className="ml-2 text-xs font-bold text-amber-400">{stars}점</span>
@@ -154,7 +154,7 @@ export function RatingsPage({ targets, onHome, onNotice }: Props) {
               value={comment}
               maxLength={200}
               onChange={(event) => setComment(event.target.value)}
-              className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-white placeholder-slate-500"
+              className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-strong placeholder-slate-500"
             />
             {saveError && <p role="alert" className="text-xs font-semibold text-rose-300">{saveError}</p>}
             <div className="flex items-center justify-between gap-3">
@@ -183,17 +183,17 @@ export function RatingsPage({ targets, onHome, onNotice }: Props) {
           {ranking.map((row, index) => (
             <li key={row.key} className="flex items-start justify-between gap-4 rounded-xl border border-slate-800 bg-slate-900 p-4">
               <div className="min-w-0">
-                <span className="text-sm font-bold text-white">{row.title}</span>
+                <span className="text-sm font-bold text-strong">{row.title}</span>
                 <div className="mt-1 flex items-center gap-2">
                   <span className="flex items-center text-amber-400">
-                    <Star className="h-3.5 w-3.5 fill-amber-400" />
+                    <Star className="h-3.5 w-3.5 fill-star" />
                     <span className="ml-1 text-xs font-black">{row.average.toFixed(1)}</span>
                   </span>
                   <span className="text-[11px] text-slate-500">평가 {row.count}개</span>
                 </div>
                 {row.comment && <p className="mt-1 text-xs text-slate-300">{row.comment}</p>}
               </div>
-              <span className="shrink-0 rounded border border-emerald-800/40 bg-emerald-950 px-2 py-1 text-xs font-bold text-emerald-400">
+              <span className="shrink-0 rounded border border-emerald-800/40 bg-emerald-950 px-2 py-1 text-xs font-bold text-accent">
                 #{index + 1}
               </span>
             </li>

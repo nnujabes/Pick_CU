@@ -27,11 +27,11 @@ export function NutritionTooltip({ product, rect }: TooltipState) {
         width: WIDTH,
         transform: above ? "translate(-50%, -100%)" : "translateX(-50%)",
       }}
-      className="pointer-events-none fixed z-50 rounded-xl border-2 border-emerald-400/80 bg-slate-950/95 p-3 text-xs shadow-[0_0_20px_rgba(16,185,129,0.4)] backdrop-blur"
+      className="pointer-events-none fixed z-50 rounded-xl border-2 border-emerald-400/80 bg-slate-950/95 p-3 text-xs shadow-[0_0_20px_rgb(var(--glow-1)/0.4)] backdrop-blur"
     >
       <div className="mb-2 flex items-center justify-between gap-2 border-b border-slate-800 pb-1.5">
-        <span className="truncate font-bold text-white">{product.product_name}</span>
-        <span className="shrink-0 rounded bg-emerald-950 px-1.5 text-[10px] font-semibold text-emerald-400">
+        <span className="truncate font-bold text-strong">{product.product_name}</span>
+        <span className="shrink-0 rounded bg-emerald-950 px-1.5 text-[10px] font-semibold text-accent">
           {product.category}
         </span>
       </div>
@@ -39,7 +39,7 @@ export function NutritionTooltip({ product, rect }: TooltipState) {
         {NUTRIENT_KEYS.map((key) => (
           <div key={key} className="flex justify-between rounded bg-slate-900/80 px-2 py-0.5">
             <span className="text-slate-400">{NUTRIENTS[key].ko}</span>
-            <span className={key === "protein" ? "font-bold text-emerald-400" : key === "calories" ? "font-bold text-white" : "font-medium"}>
+            <span className={key === "protein" ? "font-bold text-accent" : key === "calories" ? "font-bold text-strong" : "font-medium"}>
               {formatNutrient(key, product[key])}
             </span>
           </div>

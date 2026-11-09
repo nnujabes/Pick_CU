@@ -2,16 +2,131 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 다크(기본): 절제된 다크 사이버펑크 시안. 값은 "R G B"이고 tailwind.config.ts의 색 이름과 연결된다. */
+:root {
+  --page: 13 18 26;
+  --panel: 19 26 36;
+  --panel-line: 42 51 66;
+  --cta: 79 216 168;
+  --cta-hover: 111 227 187;
+  --cta-ink: 5 38 26;
+  --cta-soft: 17 48 42;
+  --cta-fg: 79 216 168;
+  --cta-mark: 79 216 168;
+  --cta-check: 5 38 26;
+  --strong: 255 255 255;
+  --on-accent: 2 6 23;
+  --accent: 52 211 153;
+  --accent-soft: 110 231 183;
+  --status: 79 216 168;
+  --star: 251 191 36;
+  --tip: 11 16 23;
+  --drawer: 13 18 28;
+  --top-a: 14 31 38;
+  --top-b: 15 23 42;
+  --top-c: 18 28 44;
+  --glow-1: 16 185 129;
+  --glow-2: 52 211 153;
+  --glow-3: 79 216 168;
+
+  --slate-100: 241 245 249;
+  --slate-200: 226 232 240;
+  --slate-300: 203 213 225;
+  --slate-400: 148 163 184;
+  --slate-500: 100 116 139;
+  --slate-600: 71 85 105;
+  --slate-700: 51 65 85;
+  --slate-800: 30 41 59;
+  --slate-900: 15 23 42;
+  --slate-950: 2 6 23;
+  --emerald-300: 110 231 183;
+  --emerald-400: 52 211 153;
+  --emerald-500: 16 185 129;
+  --emerald-800: 6 95 70;
+  --emerald-950: 2 44 34;
+  --amber-200: 253 230 138;
+  --amber-400: 251 191 36;
+  --amber-500: 245 158 11;
+  --amber-950: 69 26 3;
+  --rose-200: 254 205 211;
+  --rose-300: 253 164 175;
+  --rose-400: 251 113 133;
+  --rose-500: 244 63 94;
+  --rose-950: 76 5 25;
+  --sky-200: 186 230 253;
+  --sky-500: 14 165 233;
+  --sky-950: 8 47 73;
+  --purple-300: 216 180 254;
+}
+
+/* 화이트: 플랫 화이트 시안. 글자용 단계는 어둡게, 바탕용 단계는 밝게 뒤집는다. 강조색은 노랑이다. */
+:root[data-theme="light"] {
+  color-scheme: light;
+  --page: 247 249 251;
+  --panel: 255 255 255;
+  --panel-line: 221 225 231;
+  --cta: 244 205 99;
+  --cta-hover: 240 194 70;
+  --cta-ink: 26 22 8;
+  --cta-soft: 255 252 240;
+  --cta-fg: 55 65 81;
+  --cta-mark: 229 168 35;
+  --cta-check: 255 255 255;
+  --strong: 17 24 39;
+  --on-accent: 26 22 8;
+  --accent: 138 90 0;
+  --accent-soft: 138 90 0;
+  --status: 156 163 175;
+  --star: 240 180 41;
+  --tip: 255 255 255;
+  --drawer: 255 255 255;
+  --top-a: 255 251 235;
+  --top-b: 255 255 255;
+  --top-c: 255 255 255;
+  --glow-1: 229 168 35;
+  --glow-2: 229 168 35;
+  --glow-3: 229 168 35;
+
+  --slate-100: 31 41 55;
+  --slate-200: 31 41 55;
+  --slate-300: 55 65 81;
+  --slate-400: 91 100 114;
+  --slate-500: 107 114 128;
+  --slate-600: 156 163 175;
+  --slate-700: 221 225 231;
+  --slate-800: 231 234 239;
+  --slate-900: 255 255 255;
+  --slate-950: 247 249 251;
+  --emerald-300: 240 193 75;
+  --emerald-400: 240 193 75;
+  --emerald-500: 244 205 99;
+  --emerald-800: 239 214 143;
+  --emerald-950: 255 246 216;
+  --amber-200: 146 64 14;
+  --amber-400: 180 83 9;
+  --amber-500: 245 158 11;
+  --amber-950: 254 243 199;
+  --rose-200: 159 18 57;
+  --rose-300: 190 18 60;
+  --rose-400: 225 29 72;
+  --rose-500: 244 63 94;
+  --rose-950: 255 228 230;
+  --sky-200: 7 89 133;
+  --sky-500: 14 165 233;
+  --sky-950: 224 242 254;
+  --purple-300: 126 34 206;
+}
+
 body {
-  background: #0d121a;
+  background: rgb(var(--page));
 }
 
 :focus-visible {
-  outline: 2px solid #4fd8a8;
+  outline: 2px solid rgb(var(--cta-mark));
   outline-offset: 2px;
 }
 
-/* 간판: 옅은 격자 바탕 위에 민트 제목, 양옆에 보라 선 */
+/* 간판: 옅은 격자 바탕 위에 제목, 양옆에 선. 다크는 민트 제목·보라 선, 화이트는 검은 제목·노란 선 */
 .sign-grid {
   background-color: #0f151f;
   background-image:
@@ -31,10 +146,50 @@ body {
 }
 
 .sign-line {
-  display: block;
   width: 120px;
   height: 3px;
   border-radius: 9999px;
   background: linear-gradient(90deg, rgba(155, 124, 240, 0), #9b7cf0 22%, #9b7cf0 78%, rgba(155, 124, 240, 0));
   box-shadow: 0 0 10px rgba(155, 124, 240, 0.55);
+}
+
+[data-theme="light"] .sign-grid {
+  background-color: #fbfcfd;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px;
+}
+
+[data-theme="light"] .sign-title {
+  background: none;
+  color: #111827;
+  filter: none;
+}
+
+[data-theme="light"] .sign-line {
+  background: linear-gradient(90deg, rgba(244, 196, 48, 0), #f4c430 22%, #f4c430 78%, rgba(244, 196, 48, 0));
+  box-shadow: 0 0 10px rgba(244, 196, 48, 0.55);
+}
+
+/* 단계 번호와 선택 개수: 다크는 민트, 화이트는 시안대로 회색 */
+.step-number {
+  background: rgb(var(--cta));
+  color: rgb(var(--cta-ink));
+}
+
+.count-pill {
+  border: 1px solid rgb(var(--cta) / 0.6);
+  color: rgb(var(--cta));
+}
+
+[data-theme="light"] .step-number {
+  background: #e5e7eb;
+  color: #1f2937;
+}
+
+[data-theme="light"] .count-pill {
+  border-color: transparent;
+  background: #e9ecf0;
+  color: #374151;
 }

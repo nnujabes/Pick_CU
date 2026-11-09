@@ -26,6 +26,9 @@ export function readList<T>(key: string): T[] {
 
 export const writeList = (key: string, value: unknown[]) => write(key, JSON.stringify(value));
 
+export const readValue = read;
+export const writeValue = write;
+
 const SESSION_KEY = "pickcu2.session";
 let memorySession: string | null = null;
 

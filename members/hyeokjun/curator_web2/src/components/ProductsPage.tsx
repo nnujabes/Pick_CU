@@ -89,8 +89,8 @@ export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
     <section>
       <div className="mb-6 flex flex-wrap items-end justify-between gap-3 px-1">
         <div>
-          <h2 className="flex items-center gap-2 text-2xl font-black text-white">
-            <LayoutGrid className="h-6 w-6 text-cta" />
+          <h2 className="flex items-center gap-2 text-2xl font-black text-strong">
+            <LayoutGrid className="h-6 w-6 text-cta-fg" />
             전체 상품
           </h2>
           <p className="mt-1 text-sm text-slate-400">
@@ -112,7 +112,7 @@ export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
               aria-pressed={active}
               onClick={() => chooseCategory(value)}
               className={`flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
-                active ? "border-cta bg-cta-soft text-white" : "border-panel-line bg-panel text-slate-300 hover:border-slate-500 hover:text-white"
+                active ? "border-cta bg-cta-soft text-strong" : "border-panel-line bg-panel text-slate-300 hover:border-slate-500 hover:text-strong"
               }`}
             >
               <Icon className="h-4 w-4" strokeWidth={1.75} />
@@ -133,14 +133,14 @@ export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
             value={input}
             maxLength={50}
             onChange={(event) => setInput(event.target.value)}
-            className="w-full bg-transparent py-3 pl-12 pr-10 text-sm text-white placeholder-slate-500 outline-none [&::-webkit-search-cancel-button]:hidden"
+            className="w-full bg-transparent py-3 pl-12 pr-10 text-sm text-strong placeholder-slate-500 outline-none [&::-webkit-search-cancel-button]:hidden"
           />
           {input && (
             <button
               type="button"
               aria-label="검색어 지우기"
               onClick={() => setInput("")}
-              className="absolute right-3 flex h-6 w-6 items-center justify-center rounded-full bg-slate-700/80 text-slate-300 hover:bg-slate-600 hover:text-white"
+              className="absolute right-3 flex h-6 w-6 items-center justify-center rounded-full bg-slate-700/80 text-slate-300 hover:bg-slate-600 hover:text-strong"
             >
               <X className="h-3.5 w-3.5 stroke-[2.5]" />
             </button>
@@ -155,7 +155,7 @@ export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
                 aria-pressed={promo === item.value}
                 onClick={() => choosePromo(item.value)}
                 className={`rounded-lg px-3 py-1.5 text-sm font-semibold transition-colors ${
-                  promo === item.value ? "bg-cta text-cta-ink" : "text-slate-300 hover:text-white"
+                  promo === item.value ? "bg-cta text-cta-ink" : "text-slate-300 hover:text-strong"
                 }`}
               >
                 {item.label}
@@ -166,7 +166,7 @@ export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
             aria-label="정렬"
             value={sort}
             onChange={(event) => chooseSort(event.target.value as ProductSort)}
-            className="rounded-xl border border-panel-line bg-panel px-3 py-2.5 text-sm text-white outline-none focus:border-cta/70"
+            className="rounded-xl border border-panel-line bg-panel px-3 py-2.5 text-sm text-strong outline-none focus:border-cta/70"
           >
             {SORTS.map((item) => (
               <option key={item.value} value={item.value}>
@@ -217,14 +217,14 @@ export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
                 </span>
                 <span className="flex flex-1 flex-col gap-1 p-3">
                   <span className="text-[11px] text-slate-400">{product.category}</span>
-                  <span className="line-clamp-2 text-sm font-semibold text-white">{product.product_name}</span>
-                  <span className="mt-auto pt-1 text-base font-extrabold text-white">{formatWon(product.price)}</span>
+                  <span className="line-clamp-2 text-sm font-semibold text-strong">{product.product_name}</span>
+                  <span className="mt-auto pt-1 text-base font-extrabold text-strong">{formatWon(product.price)}</span>
                   <span className="text-[11px] text-slate-400">
                     단백질 {formatNutrient("protein", product.protein)} · {formatNutrient("calories", product.calories)}
                   </span>
                   {product.n_reviews > 0 && product.avg_rating !== null && (
                     <span className="flex items-center gap-1 text-[11px] font-semibold text-amber-400">
-                      <Star className="h-3 w-3 fill-amber-400" />
+                      <Star className="h-3 w-3 fill-star" />
                       {product.avg_rating.toFixed(1)}
                       <span className="font-normal text-slate-500">({product.n_reviews})</span>
                     </span>
@@ -239,7 +239,7 @@ export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
                     onAddToCart(product);
                   }}
                   aria-label={`${product.product_name} 장바구니에 담기`}
-                  className="flex w-full items-center justify-center gap-1.5 rounded-xl border-2 border-emerald-400 bg-emerald-500/10 px-3 py-2 text-sm font-bold text-emerald-300 transition-all hover:bg-emerald-500 hover:text-slate-950 active:scale-95"
+                  className="flex w-full items-center justify-center gap-1.5 rounded-xl border-2 border-emerald-400 bg-emerald-500/10 px-3 py-2 text-sm font-bold text-accent-soft transition-all hover:bg-emerald-500 hover:text-on-accent active:scale-95"
                 >
                   <ShoppingCart className="h-4 w-4 stroke-[2.5]" />
                   장바구니 담기
@@ -253,7 +253,7 @@ export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
       <div className="mt-6 flex justify-center">
         {loading ? (
           <p className="flex items-center gap-2 text-sm text-slate-400">
-            <Loader2 className="h-4 w-4 animate-spin text-cta" />
+            <Loader2 className="h-4 w-4 animate-spin text-cta-fg" />
             불러오는 중…
           </p>
         ) : (
@@ -261,7 +261,7 @@ export function ProductsPage({ onHover, onHoverEnd, onAddToCart }: Props) {
             <button
               type="button"
               onClick={() => setPage((current) => current + 1)}
-              className="rounded-xl border border-panel-line bg-panel px-6 py-2.5 text-sm font-semibold text-slate-200 hover:border-cta/70 hover:text-white"
+              className="rounded-xl border border-panel-line bg-panel px-6 py-2.5 text-sm font-semibold text-slate-200 hover:border-cta/70 hover:text-strong"
             >
               더 보기 ({items.length.toLocaleString("ko-KR")} / {total?.toLocaleString("ko-KR")})
             </button>

@@ -45,7 +45,7 @@ interface Props {
 export function PromptForm({ value, answering, loading, notice, inputRef, onChange, onSubmit }: Props) {
   return (
     <section className="mb-10">
-      <label htmlFor="prompt" className="mb-4 flex items-center gap-3 px-1 text-lg font-bold text-white sm:text-xl">
+      <label htmlFor="prompt" className="mb-4 flex items-center gap-3 px-1 text-lg font-bold text-strong sm:text-xl">
         <StepNumber value={2} />
         추천 조건 입력
       </label>
@@ -68,7 +68,7 @@ export function PromptForm({ value, answering, loading, notice, inputRef, onChan
             aria-invalid={notice?.tone === "warn" || notice?.tone === "error" ? true : undefined}
             onChange={(event) => onChange(event.target.value)}
             placeholder={answering ? "위 질문의 답을 적어 주세요" : "예: 운동 후 먹을 1만 원 미만의 음식을 추천해줘"}
-            className="w-full bg-transparent py-4 pl-14 pr-12 text-base text-white placeholder-slate-500 outline-none focus-visible:outline-none sm:text-lg"
+            className="w-full bg-transparent py-4 pl-14 pr-12 text-base text-strong placeholder-slate-500 outline-none focus-visible:outline-none sm:text-lg"
           />
           {value && (
             <button
@@ -81,7 +81,7 @@ export function PromptForm({ value, answering, loading, notice, inputRef, onChan
                 onChange("");
                 inputRef.current?.focus();
               }}
-              className="absolute right-3 flex h-7 w-7 items-center justify-center rounded-full bg-slate-700/80 text-slate-300 transition-colors hover:bg-slate-600 hover:text-white"
+              className="absolute right-3 flex h-7 w-7 items-center justify-center rounded-full bg-slate-700/80 text-slate-300 transition-colors hover:bg-slate-600 hover:text-strong"
             >
               <X className="h-4 w-4 stroke-[2.5]" />
             </button>
@@ -120,7 +120,7 @@ export function PromptForm({ value, answering, loading, notice, inputRef, onChan
               onChange(example.text);
               inputRef.current?.focus();
             }}
-            className="rounded-full border border-panel-line bg-panel px-4 py-1.5 text-sm text-slate-200 transition-colors hover:border-cta/70 hover:text-white disabled:opacity-50"
+            className="rounded-full border border-panel-line bg-panel px-4 py-1.5 text-sm text-slate-200 transition-colors hover:border-cta/70 hover:text-strong disabled:opacity-50"
           >
             {example.label}
           </button>
