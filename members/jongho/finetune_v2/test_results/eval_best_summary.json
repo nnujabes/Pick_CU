@@ -1,0 +1,32 @@
+{
+  "dev": {
+    "exact": {
+      "correct": 182,
+      "n": 216,
+      "acc": 0.8426
+    },
+    "pair": {
+      "correct": 380,
+      "n": 432,
+      "acc": 0.8796
+    },
+    "gen_sec": 197.4
+  },
+  "test": {
+    "exact": {
+      "correct": 212,
+      "n": 240,
+      "acc": 0.8833
+    },
+    "pair": {
+      "correct": 432,
+      "n": 480,
+      "acc": 0.9
+    },
+    "gen_sec": 219.7
+  },
+  "md5_unchanged": {
+    "dev": true,
+    "test": true
+  }
+}

@@ -1,0 +1,9 @@
+adapter/best/adapter_model.safetensors
+ft_data/
+ckpt/
+# test 문장이 들어 있는 파일 (팀 규칙: test 데이터는 git에 올리지 않음)
+test_results/ft/
+# 로그
+results/run_r16_lr2e-4/train.log
+# test 문장이 들어 있는 비교 PDF
+AX_vs_EXAONE_비교.pdf
