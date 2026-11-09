@@ -1,0 +1,11 @@
+{
+  "model": "pickcu-ax:q5_k_m",
+  "n": 216,
+  "correct": 186,
+  "acc": 0.8611,
+  "reference_correct": 186,
+  "same_as_reference": 213,
+  "format_errors": 0,
+  "seconds": 174.7,
+  "sec_per_sentence": 0.81
+}

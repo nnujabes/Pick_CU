@@ -1,0 +1,14 @@
+diff --git a/conversion/base.py b/conversion/base.py
+index 841efe7..1b13420 100644
+--- a/conversion/base.py
++++ b/conversion/base.py
+@@ -2062,6 +2062,9 @@ class TextModel(ModelBase):
+ 
+         res = None
+ 
++        if chkhsh == "261dca7f7e13f3c2d223e219f9983a7587fb6fb33792ff438a0612c847964ff9":
++            # local patch: skt/A.X-4.0-Light (ByteLevel use_regex, GPT-2 regex)
++            res = "gpt-2"
+         # NOTE: if you get an error here, you need to update the convert_hf_to_gguf_update.py script
+         #       or pull the latest version of the model from Huggingface
+         #       don't edit the hashes manually!
