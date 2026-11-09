@@ -1,0 +1,11 @@
+{
+  "model": "pickcu-exa:q5_k_m-train",
+  "n": 216,
+  "correct": 183,
+  "acc": 0.8472,
+  "reference_correct": 186,
+  "same_as_reference": 191,
+  "format_errors": 0,
+  "seconds": 192.0,
+  "sec_per_sentence": 0.89
+}
