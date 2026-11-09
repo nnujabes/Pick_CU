@@ -124,15 +124,10 @@ body {
   outline-offset: 2px;
 }
 
-/* 간판: 옅은 격자 바탕 위에 제목, 양옆에 선. 다크는 민트 제목·보라 선, 화이트는 검은 제목·노란 선 */
-.sign-grid {
+/* 간판: 제목과 양옆의 선. 다크는 민트 제목·보라 선, 화이트는 검은 제목·노란 선 */
+.sign-board {
   background-color: #0f151f;
-  background-image:
-    radial-gradient(ellipse 50% 120% at 50% 40%, rgba(79, 216, 168, 0.07), transparent 70%),
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: auto, 32px 32px, 32px 32px;
-  background-position: center;
+  background-image: radial-gradient(ellipse 50% 120% at 50% 40%, rgba(79, 216, 168, 0.07), transparent 70%);
 }
 
 .sign-title {
@@ -151,12 +146,9 @@ body {
   box-shadow: 0 0 10px rgba(155, 124, 240, 0.55);
 }
 
-[data-theme="light"] .sign-grid {
+[data-theme="light"] .sign-board {
   background-color: #fbfcfd;
-  background-image:
-    linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
-  background-size: 32px 32px, 32px 32px;
+  background-image: none;
 }
 
 [data-theme="light"] .sign-title {

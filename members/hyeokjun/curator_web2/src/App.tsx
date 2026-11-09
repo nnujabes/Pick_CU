@@ -14,11 +14,11 @@ import { Signboard } from "@/components/Signboard";
 import { useTheme } from "@/hooks/useTheme";
 import { comboKey, comboTitle, formatWon, shortName } from "@/utils/format";
 import { noticeFor } from "@/utils/notices";
+import { defaultPrompt } from "@/utils/prompt";
 import { readList, writeList } from "@/utils/storage";
 
 const CART_KEY = "pickcu2.cart";
 const INITIAL_CATEGORIES: Category[] = ["간편식사", "음료"];
-const INITIAL_PROMPT = "운동 후 먹을 1만 원 미만의 음식을 추천해줘";
 
 /** 조합 이름은 서로 겹칠 수 있어 평가 목록에는 상품 이름을 쓴다. */
 const targetLabel = (items: Product[], price: number) =>
@@ -28,7 +28,7 @@ export default function App() {
   const { theme, toggleTheme } = useTheme();
   const [activeTab, setActiveTab] = useState<Tab>("home");
   const [selectedCategories, setSelectedCategories] = useState<Category[]>(INITIAL_CATEGORIES);
-  const [prompt, setPrompt] = useState(INITIAL_PROMPT);
+  const [prompt, setPrompt] = useState(defaultPrompt);
   const [pendingText, setPendingText] = useState<string | null>(null);
   const [response, setResponse] = useState<RecommendResponse | null>(null);
   const [lastQuery, setLastQuery] = useState<string | null>(null);
@@ -110,7 +110,7 @@ export default function App() {
     if (loading) return;
     setActiveTab("home");
     setSelectedCategories(INITIAL_CATEGORIES);
-    setPrompt(INITIAL_PROMPT);
+    setPrompt(defaultPrompt());
     setPendingText(null);
     setResponse(null);
     setLastQuery(null);
@@ -218,7 +218,7 @@ export default function App() {
 
       <Signboard onHome={goHome} />
 
-      <main className="mx-auto max-w-[1232px] px-4 py-10">
+      <main className="mx-auto max-w-[1232px] px-4 pb-24 pt-6 sm:py-10">
         {activeTab === "home" ? (
           <>
             <CategoryPicker selected={selectedCategories} onToggle={toggleCategory} />

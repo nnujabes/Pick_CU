@@ -1,5 +1,6 @@
 import type { RefObject } from "react";
 import { AlertCircle, Info, Search, TriangleAlert, X } from "lucide-react";
+import { defaultPrompt } from "@/utils/prompt";
 import { StepNumber } from "./CategoryPicker";
 
 /** 입력창 바로 아래에 띄우는 안내. 경우에 따라 안내(info)·주의(warn)·오류(error)로 나눈다. */
@@ -30,6 +31,7 @@ const EXAMPLES = [
   { label: "1만 원 이하", text: "1만 원 이하로 든든한 한 끼 추천해줘" },
   { label: "다이어트 간식", text: "다이어트 중에 먹을 열량 낮은 간식 추천해줘" },
   { label: "혈당 관리", text: "혈당 관리 중이라 당 적은 음료 추천해줘" },
+  { label: "나트륨 적게", text: "나트륨 적은 저녁 메뉴 추천해줘" },
 ];
 
 interface Props {
@@ -57,7 +59,7 @@ export function PromptForm({ value, answering, loading, notice, inputRef, onChan
         className="flex flex-col gap-3 sm:flex-row"
       >
         <div className="relative flex flex-1 items-center rounded-xl border border-panel-line bg-panel transition-colors focus-within:border-cta/70">
-          <Search className="absolute left-5 h-5 w-5 text-slate-400" />
+          <Search className="absolute left-3.5 h-5 w-5 text-slate-400 sm:left-5" />
           <input
             id="prompt"
             ref={inputRef}
@@ -67,8 +69,8 @@ export function PromptForm({ value, answering, loading, notice, inputRef, onChan
             aria-describedby={notice ? "prompt-notice" : undefined}
             aria-invalid={notice?.tone === "warn" || notice?.tone === "error" ? true : undefined}
             onChange={(event) => onChange(event.target.value)}
-            placeholder={answering ? "위 질문의 답을 적어 주세요" : "예: 운동 후 먹을 1만 원 미만의 음식을 추천해줘"}
-            className="w-full bg-transparent py-4 pl-14 pr-12 text-base text-strong placeholder-slate-500 outline-none focus-visible:outline-none sm:text-lg"
+            placeholder={answering ? "위 질문의 답을 적어 주세요" : defaultPrompt()}
+            className="w-full bg-transparent py-4 pl-11 pr-10 text-base text-strong placeholder-slate-500 outline-none focus-visible:outline-none sm:pl-14 sm:pr-12 sm:text-lg"
           />
           {value && (
             <button
@@ -81,7 +83,7 @@ export function PromptForm({ value, answering, loading, notice, inputRef, onChan
                 onChange("");
                 inputRef.current?.focus();
               }}
-              className="absolute right-3 flex h-7 w-7 items-center justify-center rounded-full bg-slate-700/80 text-slate-300 transition-colors hover:bg-slate-600 hover:text-strong"
+              className="absolute right-2 flex h-7 w-7 sm:right-3 items-center justify-center rounded-full bg-slate-700/80 text-slate-300 transition-colors hover:bg-slate-600 hover:text-strong"
             >
               <X className="h-4 w-4 stroke-[2.5]" />
             </button>
@@ -107,9 +109,11 @@ export function PromptForm({ value, answering, loading, notice, inputRef, onChan
           </p>
         )}
       </div>
-      <div className="mt-4 flex flex-wrap items-center gap-2 px-1 sm:gap-3">
-        <span className="text-sm text-slate-400">예시로 시도해보세요.</span>
-        <span className="h-4 w-px bg-slate-600" aria-hidden />
+      {/* 휴대폰 폭은 설명을 윗줄에 두고 예시를 같은 폭의 3칸 격자로, 넓은 폭은 한 줄로 흘린다. */}
+      <div className="mt-4 px-1 sm:flex sm:flex-wrap sm:items-center sm:gap-3">
+        <span className="mb-2 block text-sm text-slate-400 sm:mb-0">예시로 시도해보세요.</span>
+        <span className="hidden h-4 w-px bg-slate-600 sm:block" aria-hidden />
+        <div className="grid grid-cols-3 gap-2 sm:contents">
         {EXAMPLES.map((example) => (
           <button
             key={example.label}
@@ -120,11 +124,12 @@ export function PromptForm({ value, answering, loading, notice, inputRef, onChan
               onChange(example.text);
               inputRef.current?.focus();
             }}
-            className="rounded-full border border-panel-line bg-panel px-4 py-1.5 text-sm text-slate-200 transition-colors hover:border-cta/70 hover:text-strong disabled:opacity-50"
+            className="whitespace-nowrap rounded-full border border-panel-line bg-panel px-1 py-1.5 text-[13px] max-[340px]:text-xs text-slate-200 transition-colors hover:border-cta/70 hover:text-strong disabled:opacity-50 sm:px-4 sm:text-sm"
           >
             {example.label}
           </button>
         ))}
+        </div>
       </div>
     </section>
   );

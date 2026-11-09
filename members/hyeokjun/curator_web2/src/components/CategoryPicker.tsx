@@ -54,15 +54,15 @@ export function CategoryPicker({ selected, onToggle }: { selected: Category[]; o
       <div className="mb-4 flex items-center justify-between gap-2 px-1">
         <h2 className="flex items-center gap-3 text-lg font-bold text-strong sm:text-xl">
           <StepNumber value={1} />
-          카테고리 선택 <span className="text-xs font-normal text-slate-400 sm:text-sm">(1~3개 선택 가능)</span>
+          카테고리 선택 <span className="hidden text-sm font-normal text-slate-400 sm:inline">(1~3개 선택 가능)</span>
         </h2>
         <span className="count-pill shrink-0 rounded-lg px-3 py-1 text-xs font-semibold sm:text-sm">
           {selected.length} / 3 선택됨
         </span>
       </div>
 
-      {/* 어느 폭에서나 한 줄이다. */}
-      <div className="relative grid grid-cols-6 gap-1.5 sm:gap-3">
+      {/* 휴대폰 폭은 3칸씩 두 줄, 넓은 폭은 한 줄이다. */}
+      <div className="relative grid grid-cols-3 gap-2 sm:grid-cols-6 sm:gap-3">
         {CATEGORIES.map((category, index) => {
           const isSelected = selected.includes(category);
           const Icon = CATEGORY_ICONS[category];
@@ -90,7 +90,7 @@ export function CategoryPicker({ selected, onToggle }: { selected: Category[]; o
                   </span>
                 )}
                 <Icon className="h-6 w-6 sm:h-8 sm:w-8" strokeWidth={1.5} />
-                <span className="whitespace-nowrap text-[10px] font-semibold tracking-[-0.04em] sm:text-base sm:tracking-normal">
+                <span className="whitespace-nowrap text-sm font-semibold sm:text-base">
                   {category}
                 </span>
               </button>
