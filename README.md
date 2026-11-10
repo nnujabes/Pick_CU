@@ -104,7 +104,7 @@ python backend/scripts/build_cu_products_db.py
 | --- | --- | --- | --- |
 | hayoung | LLM 선정·파인튜닝, 자연어 전처리 | A.X-4.0-Light QLoRA 모델, `parse_query` | `backend/pickcu/query_parser.py` |
 | jongho | API 서버, 예산 규칙, 모델 비교 | FastAPI 서버, 규칙 파서, `budget_filter`, EXAONE 비교 | `backend/api/`, `backend/pickcu/nlu.py` |
-| hyeokjun | 웹 화면, A.X 기준선 평가 | 웹 화면 3종(curator_web, web2, web3) | `frontend/` (curator_web2) |
+| hyeokjun | 웹 화면, A.X 기준선 평가, 양자화 | 웹 화면 3종(curator_web, web2, web3), GGUF 양자화 모델 | `frontend/` (curator_web2) |
 | knlee | 데이터 수집·DB, 추천 엔진, 통합 | 상품 DB 2,154개, 검색 함수, Top 5 필터 엔진 | `backend/pickcu/`(엔진·검색), `backend/data/` |
 
 ### hayoung — 문장 해석 모델 (`members/hayoung/`)
@@ -143,7 +143,7 @@ python backend/scripts/build_cu_products_db.py
   - test는 EXAONE 88.3%, A.X 85.8%입니다.
   - 두 모델의 차이는 통계적으로 구분되지 않아(McNemar p=0.29) 서비스는 A.X를 유지했습니다.
 
-### hyeokjun — 웹 화면 (`members/hyeokjun/`)
+### hyeokjun — 웹 화면과 양자화 (`members/hyeokjun/`)
 
 - A.X 4.0 Light 기준선을 평가했습니다(Ollama Q5_K_M).
   - 직접 말한 영양소는 100%를 맞혔습니다.
@@ -154,6 +154,10 @@ python backend/scripts/build_cu_products_db.py
   - 카테고리 세부 분류, 전체 상품 화면
   - 장바구니, 별점 랭킹, 휴대폰 화면
 - `curator_web3/`: 양자화한 A.X(GGUF, Ollama)로 화면, API, 모델을 한 번에 실행하는 버전입니다.
+- 양자화(`curator_web3/model/`): 파인튜닝 어댑터를 원본 모델에 합친 뒤 GGUF Q5_K_M으로 양자화했습니다.
+  - A.X 4.0 Light: 약 5.2GB, test 240문장 86.3%(서비스 프롬프트), 문장당 0.81초
+  - EXAONE 3.5 7.8B도 비교용으로 양자화했습니다. 두 모델의 차이가 1%p 이내라 A.X를 유지했습니다.
+  - A.X GGUF 모델과 LoRA 어댑터는 Hugging Face에 공개로 올렸습니다(`members/hyeokjun/huggingface/README.md`).
 
 ### knlee — 데이터와 추천 엔진 (`members/knlee/`, `backend/`)
 
