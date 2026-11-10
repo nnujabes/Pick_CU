@@ -1,7 +1,7 @@
 """Pick CU API. 응답 형식의 기준은 이 폴더의 README.md다.
 
 실행 (backend 폴더에서): python -m uvicorn api.main:app --port 8000
-POST /recommend?mock=<경우>를 붙이면 mock_responses.json의 응답을 그대로 돌려준다.
+POST /recommend?mock=<경우>를 붙이면 backend/data/mock_responses.json의 응답을 그대로 돌려준다.
 """
 import json
 from contextlib import asynccontextmanager
@@ -14,8 +14,7 @@ from pydantic import BaseModel, Field
 
 from api import review_store, service
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
-MOCK_PATH = REPO_ROOT / "members" / "hyeokjun" / "curator_web" / "frontend" / "src" / "mocks" / "mock_responses.json"
+MOCK_PATH = Path(__file__).resolve().parents[1] / "data" / "mock_responses.json"
 MockCase = Literal["single", "combo", "ask", "empty", "relaxed"]
 SortKey = Literal["default", "price", "protein", "sugar", "calories", "sodium"]
 

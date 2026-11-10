@@ -1,4 +1,4 @@
-"""mock 응답 5종을 실제 DB와 엔진 결과로 만들어 프론트의 mock_responses.json에 저장한다.
+"""mock 응답 5종을 실제 DB와 엔진 결과로 만들어 backend/data/mock_responses.json에 저장한다.
 
 DB가 바뀌었을 때만 다시 실행한다 (저장소 루트에서): python backend/scripts/build_mocks.py
 """

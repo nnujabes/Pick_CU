@@ -41,7 +41,7 @@ python -m unittest discover -s tests -p "test_api.py"
 | `../pickcu/nlu.py` | 규칙 파서. A.X를 쓸 수 없을 때의 해석과 개수·가성비 해석 |
 | `../pickcu/query_parser.py` | A.X 문장 해석 (원본 `members/hayoung/finetune_v1/code/query_parser.py`) |
 | `review_store.py` | 리뷰 저장. `backend/data/reviews.db`는 자동으로 만들어지고 커밋되지 않음 |
-| `../scripts/build_mocks.py` | 프론트의 `mock_responses.json` 생성 |
+| `../scripts/build_mocks.py` | `backend/data/mock_responses.json` 생성 |
 | `../tests/test_api.py` | API 테스트 |
 
 ## API 명세서
@@ -169,7 +169,7 @@ python -m unittest discover -s tests -p "test_api.py"
 
 응답 형식의 기준은 이 README입니다. `members/hyeokjun/curator_web/api_contract.json`은 더 이상 갱신하지 않습니다.
 
-쿼리 파라미터 `mock`(선택)에 `single`, `combo`, `ask`, `empty`, `relaxed` 중 하나를 주면 `mock_responses.json`의 응답을 그대로 돌려줍니다. 이때도 본문은 아래 형식을 지켜야 합니다.
+쿼리 파라미터 `mock`(선택)에 `single`, `combo`, `ask`, `empty`, `relaxed` 중 하나를 주면 `backend/data/mock_responses.json`의 응답을 그대로 돌려줍니다. 이때도 본문은 아래 형식을 지켜야 합니다.
 
 | 요청 필드 | 타입 | 필수 | 설명 |
 | --- | --- | --- | --- |
