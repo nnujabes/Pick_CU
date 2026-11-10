@@ -44,7 +44,18 @@ members/       팀원별 작업 폴더 (실험, 학습, 이전 버전)
    pip install -r backend/requirements.txt   # torch는 PC의 CUDA 버전에 맞게 따로 설치
    ```
 
-2. A.X 어댑터: `adapter_model.safetensors`는 git에 없어서 따로 받아 `backend/models/adapter/best/`에 넣습니다. 다른 곳에 두었으면 환경변수 `QUERY_PARSER_ADAPTER`로 경로를 지정합니다. 첫 실행 때 `skt/A.X-4.0-Light` 원본(약 15GB)을 받습니다.
+2. A.X 어댑터: 어댑터 파일은 용량 때문에 git에 없고 Hugging Face에 공개로 올려 두었습니다(https://huggingface.co/nnujabes/pickcu-ax-4.0-light-lora, 약 162MB). 로그인 없이 받을 수 있습니다.
+
+   ```bash
+   pip install -U huggingface_hub
+   # README.md는 받지 않도록 파일 두 개만 지정
+   hf download nnujabes/pickcu-ax-4.0-light-lora adapter_model.safetensors adapter_config.json \
+     --local-dir backend/models/adapter/best
+   sha256sum backend/models/adapter/best/adapter_model.safetensors
+   # f95d9f5e429f0f16c854c769253ee0dd4df075f91b5ea3cc29fd56b7b157cc8b
+   ```
+
+   다른 곳에 두었으면 환경변수 `QUERY_PARSER_ADAPTER`로 경로를 지정합니다. 첫 실행 때 `skt/A.X-4.0-Light` 원본(약 15GB)을 받습니다. 양자화 GGUF 모델(web3용)은 `members/hyeokjun/huggingface/README.md`를 참고합니다.
 
 3. 화면과 API를 함께 실행
 
@@ -123,8 +134,10 @@ python backend/scripts/build_cu_products_db.py
   - 리뷰 별점을 추천 순위에 반영합니다(엔진 총점 + 10 × R).
   - API 명세는 `backend/api/README.md`에 있습니다.
 - `budget_lab/`: 예산 함수 수정안 `budget_filter`
-  - 지출 금액은 예산에서 제외하고, 10만원 초과는 None, 1원 미만은 0으로 처리합니다.
-  - hayoung의 `parse_query`에 반영되었습니다.
+  - 이미 쓴 금액("어제 3만원 썼는데")은 예산에서 뺍니다.
+  - 10만원을 넘는 금액은 예산이 없는 것으로 봅니다.
+  - "0.5원" 같은 1원 미만 금액은 0원으로 읽고, 서버가 1000원 이상으로 다시 입력하도록 안내합니다.
+  - hayoung의 `parse_query`에는 아직 반영되지 않았습니다(반영 요청서 `budget_lab/README_budget_filter_반영요청.md`). 서비스는 지금 이전 함수 `extract_budget`을 씁니다.
 - `eval/`: 파인튜닝 어댑터 평가 스크립트
 - `finetune_v2/`: 같은 데이터로 EXAONE-3.5-7.8B를 파인튜닝해 A.X와 비교했습니다.
   - test는 EXAONE 88.3%, A.X 85.8%입니다.
