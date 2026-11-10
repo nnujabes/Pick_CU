@@ -7,7 +7,7 @@
 | 항목 | 값 |
 | --- | --- |
 | 파일 | `pickcu-ax-Q5_K_M.gguf` (약 5.2GB) |
-| 받는 곳 | Hugging Face 비공개 저장소 [`nnujabes/pickcu-ax-4.0-light-gguf`](https://huggingface.co/nnujabes/pickcu-ax-4.0-light-gguf) (받는 방법은 `members/hyeokjun/huggingface/README.md`) |
+| 받는 곳 | https://huggingface.co/nnujabes/pickcu-ax-4.0-light-gguf (공개, 받는 방법은 `members/hyeokjun/huggingface/README.md`) |
 | 넣는 위치 | `members/hyeokjun/curator_web3/model/ax-4.0-light/` |
 | sha256 | `324e1bcb590b67df7928d72c2d13d55ecf70ef30e766bd0c48608d342fa71a6f` |
 
