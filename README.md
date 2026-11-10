@@ -86,3 +86,73 @@ python backend/scripts/build_cu_products_db.py
 | `backend/pickcu/query_parser.py` | `members/hayoung/finetune_v1/code/query_parser.py` |
 | `backend/pickcu/filter_engine.py`, `product_search.py`, `backend/data/` | knlee |
 | `frontend/` | `members/hyeokjun/curator_web2/` |
+
+## 팀원별 작업
+
+| 팀원 | 담당 | 주요 결과물 | 서비스에 쓰인 곳 |
+| --- | --- | --- | --- |
+| hayoung | LLM 선정·파인튜닝, 자연어 전처리 | A.X-4.0-Light QLoRA 모델, `parse_query` | `backend/pickcu/query_parser.py` |
+| jongho | API 서버, 예산 규칙, 모델 비교 | FastAPI 서버, 규칙 파서, `budget_filter`, EXAONE 비교 | `backend/api/`, `backend/pickcu/nlu.py` |
+| hyeokjun | 웹 화면, A.X 기준선 평가 | 웹 화면 3종(curator_web, web2, web3) | `frontend/` (curator_web2) |
+| knlee | 데이터 수집·DB, 추천 엔진, 통합 | 상품 DB 2,154개, 검색 함수, Top 5 필터 엔진 | `backend/pickcu/`(엔진·검색), `backend/data/` |
+
+### hayoung — 문장 해석 모델 (`members/hayoung/`)
+
+- 프롬프트만 개선한 방식과 파인튜닝을 비교했습니다. 프롬프트만 쓴 dev 정확도는 최고 43.5%, 파인튜닝 후는 86.1%여서 파인튜닝 모델을 서비스 모델로 정했습니다.
+- 실험 과정
+  - 영양 성분 1개 추출에서 2개 추출로 과제를 바꿨습니다(dev 14.4%).
+  - 짝 규칙표로 라벨을 통일하자 44.0%가 되었습니다.
+  - 데이터 v2, v3를 만들었습니다.
+  - 마지막으로 QLoRA 파인튜닝을 했습니다(dev 86.1%).
+- 파인튜닝 설정
+  - 4bit NF4, LoRA r16·alpha32, lr 2e-4
+  - train 2,550문장, best epoch 1
+- 최종 test 240문장 완전 정확도는 **85.8%**입니다. 원본 모델은 62.5%였습니다.
+- `parse_query(text)`
+  - 영양 성분 2개와 방향(high/low)은 모델이, 예산은 규칙 코드가 뽑습니다.
+  - 인사나 잡담처럼 관계없는 문장이면 `None`을 돌려줍니다.
+  - `parse_query_with_reason`은 실패 이유도 함께 돌려줍니다.
+
+### jongho — API 서버와 예산 규칙 (`members/jongho/`)
+
+- `fastapi/`: 화면이 호출하는 API 서버
+  - 추천(`/recommend`), 상품 목록(`/products`), 리뷰(`/reviews`)
+  - A.X 해석을 연결했고, A.X를 쓸 수 없으면 규칙 파서(`nlu.py`)로 동작합니다.
+  - 영양소를 찾지 못하면 `no_nutrient` 상태와 이유를 돌려주어 화면이 다시 묻게 합니다.
+  - 예산 안에 결과가 없으면 예산을 10% 넓혀 다시 찾습니다.
+  - 리뷰 별점을 추천 순위에 반영합니다(엔진 총점 + 10 × R).
+  - API 명세는 `backend/api/README.md`에 있습니다.
+- `budget_lab/`: 예산 함수 수정안 `budget_filter`
+  - 지출 금액은 예산에서 제외하고, 10만원 초과는 None, 1원 미만은 0으로 처리합니다.
+  - hayoung의 `parse_query`에 반영되었습니다.
+- `eval/`: 파인튜닝 어댑터 평가 스크립트
+- `finetune_v2/`: 같은 데이터로 EXAONE-3.5-7.8B를 파인튜닝해 A.X와 비교했습니다.
+  - test는 EXAONE 88.3%, A.X 85.8%입니다.
+  - 두 모델의 차이는 통계적으로 구분되지 않아(McNemar p=0.29) 서비스는 A.X를 유지했습니다.
+
+### hyeokjun — 웹 화면 (`members/hyeokjun/`)
+
+- A.X 4.0 Light 기준선을 평가했습니다(Ollama Q5_K_M).
+  - 직접 말한 영양소는 100%를 맞혔습니다.
+  - 상황 표현(strict 13%), 제외 표현(53%), 전문용어(40%)는 약했습니다.
+- `curator_web/`: 3D 편의점 모형이 있는 첫 웹 화면입니다. 실제 상품 DB와 엔진 결과를 쓰고 장바구니와 리뷰가 있습니다.
+- `curator_web2/`: 대시보드형 화면으로, **서비스 화면(`frontend/`)의 원본**입니다.
+  - 네온 간판과 다크·화이트 모드
+  - 카테고리 세부 분류, 전체 상품 화면
+  - 장바구니, 별점 랭킹, 휴대폰 화면
+- `curator_web3/`: 양자화한 A.X(GGUF, Ollama)로 화면, API, 모델을 한 번에 실행하는 버전입니다.
+
+### knlee — 데이터와 추천 엔진 (`members/knlee/`, `backend/`)
+
+- CU 상품 정보와 영양성분표 이미지를 수집했습니다(`crawl_cu.py`).
+- Qwen2.5-VL-7B로 이미지에서 영양소 6개를 추출하고 검증했습니다(`vlm_nutrition_parser.py`).
+  - 이미지 3,873건 중 2,154개 상품을 DB에 넣었습니다.
+- 상품 DB(`cu_products.db`)를 만들었습니다.
+  - 소스·양념·조미료와 식재료 24개는 DB에 남기되 추천 검색에서 뺐습니다.
+- `product_search.py`: 카테고리별 후보 검색. 예산이 있으면 단품 가격 상한을 겁니다.
+- `filter_engine.py`: 카테고리별 1개씩 조합해 Top 5를 고릅니다.
+  - 점수는 영양 0.7 + 가격 0.3입니다.
+  - 카테고리가 3개면 후보를 50+30개로 줄입니다.
+  - 중복 상품과 맛만 다른 상품은 제거합니다.
+  - 시험은 엔진 37개, 검색 23개입니다.
+- 팀원 코드를 서비스 폴더 `backend/`, `frontend/`로 통합했습니다(PR #42~#45).
