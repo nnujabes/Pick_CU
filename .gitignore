@@ -239,3 +239,6 @@ models/
 # Team: outputs and logs
 outputs/
 *.log
+
+# API 리뷰 DB (실행 시 생성)
+backend/data/reviews.db
